@@ -14,10 +14,6 @@
         <h1><%= noticia.titulo %></h1>
       </div>
 
-      <% if (noticia.imagem) { %>
-      <img src="<%= noticia.imagem %>" alt="<%= noticia.titulo %>" class="post-cover">
-      <% } %>
-
       <div class="post-body">
         <%- noticia.corpoHtml %>
       </div>
@@ -30,7 +26,6 @@
         <div class="news-grid">
           <% relacionadas.forEach(function(n) { %>
           <article class="news-card">
-            <% if (n.imagem) { %><img src="<%= n.imagem %>" alt="<%= n.titulo %>" class="news-card-img"><% } %>
             <div class="news-card-body">
               <span class="news-date"><%= n.dataFormatada %></span>
               <h3 class="news-title"><a href="/noticias/<%= n.slug %>"><%= n.titulo %></a></h3>

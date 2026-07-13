@@ -22,7 +22,6 @@
       <div class="news-grid">
         <% noticias.forEach(function(n) { %>
         <article class="news-card">
-          <% if (n.imagem) { %><img src="<%= n.imagem %>" alt="<%= n.titulo %>" class="news-card-img"><% } %>
           <div class="news-card-body">
             <span class="news-date"><%= n.dataFormatada %></span>
             <h3 class="news-title"><a href="/noticias/<%= n.slug %>"><%= n.titulo %></a></h3>
