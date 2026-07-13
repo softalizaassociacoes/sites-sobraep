@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: noticia.titulo, description: noticia.resumo }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="post-header">
+        <span class="post-date"><%= noticia.dataFormatada %></span>
+        <h1><%= noticia.titulo %></h1>
+      </div>
+
+      <% if (noticia.imagem) { %>
+      <img src="<%= noticia.imagem %>" alt="<%= noticia.titulo %>" class="post-cover">
+      <% } %>
+
+      <div class="post-body">
+        <%- noticia.corpoHtml %>
+      </div>
+
+      <p style="margin-top:40px;"><a href="/noticias" class="btn btn-outline-primary">← Voltar para Notícias</a></p>
+
+      <% if (relacionadas && relacionadas.length) { %>
+      <div style="margin-top:56px;">
+        <h2>Outras notícias</h2>
+        <div class="news-grid">
+          <% relacionadas.forEach(function(n) { %>
+          <article class="news-card">
+            <% if (n.imagem) { %><img src="<%= n.imagem %>" alt="<%= n.titulo %>" class="news-card-img"><% } %>
+            <div class="news-card-body">
+              <span class="news-date"><%= n.dataFormatada %></span>
+              <h3 class="news-title"><a href="/noticias/<%= n.slug %>"><%= n.titulo %></a></h3>
+              <a href="/noticias/<%= n.slug %>" class="news-readmore">Leia mais →</a>
+            </div>
+          </article>
+          <% }) %>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>

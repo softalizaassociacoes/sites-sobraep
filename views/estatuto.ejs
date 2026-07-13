@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Estatuto' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Estatuto</h1>
+      <p>Estatuto social da Associação Brasileira de Eletrônica de Potência.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p style="margin-bottom:24px;">
+        <a href="/docs/Estatuto_Final_assinado.pdf" target="_blank" rel="noopener" class="btn btn-primary">Baixar o Estatuto (PDF)</a>
+      </p>
+      <div class="table-wrap" style="box-shadow: var(--shadow); border-radius: var(--radius); overflow:hidden;">
+        <iframe src="/docs/Estatuto_Final_assinado.pdf" title="Estatuto SOBRAEP" style="width:100%; height:80vh; border:none; display:block;"></iframe>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>

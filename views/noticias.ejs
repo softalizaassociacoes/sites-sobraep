@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Notícias' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Notícias</h1>
+      <p>Acompanhe as novidades da SOBRAEP.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <% if (!noticias.length) { %>
+        <p>Nenhuma notícia encontrada.</p>
+      <% } else { %>
+      <div class="news-grid">
+        <% noticias.forEach(function(n) { %>
+        <article class="news-card">
+          <% if (n.imagem) { %><img src="<%= n.imagem %>" alt="<%= n.titulo %>" class="news-card-img"><% } %>
+          <div class="news-card-body">
+            <span class="news-date"><%= n.dataFormatada %></span>
+            <h3 class="news-title"><a href="/noticias/<%= n.slug %>"><%= n.titulo %></a></h3>
+            <p class="news-excerpt"><%= n.resumo %></p>
+            <a href="/noticias/<%= n.slug %>" class="news-readmore">Leia mais →</a>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+
+      <nav class="pagination" aria-label="Paginação de notícias">
+        <a href="/noticias?page=<%= page - 1 %>" class="<%= page <= 1 ? 'is-disabled' : '' %>">‹</a>
+        <% for (let p = 1; p <= totalPages; p++) { %>
+          <a href="/noticias?page=<%= p %>" class="<%= p === page ? 'is-active' : '' %>"><%= p %></a>
+        <% } %>
+        <a href="/noticias?page=<%= page + 1 %>" class="<%= page >= totalPages ? 'is-disabled' : '' %>">›</a>
+      </nav>
+      <% } %>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>

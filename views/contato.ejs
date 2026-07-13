@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Contato' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Contato</h1>
+      <p>Ficaremos felizes em responder suas dúvidas, receber suas sugestões ou solucionar algum problema.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <form class="contact-form" action="#" method="post">
+        <label>
+          Nome
+          <input type="text" name="nome" required>
+        </label>
+        <label>
+          E-mail
+          <input type="email" name="email" required>
+        </label>
+        <label>
+          Telefone
+          <input type="tel" name="telefone">
+        </label>
+        <label>
+          Assunto
+          <input type="text" name="assunto" required>
+        </label>
+        <label>
+          Mensagem
+          <textarea name="mensagem" rows="5" maxlength="180" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+      </form>
+
+      <aside class="info-card card">
+        <h3>E-mail</h3>
+        <p><a href="mailto:<%= site.email %>"><%= site.email %></a></p>
+        <p><a href="mailto:<%= site.emailSecretaria %>"><%= site.emailSecretaria %></a></p>
+        <h3>Telefone</h3>
+        <p><%= site.telefone %></p>
+        <h3>Endereço</h3>
+        <p><%= site.endereco %></p>
+        <h3>Redes sociais</h3>
+        <p><a href="<%= site.facebook %>" target="_blank" rel="noopener">Facebook</a></p>
+        <p><a href="<%= site.linkedin %>" target="_blank" rel="noopener">LinkedIn</a></p>
+        <p><a href="<%= site.youtube %>" target="_blank" rel="noopener">YouTube</a></p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>

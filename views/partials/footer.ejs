@@ -1,0 +1,42 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.png" alt="<%= site.nomeCompleto %>" class="footer-logo">
+      <p><%= site.nomeCompleto %> (<%= site.nome %>), fundada em <%= site.fundacao %>, sede em <%= site.sede %>.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Institucional</h4>
+      <a href="/sobre-nos">Sobre nós</a>
+      <a href="/estatuto">Estatuto</a>
+      <a href="/diretoria">Diretoria</a>
+      <a href="/cobep">COBEP</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Comunidade</h4>
+      <a href="/noticias">Notícias</a>
+      <a href="/webinars">Webinars</a>
+      <a href="/contato">Contato</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <p><%= site.telefone %></p>
+      <a href="mailto:<%= site.email %>"><%= site.email %></a>
+      <p><%= site.endereco %></p>
+      <div class="footer-social">
+        <a href="<%= site.facebook %>" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+        <a href="<%= site.linkedin %>" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+        <a href="<%= site.youtube %>" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      &copy; <%= new Date().getFullYear() %> <%= site.nome %> — <%= site.nomeCompleto %>. Todos os direitos reservados.
+    </div>
+  </div>
+</footer>
+<script src="/js/main.js"></script>

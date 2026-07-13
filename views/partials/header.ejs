@@ -1,0 +1,35 @@
+<%
+const sobreNosGroup = ['sobre-nos', 'estatuto', 'diretoria', 'socios-fundadores', 'ex-presidentes', 'ex-editores-chefes'];
+const isSobreNosActive = sobreNosGroup.includes(active);
+%>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="/images/logo.png" alt="<%= site.nomeCompleto %>" class="brand-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="/" class="<%= active === 'home' ? 'is-active' : '' %>">Home</a>
+
+      <div class="nav-item <%= isSobreNosActive ? 'is-active' : '' %>">
+        <a href="/sobre-nos" class="nav-toplink">Sobre nós</a>
+        <ul class="nav-dropdown">
+          <li><a href="/sobre-nos" class="<%= active === 'sobre-nos' ? 'is-active' : '' %>">Sobre nós</a></li>
+          <li><a href="/estatuto" class="<%= active === 'estatuto' ? 'is-active' : '' %>">Estatuto</a></li>
+          <li><a href="/diretoria" class="<%= active === 'diretoria' ? 'is-active' : '' %>">Diretoria</a></li>
+          <li><a href="/socios-fundadores" class="<%= active === 'socios-fundadores' ? 'is-active' : '' %>">Sócios Fundadores</a></li>
+          <li><a href="/ex-presidentes" class="<%= active === 'ex-presidentes' ? 'is-active' : '' %>">Ex-Presidentes</a></li>
+          <li><a href="/ex-editores-chefes" class="<%= active === 'ex-editores-chefes' ? 'is-active' : '' %>">Ex-Editores-Chefes</a></li>
+        </ul>
+      </div>
+
+      <a href="/cobep" class="<%= active === 'cobep' ? 'is-active' : '' %>">COBEP</a>
+      <a href="/noticias" class="<%= active === 'noticias' ? 'is-active' : '' %>">Notícias</a>
+      <a href="/webinars" class="<%= active === 'webinars' ? 'is-active' : '' %>">Webinars</a>
+      <a href="/contato" class="<%= active === 'contato' ? 'is-active' : '' %>">Contato</a>
+      <a href="/contato" class="btn btn-primary nav-cta">Associe-se</a>
+    </nav>
+  </div>
+</header>

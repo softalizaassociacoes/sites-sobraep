@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Home' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <h1>Seja um Associado</h1>
+        <p>A afiliação à SOBRAEP permite aos sócios — Efetivos (R$ 175,00), Aspirantes (R$ 90,00) e Corporativos (R$ 950,00) — acesso completo ao site da SOBRAEP, descontos em inscrições de alguns congressos da área e participação nos Webinars promovidos pela associação.</p>
+        <div class="hero-actions">
+          <a href="https://associacoes.softaliza.com.br/login/sobraep" target="_blank" rel="noopener" class="btn btn-primary">Associe-se</a>
+          <a href="/sobre-nos" class="btn btn-outline">Conheça a SOBRAEP</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Últimas Notícias</h2>
+      <div class="news-grid">
+        <% noticias.forEach(function(n) { %>
+        <article class="news-card">
+          <% if (n.imagem) { %><img src="<%= n.imagem %>" alt="<%= n.titulo %>" class="news-card-img"><% } %>
+          <div class="news-card-body">
+            <span class="news-date"><%= n.dataFormatada %></span>
+            <h3 class="news-title"><a href="/noticias/<%= n.slug %>"><%= n.titulo %></a></h3>
+            <p class="news-excerpt"><%= n.resumo %></p>
+            <a href="/noticias/<%= n.slug %>" class="news-readmore">Leia mais →</a>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+      <div style="text-align:center; margin-top:32px;">
+        <a href="/noticias" class="btn btn-outline-primary">Ir para o feed de notícias</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container two-col">
+      <div>
+        <h2>Próximos Webinars</h2>
+        <p class="section-lead">Acompanhe a agenda de webinars promovidos pela SOBRAEP e parceiros.</p>
+        <a href="https://register.gotowebinar.com/register/6964763401273943386" target="_blank" rel="noopener" class="btn btn-primary">Registre-se aqui</a>
+        <p style="margin-top:12px;"><a href="/webinars">Ver todos os webinars →</a></p>
+      </div>
+      <div>
+        <h2>Revista Eletrônica de Potência</h2>
+        <p class="section-lead">Publicação científica oficial da SOBRAEP, indexada e aceita no DOAJ.</p>
+        <a href="https://mc04.manuscriptcentral.com/epot-scielo" target="_blank" rel="noopener" class="btn btn-primary">Submissão</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Nossos Patrocinadores</h2>
+      <div class="sponsor-grid">
+        <img src="/images/patrocinadores/tektronix.png" alt="Tektronix" class="sponsor-logo">
+        <img src="/images/patrocinadores/okk.jpg" alt="OKK Soluções em Teste e Medição" class="sponsor-logo">
+      </div>
+      <p style="margin-top:20px;"><a href="mailto:<%= site.email %>" class="btn btn-outline-primary">Seja nosso Patrocinador</a></p>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <h2>Palavra do Presidente</h2>
+      <div class="president-block">
+        <div>
+          <img src="/images/presidente-heverton.jpeg" alt="Heverton Augusto Pereira" class="president-photo">
+          <p class="president-name">Heverton Augusto Pereira</p>
+          <p class="president-role">Presidente da SOBRAEP</p>
+        </div>
+        <div>
+          <p>Querida SOBRAEP e parceiros,</p>
+          <p>No meu coração, há uma mistura de alegria e responsabilidade nesta missão de conduzir a SOBRAEP no biênio 2026–2027. Juntamente com a diretoria e todo o time que apoia nossa sociedade, desenvolvemos um trabalho voluntário que busca contribuir, ainda que modestamente, para o desenvolvimento de um país mais moderno e com profissionais preparados para compreender e atender às demandas da sociedade.</p>
+          <p>Desejo que, nesses dois anos, nossos associados tenham liberdade para sugerir melhorias, propor estratégias e se sintam confiantes em divulgar nossa sociedade. Trabalharemos para que o COBEP continue sendo um congresso de referência em nível internacional e para que a revista Eletrônica de Potência evolua a cada dia. Além disso, atuaremos como vetores de divulgação da eletrônica de potência brasileira.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section" style="background: linear-gradient(120deg, var(--color-primary), var(--color-primary-dark)); color:#fff; text-align:center;">
+    <div class="container">
+      <h2 style="color:#fff;">Fale com a SOBRAEP</h2>
+      <p style="color:rgba(255,255,255,0.85); max-width:560px; margin:0 auto 24px;">Ficaremos felizes em responder suas dúvidas, receber suas sugestões ou solucionar algum problema.</p>
+      <a href="/contato" class="btn btn-primary">Entrar em contato</a>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>

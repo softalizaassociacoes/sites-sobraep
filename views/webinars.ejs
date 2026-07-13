@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Webinars' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Webinars</h1>
+      <p>Webinars promovidos pela SOBRAEP e em parceria com a PELS.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="card-grid">
+
+        <div class="webinar-card">
+          <img src="/images/webinars/webinar-1.jpg" alt="Próximo webinar SOBRAEP" style="border-radius:8px;">
+          <div class="webinar-actions">
+            <a href="https://register.gotowebinar.com/register/6964763401273943386" target="_blank" rel="noopener" class="btn btn-primary">Registre-se aqui</a>
+          </div>
+        </div>
+
+        <% const slides = [
+          { img: 'webinar-2.jpg', pdf: 'https://sobraep.org.br/wp-content/uploads/2026/06/Demystifying-Capacitive-Isolation-in-High-Efficiency-DC-DC-Converters.pdf' },
+          { img: 'webinar-3.jpg', pdf: 'https://sobraep.org.br/wp-content/uploads/2026/05/PELSSOBRAEPWebinarSLBIllaFont.pdf' },
+          { img: 'webinar-4.jpeg', pdf: 'https://sobraep.org.br/wp-content/uploads/2026/03/PELS-WEBINAR-2026.pdf' },
+          { img: 'webinar-5.jpeg', pdf: 'https://sobraep.org.br/wp-content/uploads/2025/11/PELSSOBRAEPWebinar-B2Bsynergeticoperation.pdf' },
+          { img: 'webinar-6.jpeg', pdf: 'https://sobraep.org.br/wp-content/uploads/2025/09/Why-and-When-Power-Electronics-Calls-For-Artificial-Intelligence.pdf' },
+          { img: 'webinar-7.jpeg', pdf: 'https://sobraep.org.br/wp-content/uploads/2025/09/The-Challenges-of-Renewable-Energy-Sources.pdf' },
+          { img: 'webinar-8.jpeg', pdf: 'https://sobraep.org.br/wp-content/uploads/2026/02/PELSWEB091024S.pdf' },
+          { img: 'webinar-9.jpeg', pdf: 'https://sobraep.org.br/wp-content/uploads/2026/02/PELSWEB072524S.pdf' },
+          { img: 'webinar-10.jpeg', pdf: 'https://sobraep.org.br/wp-content/uploads/2026/02/PELSWEB060624S.pdf' }
+        ]; %>
+        <% slides.forEach(function(w) { %>
+        <div class="webinar-card">
+          <img src="/images/webinars/<%= w.img %>" alt="Webinar SOBRAEP" style="border-radius:8px;">
+          <div class="webinar-actions">
+            <a href="<%= w.pdf %>" target="_blank" rel="noopener" class="btn btn-outline-primary">Slides da apresentação</a>
+          </div>
+        </div>
+        <% }) %>
+
+      </div>
+
+      <p style="margin-top:32px; text-align:center;">
+        Confira as gravações no nosso <a href="<%= site.youtube %>" target="_blank" rel="noopener">canal do YouTube</a>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>

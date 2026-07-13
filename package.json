@@ -1,0 +1,20 @@
+{
+  "name": "sites-sobraep",
+  "version": "1.0.0",
+  "description": "Site institucional da SOBRAEP (Associação Brasileira de Eletrônica de Potência)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.3"
+  }
+}
