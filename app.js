@@ -7,7 +7,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, 'public/images/logo.png')));
+app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, 'public/images/favicon-64.png')));
 
 const site = {
   nome: 'SOBRAEP',
@@ -15,9 +15,10 @@ const site = {
   fundacao: '31 de agosto de 1990',
   sede: 'Florianópolis (SC)',
   email: 'presidente@sobraep.org.br',
+  emailSecundario: 'heverton.pereira@ufv.br',
   emailSecretaria: 'secretaria1@sobraep.com.br',
   telefone: '(31) 3612-6401',
-  endereco: 'Universidade Federal de Viçosa, Departamento de Engenharia Elétrica, Viçosa-MG, CEP 36570-900',
+  endereco: 'Prof. Heverton Augusto Pereira, Universidade Federal de Viçosa – UFV. Gerência de Especialistas em Sistemas Elétricos de Potência – GESEP. Departamento de Engenharia Elétrica, Viçosa – MG – Brasil, CEP 36570-900',
   facebook: 'https://www.facebook.com/sobraep/',
   linkedin: 'https://www.linkedin.com/groups/40133/',
   youtube: 'https://www.youtube.com/channel/UCK9b6kbTrcT-UvtjJ6pSESw'

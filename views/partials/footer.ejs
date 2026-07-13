@@ -22,9 +22,9 @@
 
     <div class="footer-col">
       <h4>Contato</h4>
-      <p><%= site.telefone %></p>
-      <a href="mailto:<%= site.email %>"><%= site.email %></a>
-      <p><%= site.endereco %></p>
+      <p><strong>Endereço:</strong> <%= site.endereco %></p>
+      <p><strong>Telefone:</strong> <%= site.telefone %></p>
+      <p><strong>E-mail:</strong> <a href="mailto:<%= site.email %>"><%= site.email %></a> / <a href="mailto:<%= site.emailSecundario %>"><%= site.emailSecundario %></a></p>
       <div class="footer-social">
         <a href="<%= site.facebook %>" target="_blank" rel="noopener" aria-label="Facebook">f</a>
         <a href="<%= site.linkedin %>" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>

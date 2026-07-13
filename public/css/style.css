@@ -49,6 +49,40 @@ a { color: var(--color-primary); text-decoration: none; }
   padding: 0 24px;
 }
 
+/* Top bar */
+.top-bar {
+  background: var(--color-primary-dark);
+}
+.top-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 24px;
+}
+.top-bar-social {
+  display: flex;
+  gap: 10px;
+}
+.top-bar-social a {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: var(--color-white);
+  font-size: 0.72rem;
+}
+.top-bar-social a:hover { background: var(--color-secondary); color: var(--color-primary-dark); }
+.top-bar-cta {
+  color: var(--color-white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-heading);
+}
+.top-bar-cta:hover { color: var(--color-secondary); }
+
 /* Header */
 .site-header {
   background: var(--color-white);
