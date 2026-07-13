@@ -10,6 +10,7 @@
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-content">
+        <span class="eyebrow eyebrow--light">Associação Brasileira de Eletrônica de Potência</span>
         <h1>Seja um Associado</h1>
         <p>A afiliação à SOBRAEP permite aos sócios — Efetivos (R$ 175,00), Aspirantes (R$ 90,00) e Corporativos (R$ 950,00) — acesso completo ao site da SOBRAEP, descontos em inscrições de alguns congressos da área e participação nos Webinars promovidos pela associação.</p>
         <div class="hero-actions">
@@ -20,9 +21,33 @@
     </div>
   </section>
 
+  <div class="container">
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="stat-number">1990</div>
+        <div class="stat-label">Ano de fundação</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">18</div>
+        <div class="stat-label">Edições do COBEP</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Categorias de sócios</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">35+</div>
+        <div class="stat-label">Anos de história</div>
+      </div>
+    </div>
+  </div>
+
   <section class="section">
     <div class="container">
-      <h2>Últimas Notícias</h2>
+      <div class="section-head">
+        <span class="eyebrow">Fique por dentro</span>
+        <h2>Últimas Notícias</h2>
+      </div>
       <div class="news-grid">
         <% noticias.forEach(function(n) { %>
         <article class="news-card">
@@ -45,12 +70,14 @@
   <section class="section alt">
     <div class="container two-col">
       <div>
+        <span class="eyebrow">Agenda</span>
         <h2>Próximos Webinars</h2>
         <p class="section-lead">Acompanhe a agenda de webinars promovidos pela SOBRAEP e parceiros.</p>
         <a href="https://register.gotowebinar.com/register/6964763401273943386" target="_blank" rel="noopener" class="btn btn-primary">Registre-se aqui</a>
         <p style="margin-top:12px;"><a href="/webinars">Ver todos os webinars →</a></p>
       </div>
       <div>
+        <span class="eyebrow">Publicação científica</span>
         <h2>Revista Eletrônica de Potência</h2>
         <p class="section-lead">Publicação científica oficial da SOBRAEP, indexada e aceita no DOAJ.</p>
         <a href="https://mc04.manuscriptcentral.com/epot-scielo" target="_blank" rel="noopener" class="btn btn-primary">Submissão</a>
@@ -60,6 +87,7 @@
 
   <section class="section">
     <div class="container">
+      <span class="eyebrow">Parceiros</span>
       <h2>Nossos Patrocinadores</h2>
       <div class="sponsor-grid">
         <img src="/images/patrocinadores/tektronix.png" alt="Tektronix" class="sponsor-logo">
@@ -74,6 +102,7 @@
 
   <section class="section alt">
     <div class="container">
+      <span class="eyebrow">Mensagem institucional</span>
       <h2>Palavra do Presidente</h2>
       <div class="president-block">
         <div>
@@ -90,10 +119,10 @@
     </div>
   </section>
 
-  <section class="section cta-section" style="background: linear-gradient(120deg, var(--color-primary), var(--color-primary-dark)); color:#fff; text-align:center;">
+  <section class="cta-band">
     <div class="container">
-      <h2 style="color:#fff;">Fale com a SOBRAEP</h2>
-      <p style="color:rgba(255,255,255,0.85); max-width:560px; margin:0 auto 24px;">Ficaremos felizes em responder suas dúvidas, receber suas sugestões ou solucionar algum problema.</p>
+      <h2>Fale com a SOBRAEP</h2>
+      <p>Ficaremos felizes em responder suas dúvidas, receber suas sugestões ou solucionar algum problema.</p>
       <a href="/contato" class="btn btn-primary">Entrar em contato</a>
     </div>
   </section>
