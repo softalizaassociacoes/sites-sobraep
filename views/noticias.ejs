@@ -22,6 +22,14 @@
       <div class="news-grid">
         <% noticias.forEach(function(n) { %>
         <article class="news-card">
+          <a href="/noticias/<%= n.slug %>" class="news-card-media <%= n.imagem ? '' : 'news-card-media--placeholder' %>" aria-label="Ler: <%= n.titulo %>">
+            <% if (n.imagem) { %>
+              <img src="<%= n.imagem %>" alt="" loading="lazy">
+            <% } else { %>
+              <span class="news-placeholder-brand" aria-hidden="true">SOBRAEP</span>
+              <span class="news-placeholder-label" aria-hidden="true">Em pauta</span>
+            <% } %>
+          </a>
           <div class="news-card-body">
             <span class="news-date"><%= n.dataFormatada %></span>
             <h3 class="news-title"><a href="/noticias/<%= n.slug %>"><%= n.titulo %></a></h3>

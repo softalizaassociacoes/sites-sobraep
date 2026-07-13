@@ -44,6 +44,7 @@ app.get('/', (req, res) => {
 app.get('/sobre-nos', render('sobre-nos', { active: 'sobre-nos' }));
 app.get('/estatuto', render('estatuto', { active: 'estatuto' }));
 app.get('/diretoria', render('diretoria', { active: 'diretoria' }));
+app.get('/palavra-do-presidente', render('palavra-do-presidente', { active: 'diretoria' }));
 app.get('/socios-fundadores', render('socios-fundadores', { active: 'socios-fundadores' }));
 app.get('/ex-presidentes', render('ex-presidentes', { active: 'ex-presidentes' }));
 app.get('/ex-editores-chefes', render('ex-editores-chefes', { active: 'ex-editores-chefes' }));
