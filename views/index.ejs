@@ -6,7 +6,7 @@
 <body>
 <%- include('partials/header') %>
 
-<main>
+<main id="conteudo">
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-content">
@@ -18,6 +18,25 @@
           <a href="/sobre-nos" class="btn btn-outline">Conheça a SOBRAEP</a>
         </div>
       </div>
+      <aside class="hero-panel" aria-label="Acesse a comunidade SOBRAEP">
+        <span class="hero-panel-kicker">Explore a comunidade</span>
+        <h2>Conhecimento que conecta pessoas e tecnologia</h2>
+        <a href="/cobep" class="hero-panel-link">
+          <span class="hero-panel-icon" aria-hidden="true">01</span>
+          <span><strong>COBEP</strong><small>Congresso Brasileiro de Eletrônica de Potência</small></span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="/webinars" class="hero-panel-link">
+          <span class="hero-panel-icon" aria-hidden="true">02</span>
+          <span><strong>Webinars</strong><small>Encontros técnicos e conteúdo especializado</small></span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="https://mc04.manuscriptcentral.com/epot-scielo" target="_blank" rel="noopener" class="hero-panel-link">
+          <span class="hero-panel-icon" aria-hidden="true">03</span>
+          <span><strong>Revista Eletrônica de Potência</strong><small>Publicação científica oficial da SOBRAEP</small></span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </aside>
     </div>
   </section>
 
@@ -41,6 +60,39 @@
       </div>
     </div>
   </div>
+
+  <section class="section membership-section">
+    <div class="container">
+      <div class="section-head section-head--split">
+        <div>
+          <span class="eyebrow">Faça parte</span>
+          <h2>Por que se associar à SOBRAEP?</h2>
+        </div>
+        <p class="section-lead">Uma associação para acompanhar a evolução da eletrônica de potência e participar ativamente da comunidade técnica brasileira.</p>
+      </div>
+      <div class="benefit-grid">
+        <article class="benefit-card">
+          <span class="benefit-number" aria-hidden="true">01</span>
+          <h3>Conteúdo e comunidade</h3>
+          <p>Tenha acesso completo ao ambiente da SOBRAEP e mantenha-se próximo de profissionais, pesquisadores e iniciativas da área.</p>
+        </article>
+        <article class="benefit-card">
+          <span class="benefit-number" aria-hidden="true">02</span>
+          <h3>Condições em congressos</h3>
+          <p>Associados contam com descontos nas inscrições de congressos selecionados da área de eletrônica de potência.</p>
+        </article>
+        <article class="benefit-card">
+          <span class="benefit-number" aria-hidden="true">03</span>
+          <h3>Webinars técnicos</h3>
+          <p>Participe dos webinars promovidos pela SOBRAEP e parceiros, com temas atuais para a comunidade técnica.</p>
+        </article>
+      </div>
+      <div class="membership-cta">
+        <a href="https://associacoes.softaliza.com.br/login/sobraep" target="_blank" rel="noopener" class="btn btn-primary">Quero me associar</a>
+        <span>Efetivo, Aspirante ou Corporativo</span>
+      </div>
+    </div>
+  </section>
 
   <section class="section">
     <div class="container">
