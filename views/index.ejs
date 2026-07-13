@@ -103,6 +103,14 @@
       <div class="news-grid">
         <% noticias.forEach(function(n) { %>
         <article class="news-card">
+          <a href="/noticias/<%= n.slug %>" class="news-card-media <%= n.imagem ? '' : 'news-card-media--placeholder' %>" aria-label="Ler: <%= n.titulo %>">
+            <% if (n.imagem) { %>
+              <img src="<%= n.imagem %>" alt="" loading="lazy">
+            <% } else { %>
+              <span class="news-placeholder-brand" aria-hidden="true">SOBRAEP</span>
+              <span class="news-placeholder-label" aria-hidden="true">Em pauta</span>
+            <% } %>
+          </a>
           <div class="news-card-body">
             <span class="news-date"><%= n.dataFormatada %></span>
             <h3 class="news-title"><a href="/noticias/<%= n.slug %>"><%= n.titulo %></a></h3>
@@ -118,35 +126,66 @@
     </div>
   </section>
 
-  <section class="section alt">
-    <div class="container two-col">
-      <div>
-        <span class="eyebrow">Agenda</span>
-        <h2>Próximos Webinars</h2>
-        <p class="section-lead">Acompanhe a agenda de webinars promovidos pela SOBRAEP e parceiros.</p>
-        <a href="https://register.gotowebinar.com/register/6964763401273943386" target="_blank" rel="noopener" class="btn btn-primary">Registre-se aqui</a>
-        <p style="margin-top:12px;"><a href="/webinars">Ver todos os webinars →</a></p>
+  <section class="section alt programs-section">
+    <div class="container">
+      <div class="section-head section-head--split">
+        <div>
+          <span class="eyebrow">Conhecimento em movimento</span>
+          <h2>Agenda e publicação científica</h2>
+        </div>
+        <p class="section-lead">Participe dos encontros técnicos e acompanhe a produção científica da comunidade de eletrônica de potência.</p>
       </div>
-      <div>
-        <span class="eyebrow">Publicação científica</span>
-        <h2>Revista Eletrônica de Potência</h2>
-        <p class="section-lead">Publicação científica oficial da SOBRAEP, indexada e aceita no DOAJ.</p>
-        <a href="https://mc04.manuscriptcentral.com/epot-scielo" target="_blank" rel="noopener" class="btn btn-primary">Submissão</a>
+      <div class="program-grid">
+        <article class="program-card program-card--webinar">
+          <div class="program-media">
+            <img src="/images/webinars/webinar-1.jpg" alt="Webinar Advanced Architectures for Next-Generation Battery Energy Storage Systems">
+          </div>
+          <div class="program-content">
+            <span class="program-label">Próximo webinar</span>
+            <div class="program-meta" aria-label="Data e recursos do webinar">
+              <span>12 de agosto</span>
+              <span>10h ET</span>
+              <span>Tradução ao vivo</span>
+            </div>
+            <h3>Advanced Architectures for Next-Generation Battery Energy Storage Systems</h3>
+            <p class="program-speaker">Allan Fagner Cupertino · Universidade Federal de Juiz de Fora</p>
+            <div class="program-actions">
+              <a href="https://register.gotowebinar.com/register/6964763401273943386" target="_blank" rel="noopener" class="btn btn-primary">Inscreva-se gratuitamente</a>
+              <a href="/webinars" class="text-link">Ver agenda completa →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="program-card program-card--journal">
+          <div class="journal-mark" aria-hidden="true">EP</div>
+          <span class="program-label">Publicação científica</span>
+          <h3>Revista Eletrônica de Potência</h3>
+          <p>Publicação oficial da SOBRAEP, dedicada à pesquisa e ao desenvolvimento em eletrônica de potência.</p>
+          <div class="journal-badges" aria-label="Características da revista">
+            <span>Open access</span>
+            <span>Indexada no DOAJ</span>
+          </div>
+          <div class="program-actions">
+            <a href="https://mc04.manuscriptcentral.com/epot-scielo" target="_blank" rel="noopener" class="btn btn-outline-light">Submeter artigo</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section sponsors-section">
     <div class="container">
-      <span class="eyebrow">Parceiros</span>
-      <h2>Nossos Patrocinadores</h2>
-      <div class="sponsor-grid">
-        <img src="/images/patrocinadores/tektronix.png" alt="Tektronix" class="sponsor-logo">
-        <img src="/images/patrocinadores/okk.jpg" alt="OKK Soluções em Teste e Medição" class="sponsor-logo">
-      </div>
-      <div class="hero-actions" style="margin-top:20px;">
-        <a href="mailto:<%= site.email %>" class="btn btn-outline-primary">Seja nosso Patrocinador</a>
-        <a href="mailto:<%= site.email %>,<%= site.emailSecretaria %>" class="btn btn-outline-primary">Contato</a>
+      <div class="sponsor-showcase">
+        <div class="sponsor-copy">
+          <span class="eyebrow">Parceiros</span>
+          <h2>Empresas que apoiam a eletrônica de potência brasileira</h2>
+          <p>O apoio institucional aproxima indústria, pesquisa e comunidade técnica.</p>
+          <a href="mailto:<%= site.email %>?subject=Patrocínio%20SOBRAEP" class="text-link">Conheça as oportunidades de patrocínio →</a>
+        </div>
+        <div class="sponsor-logos" aria-label="Patrocinadores da SOBRAEP">
+          <div class="sponsor-logo-card"><img src="/images/patrocinadores/tektronix.png" alt="Tektronix"></div>
+          <div class="sponsor-logo-card"><img src="/images/patrocinadores/okk.jpg" alt="OKK Soluções em Teste e Medição"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -156,25 +195,34 @@
       <span class="eyebrow">Mensagem institucional</span>
       <h2>Palavra do Presidente</h2>
       <div class="president-block">
-        <div>
+        <div class="president-profile">
           <img src="/images/presidente-heverton.jpeg" alt="Heverton Augusto Pereira" class="president-photo">
           <p class="president-name">Heverton Augusto Pereira</p>
           <p class="president-role">Presidente da SOBRAEP</p>
         </div>
-        <div>
-          <p>Querida SOBRAEP e parceiros,</p>
-          <p>No meu coração, há uma mistura de alegria e responsabilidade nesta missão de conduzir a SOBRAEP no biênio 2026–2027. Juntamente com a diretoria e todo o time que apoia nossa sociedade, desenvolvemos um trabalho voluntário que busca contribuir, ainda que modestamente, para o desenvolvimento de um país mais moderno e com profissionais preparados para compreender e atender às demandas da sociedade.</p>
-          <p>Desejo que, nesses dois anos, nossos associados tenham liberdade para sugerir melhorias, propor estratégias e se sintam confiantes em divulgar nossa sociedade. Trabalharemos para que o COBEP continue sendo um congresso de referência em nível internacional e para que a revista Eletrônica de Potência evolua a cada dia. Além disso, atuaremos como vetores de divulgação da eletrônica de potência brasileira.</p>
+        <div class="president-message">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <blockquote>Queremos que nossos associados tenham liberdade para sugerir melhorias, propor estratégias e se sintam confiantes em divulgar nossa sociedade.</blockquote>
+          <p>Na gestão 2026–2027, seguimos trabalhando para fortalecer o COBEP, ampliar a relevância da Revista Eletrônica de Potência e aproximar a SOBRAEP de seus associados.</p>
+          <a href="/palavra-do-presidente" class="btn btn-outline-primary">Leia a mensagem completa</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="cta-band">
+  <section class="cta-band" aria-labelledby="cta-title">
     <div class="container">
-      <h2>Fale com a SOBRAEP</h2>
-      <p>Ficaremos felizes em responder suas dúvidas, receber suas sugestões ou solucionar algum problema.</p>
-      <a href="/contato" class="btn btn-primary">Entrar em contato</a>
+      <div class="cta-card">
+        <div>
+          <span class="cta-kicker">Estamos à disposição</span>
+          <h2 id="cta-title">Quer participar, apoiar ou falar com a SOBRAEP?</h2>
+          <p>Envie sua dúvida, sugestão ou proposta. Nossa equipe direciona sua mensagem para a pessoa certa.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="/contato" class="btn btn-primary">Entrar em contato</a>
+          <a href="https://associacoes.softaliza.com.br/login/sobraep" target="_blank" rel="noopener" class="btn btn-outline">Área do associado</a>
+        </div>
+      </div>
     </div>
   </section>
 </main>

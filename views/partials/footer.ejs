@@ -1,41 +1,50 @@
 <footer class="site-footer">
-  <div class="container footer-inner">
+  <div class="container footer-main">
     <div class="footer-brand">
       <img src="/images/logo.png" alt="<%= site.nomeCompleto %>" class="footer-logo">
-      <p><%= site.nomeCompleto %> (<%= site.nome %>), fundada em <%= site.fundacao %>, sede em <%= site.sede %>.</p>
+      <p>Conectando pesquisa, indústria e profissionais para fortalecer a eletrônica de potência brasileira.</p>
+      <a href="/sobre-nos" class="footer-brand-link">Conheça nossa história →</a>
     </div>
 
-    <div class="footer-col">
-      <h4>Institucional</h4>
-      <a href="/sobre-nos">Sobre nós</a>
-      <a href="/estatuto">Estatuto</a>
-      <a href="/diretoria">Diretoria</a>
-      <a href="/cobep">COBEP</a>
-    </div>
+    <nav class="footer-nav" aria-label="Navegação do rodapé">
+      <div class="footer-col">
+        <h4>Participe</h4>
+        <a href="https://associacoes.softaliza.com.br/login/sobraep" target="_blank" rel="noopener">Associe-se</a>
+        <a href="/cobep">COBEP</a>
+        <a href="/webinars">Webinars</a>
+        <a href="/noticias">Notícias</a>
+      </div>
 
-    <div class="footer-col">
-      <h4>Comunidade</h4>
-      <a href="/noticias">Notícias</a>
-      <a href="/webinars">Webinars</a>
-      <a href="/contato">Contato</a>
-    </div>
+      <div class="footer-col">
+        <h4>Institucional</h4>
+        <a href="/sobre-nos">Sobre nós</a>
+        <a href="/diretoria">Diretoria</a>
+        <a href="/estatuto">Estatuto</a>
+        <a href="/palavra-do-presidente">Palavra do Presidente</a>
+      </div>
+    </nav>
 
-    <div class="footer-col">
-      <h4>Contato</h4>
-      <p><strong>Endereço:</strong> <%= site.endereco %></p>
-      <p><strong>Telefone:</strong> <%= site.telefone %></p>
-      <p><strong>E-mail:</strong> <a href="mailto:<%= site.email %>"><%= site.email %></a> / <a href="mailto:<%= site.emailSecundario %>"><%= site.emailSecundario %></a></p>
-      <div class="footer-social">
-        <a href="<%= site.facebook %>" target="_blank" rel="noopener" aria-label="Facebook">f</a>
-        <a href="<%= site.linkedin %>" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
-        <a href="<%= site.youtube %>" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+    <div class="footer-contact-card">
+      <span class="footer-contact-kicker">Fale com a gente</span>
+      <h3>Como podemos ajudar?</h3>
+      <p>Associação, eventos, parcerias ou dúvidas institucionais.</p>
+      <a href="mailto:<%= site.email %>" class="footer-email"><%= site.email %></a>
+      <div class="footer-contact-actions">
+        <a href="/contato" class="btn btn-primary">Enviar mensagem</a>
+        <a href="tel:<%= site.telefone.replace(/[^\d+]/g, '') %>" class="footer-phone"><%= site.telefone %></a>
       </div>
     </div>
   </div>
 
   <div class="footer-bottom">
-    <div class="container">
-      &copy; <%= new Date().getFullYear() %> <%= site.nome %> — <%= site.nomeCompleto %>. Todos os direitos reservados.
+    <div class="container footer-bottom-inner">
+      <span>&copy; <%= new Date().getFullYear() %> <%= site.nome %>. Todos os direitos reservados.</span>
+      <div class="footer-social-links" aria-label="Redes sociais">
+        <a href="<%= site.facebook %>" target="_blank" rel="noopener">Facebook ↗</a>
+        <a href="<%= site.linkedin %>" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="<%= site.youtube %>" target="_blank" rel="noopener">YouTube ↗</a>
+      </div>
+      <a href="/contato" class="footer-address-link">Contato e endereço</a>
     </div>
   </div>
 </footer>
