@@ -1,12 +1,14 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const { Resend } = require('resend');
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
 app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, 'public/images/favicon-64.png')));
 
 const site = {
@@ -51,7 +53,32 @@ app.get('/ex-presidentes', render('ex-presidentes', { active: 'ex-presidentes' }
 app.get('/ex-editores-chefes', render('ex-editores-chefes', { active: 'ex-editores-chefes' }));
 app.get('/cobep', render('cobep', { active: 'cobep' }));
 app.get('/webinars', render('webinars', { active: 'webinars' }));
-app.get('/contato', render('contato', { active: 'contato' }));
+app.get('/contato', (req, res) => {
+  res.render('contato', { site, active: 'contato', enviado: req.query.enviado, erro: req.query.erro });
+});
+
+app.post('/contato', async (req, res) => {
+  const { nome, email, telefone, assunto, mensagem } = req.body;
+  if (!nome || !email || !assunto || !mensagem) {
+    return res.redirect('/contato?erro=1');
+  }
+  try {
+    if (!process.env.RESEND_API_KEY) throw new Error('RESEND_API_KEY não configurada');
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const { error } = await resend.emails.send({
+      from: process.env.RESEND_FROM || 'SOBRAEP <onboarding@resend.dev>',
+      to: site.email,
+      replyTo: email,
+      subject: `[Site SOBRAEP] ${assunto}`,
+      text: `Nome: ${nome}\nE-mail: ${email}\nTelefone: ${telefone || 'não informado'}\n\nMensagem:\n${mensagem}`
+    });
+    if (error) throw new Error(error.message || 'Falha ao enviar');
+    res.redirect('/contato?enviado=1');
+  } catch (err) {
+    console.error('Erro ao enviar e-mail de contato:', err.message);
+    res.redirect('/contato?erro=1');
+  }
+});
 
 app.get('/noticias', (req, res) => {
   const all = getNoticias();

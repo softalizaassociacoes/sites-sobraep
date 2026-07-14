@@ -16,7 +16,12 @@
 
   <section class="section">
     <div class="container two-col">
-      <form class="contact-form" action="#" method="post">
+      <form class="contact-form" action="/contato" method="post">
+        <% if (enviado) { %>
+          <p class="form-alert form-alert--success">Mensagem enviada! Vamos responder em breve.</p>
+        <% } else if (erro) { %>
+          <p class="form-alert form-alert--error">Não foi possível enviar sua mensagem agora. Tente novamente ou use um dos contatos ao lado.</p>
+        <% } %>
         <label>
           Nome
           <input type="text" name="nome" required>

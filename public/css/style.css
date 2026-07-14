@@ -1013,6 +1013,15 @@ table.data-table tr:hover td { background: #fff6e6; }
   padding: 32px;
   box-shadow: var(--shadow);
 }
+.form-alert {
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.form-alert--success { background: #eaf6e6; color: var(--color-accent); }
+.form-alert--error { background: #fdeaea; color: #b3261e; }
 .contact-form label {
   display: flex;
   flex-direction: column;

@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "resend": "^6.17.2"
   },
   "devDependencies": {
     "sharp": "^0.35.3"
