@@ -20,7 +20,8 @@ const site = {
   telefone: '(31) 3612-6401',
   endereco: 'Prof. Heverton Augusto Pereira, Universidade Federal de Viçosa – UFV. Gerência de Especialistas em Sistemas Elétricos de Potência – GESEP. Departamento de Engenharia Elétrica, Viçosa – MG – Brasil, CEP 36570-900',
   facebook: 'https://www.facebook.com/sobraep/',
-  linkedin: 'https://www.linkedin.com/groups/40133/',
+  linkedin: 'https://www.linkedin.com/company/sobraep/',
+  instagram: 'https://www.instagram.com/sobraep/',
   youtube: 'https://www.youtube.com/channel/UCK9b6kbTrcT-UvtjJ6pSESw'
 };
 
