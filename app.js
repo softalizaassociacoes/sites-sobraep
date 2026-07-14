@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { Resend } = require('resend');
+const sgMail = require('@sendgrid/mail');
 
 const app = express();
 
@@ -63,19 +63,19 @@ app.post('/contato', async (req, res) => {
     return res.redirect('/contato?erro=1');
   }
   try {
-    if (!process.env.RESEND_API_KEY) throw new Error('RESEND_API_KEY não configurada');
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const { error } = await resend.emails.send({
-      from: process.env.RESEND_FROM || 'SOBRAEP <onboarding@resend.dev>',
+    if (!process.env.SENDGRID_API_KEY) throw new Error('SENDGRID_API_KEY não configurada');
+    if (!process.env.SENDGRID_FROM) throw new Error('SENDGRID_FROM não configurada');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    await sgMail.send({
       to: site.email,
+      from: process.env.SENDGRID_FROM,
       replyTo: email,
       subject: `[Site SOBRAEP] ${assunto}`,
       text: `Nome: ${nome}\nE-mail: ${email}\nTelefone: ${telefone || 'não informado'}\n\nMensagem:\n${mensagem}`
     });
-    if (error) throw new Error(error.message || 'Falha ao enviar');
     res.redirect('/contato?enviado=1');
   } catch (err) {
-    console.error('Erro ao enviar e-mail de contato:', err.message);
+    console.error('Erro ao enviar e-mail de contato:', err.response?.body || err.message);
     res.redirect('/contato?erro=1');
   }
 });
