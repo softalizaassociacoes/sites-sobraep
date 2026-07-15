@@ -68,7 +68,7 @@ app.post('/contato', async (req, res) => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     await sgMail.send({
       to: [site.email, 'marcos@softaliza.com.br'],
-      from: process.env.SENDGRID_FROM,
+      from: { email: process.env.SENDGRID_FROM, name: 'Site SOBRAEP' },
       replyTo: email,
       subject: `[Site SOBRAEP] ${assunto}`,
       text: `Nome: ${nome}\nE-mail: ${email}\nTelefone: ${telefone || 'não informado'}\n\nMensagem:\n${mensagem}`
