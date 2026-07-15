@@ -67,7 +67,7 @@ app.post('/contato', async (req, res) => {
     if (!process.env.SENDGRID_FROM) throw new Error('SENDGRID_FROM não configurada');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     await sgMail.send({
-      to: site.email,
+      to: [site.email, 'marcos@softaliza.com.br'],
       from: process.env.SENDGRID_FROM,
       replyTo: email,
       subject: `[Site SOBRAEP] ${assunto}`,
