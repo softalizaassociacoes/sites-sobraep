@@ -349,7 +349,8 @@ a { color: var(--color-primary); text-decoration: none; }
   align-items: center;
   justify-content: space-between;
   gap: 54px;
-  padding: 84px 0;
+  padding-top: 84px;
+  padding-bottom: 84px;
 }
 .hero-content { max-width: 590px; }
 .hero h1 { color: var(--color-white); font-size: 2.9rem; }
@@ -1130,8 +1131,8 @@ table.data-table tr:hover td { background: #fff6e6; }
   .stats-strip { margin-top: 0; }
   .hero h1 { font-size: 2.3rem; }
   .hero-inner { flex-wrap: wrap; gap: 30px; }
-  .hero-content { max-width: 640px; }
-  .hero-panel { max-width: 640px; }
+  .hero-content { max-width: 100%; }
+  .hero-panel { max-width: 100%; min-width: 0; flex-basis: 100%; }
   .benefit-grid { grid-template-columns: 1fr; }
   .benefit-card { min-height: auto; }
 }
@@ -1183,7 +1184,7 @@ table.data-table tr:hover td { background: #fff6e6; }
   .footer-contact-card { grid-column: auto; }
   .footer-bottom-inner { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 24px; }
   .footer-social-links { flex-wrap: wrap; gap: 12px; }
-  .hero-inner { padding: 48px 0; }
+  .hero-inner { padding-top: 48px; padding-bottom: 48px; }
   .hero-panel { min-width: 0; padding: 22px; }
   .section-head--split { display: block; }
   .section-head--split .section-lead { margin-top: 14px; }
