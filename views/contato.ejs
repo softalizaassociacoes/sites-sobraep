@@ -20,7 +20,7 @@
         <% if (enviado) { %>
           <p class="form-alert form-alert--success">Mensagem enviada! Vamos responder em breve.</p>
         <% } else if (erro === 'captcha') { %>
-          <p class="form-alert form-alert--error">Confirme que você não é um robô e tente novamente.</p>
+          <p class="form-alert form-alert--error">Não foi possível validar seu envio pela proteção antispam. Recarregue a página e tente novamente.</p>
         <% } else if (erro) { %>
           <p class="form-alert form-alert--error">Não foi possível enviar sua mensagem agora. Tente novamente ou use um dos contatos ao lado.</p>
         <% } %>
@@ -44,7 +44,7 @@
           Mensagem
           <textarea name="mensagem" rows="5" maxlength="180" required></textarea>
         </label>
-        <div class="g-recaptcha" data-sitekey="<%= site.recaptchaSiteKey %>"></div>
+        <input type="hidden" name="g-recaptcha-response" id="recaptchaToken">
         <button type="submit" class="btn btn-primary">Enviar mensagem</button>
       </form>
 
@@ -68,6 +68,24 @@
 </main>
 
 <%- include('partials/footer') %>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=<%= site.recaptchaSiteKey %>"></script>
+<script>
+(function () {
+  var form = document.querySelector('.contact-form');
+  if (!form || typeof grecaptcha === 'undefined') return;
+  var siteKey = '<%= site.recaptchaSiteKey %>';
+  form.addEventListener('submit', function (e) {
+    if (form.dataset.captchaReady === '1') return; // já tem token, deixa enviar
+    e.preventDefault();
+    grecaptcha.ready(function () {
+      grecaptcha.execute(siteKey, { action: 'contato' }).then(function (token) {
+        document.getElementById('recaptchaToken').value = token;
+        form.dataset.captchaReady = '1';
+        form.submit();
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

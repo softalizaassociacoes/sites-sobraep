@@ -51,7 +51,14 @@ async function verificarCaptcha(token, ip) {
       body: params
     });
     const data = await resp.json();
-    return data.success === true;
+    // reCAPTCHA v3: além de success, valida o score (0.0 bot → 1.0 humano).
+    const minScore = parseFloat(process.env.RECAPTCHA_MIN_SCORE || '0.5');
+    if (data.success !== true) return false;
+    if (typeof data.score === 'number' && data.score < minScore) {
+      console.warn(`reCAPTCHA reprovado por score baixo: ${data.score}`);
+      return false;
+    }
+    return true;
   } catch (err) {
     console.error('Erro ao validar reCAPTCHA:', err.message);
     return false;
