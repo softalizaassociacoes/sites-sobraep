@@ -19,6 +19,8 @@
       <form class="contact-form" action="/contato" method="post">
         <% if (enviado) { %>
           <p class="form-alert form-alert--success">Mensagem enviada! Vamos responder em breve.</p>
+        <% } else if (erro === 'captcha') { %>
+          <p class="form-alert form-alert--error">Confirme que você não é um robô e tente novamente.</p>
         <% } else if (erro) { %>
           <p class="form-alert form-alert--error">Não foi possível enviar sua mensagem agora. Tente novamente ou use um dos contatos ao lado.</p>
         <% } %>
@@ -42,6 +44,7 @@
           Mensagem
           <textarea name="mensagem" rows="5" maxlength="180" required></textarea>
         </label>
+        <div class="g-recaptcha" data-sitekey="<%= site.recaptchaSiteKey %>"></div>
         <button type="submit" class="btn btn-primary">Enviar mensagem</button>
       </form>
 
@@ -65,5 +68,6 @@
 </main>
 
 <%- include('partials/footer') %>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 </html>

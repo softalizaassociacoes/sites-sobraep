@@ -1023,6 +1023,13 @@ table.data-table tr:hover td { background: #fff6e6; }
 }
 .form-alert--success { background: #eaf6e6; color: var(--color-accent); }
 .form-alert--error { background: #fdeaea; color: #b3261e; }
+.contact-form .g-recaptcha { min-height: 78px; }
+@media (max-width: 360px) {
+  .contact-form .g-recaptcha {
+    transform: scale(0.88);
+    transform-origin: left top;
+  }
+}
 .contact-form label {
   display: flex;
   flex-direction: column;

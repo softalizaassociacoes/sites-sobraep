@@ -24,8 +24,39 @@ const site = {
   facebook: 'https://www.facebook.com/sobraep/',
   linkedin: 'https://www.linkedin.com/company/sobraep/',
   instagram: 'https://www.instagram.com/sobraep/',
-  youtube: 'https://www.youtube.com/channel/UCK9b6kbTrcT-UvtjJ6pSESw'
+  youtube: 'https://www.youtube.com/channel/UCK9b6kbTrcT-UvtjJ6pSESw',
+  // Chave do site do reCAPTCHA v2 (pública por design). A chave secreta
+  // fica em process.env.RECAPTCHA_SECRET e nunca é versionada.
+  recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY || '6LfXt1wtAAAAAMFk7G8yZ5OkES0WVH1Bn59m8yyy'
 };
+
+async function verificarCaptcha(token, ip) {
+  // Sem a chave secreta configurada, o captcha é ignorado para não
+  // quebrar o formulário (ele passa a valer assim que RECAPTCHA_SECRET
+  // for definida nas variáveis de ambiente).
+  if (!process.env.RECAPTCHA_SECRET) {
+    console.warn('RECAPTCHA_SECRET não configurada — validação de captcha ignorada.');
+    return true;
+  }
+  if (!token) return false;
+  try {
+    const params = new URLSearchParams({
+      secret: process.env.RECAPTCHA_SECRET,
+      response: token
+    });
+    if (ip) params.append('remoteip', ip);
+    const resp = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params
+    });
+    const data = await resp.json();
+    return data.success === true;
+  } catch (err) {
+    console.error('Erro ao validar reCAPTCHA:', err.message);
+    return false;
+  }
+}
 
 const noticiasPath = path.join(__dirname, 'data', 'noticias.json');
 function getNoticias() {
@@ -61,6 +92,13 @@ app.post('/contato', async (req, res) => {
   const { nome, email, telefone, assunto, mensagem } = req.body;
   if (!nome || !email || !assunto || !mensagem) {
     return res.redirect('/contato?erro=1');
+  }
+  const captchaOk = await verificarCaptcha(
+    req.body['g-recaptcha-response'],
+    req.headers['x-forwarded-for'] || req.socket?.remoteAddress
+  );
+  if (!captchaOk) {
+    return res.redirect('/contato?erro=captcha');
   }
   try {
     if (!process.env.SENDGRID_API_KEY) throw new Error('SENDGRID_API_KEY não configurada');
