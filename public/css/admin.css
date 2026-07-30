@@ -309,6 +309,42 @@ a.admin-muted:hover { text-decoration: underline; }
 }
 .admin-tag--verde { background: #e8f4e1; color: #33691e; }
 
+/* ---------- Modal de confirmação ---------- */
+.admin-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(33, 33, 90, 0.55);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.admin-modal-overlay.is-aberto { display: flex; }
+.admin-modal {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 28px;
+  width: 100%;
+  max-width: 420px;
+  text-align: left;
+}
+.admin-modal-titulo {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  margin: 0 0 10px;
+}
+.admin-modal-msg { color: var(--color-text); font-size: 0.95rem; line-height: 1.5; margin: 0 0 22px; }
+.admin-modal-acoes { display: flex; justify-content: flex-end; gap: 12px; }
+.btn-perigo {
+  background: #c62828;
+  color: #fff;
+  border: 1px solid #c62828;
+}
+.btn-perigo:hover { background: #a91f1f; border-color: #a91f1f; }
+
 /* ---------- Login ---------- */
 .admin-login-body {
   display: flex;

@@ -1,12 +1,57 @@
 /* Painel admin: confirmações, editor WYSIWYG e upload direto ao Vercel Blob. */
 import { upload } from '/js/vendor/vercel-blob-client.js';
 
-// ---------- Confirmação em formulários destrutivos ----------
-document.querySelectorAll('form[data-confirmar]').forEach((form) => {
-  form.addEventListener('submit', (e) => {
-    if (!window.confirm(form.dataset.confirmar)) e.preventDefault();
+// ---------- Confirmação em formulários destrutivos (modal do próprio site) ----------
+(() => {
+  const forms = document.querySelectorAll('form[data-confirmar]');
+  if (!forms.length) return;
+
+  // cria o modal uma única vez, reutilizado por todos os formulários
+  const overlay = document.createElement('div');
+  overlay.className = 'admin-modal-overlay';
+  overlay.innerHTML =
+    '<div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminModalMsg">' +
+    '<h2 class="admin-modal-titulo">Confirmar exclusão</h2>' +
+    '<p class="admin-modal-msg" id="adminModalMsg"></p>' +
+    '<div class="admin-modal-acoes">' +
+    '<button type="button" class="btn btn-outline-primary" data-modal="cancelar">Cancelar</button>' +
+    '<button type="button" class="btn btn-perigo" data-modal="confirmar">Excluir</button>' +
+    '</div></div>';
+  document.body.appendChild(overlay);
+
+  const msgEl = overlay.querySelector('.admin-modal-msg');
+  const btnConfirmar = overlay.querySelector('[data-modal="confirmar"]');
+  const btnCancelar = overlay.querySelector('[data-modal="cancelar"]');
+  let formPendente = null;
+
+  function abrir(form) {
+    formPendente = form;
+    msgEl.textContent = form.dataset.confirmar;
+    overlay.classList.add('is-aberto');
+    btnConfirmar.focus();
+  }
+  function fechar() {
+    overlay.classList.remove('is-aberto');
+    formPendente = null;
+  }
+
+  forms.forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      if (form.dataset.confirmado === '1') return; // já confirmado, deixa enviar
+      e.preventDefault();
+      abrir(form);
+    });
   });
-});
+
+  btnConfirmar.addEventListener('click', () => {
+    if (!formPendente) return;
+    formPendente.dataset.confirmado = '1';
+    formPendente.submit();
+  });
+  btnCancelar.addEventListener('click', fechar);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) fechar(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('is-aberto')) fechar(); });
+})();
 
 // ---------- Upload (imagens e PDFs) ----------
 document.querySelectorAll('.admin-upload').forEach((wrap) => {
