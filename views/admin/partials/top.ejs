@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title><%= titulo %> · Painel SOBRAEP</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+<header class="admin-topbar">
+  <div class="admin-topbar-inner">
+    <a href="/admin/noticias" class="admin-brand">
+      <img src="/images/logo.png" alt="SOBRAEP">
+      <span>Painel</span>
+    </a>
+    <nav class="admin-nav">
+      <a href="/admin/noticias" class="<%= aba === 'noticias' ? 'is-active' : '' %>">Notícias</a>
+      <a href="/admin/webinars" class="<%= aba === 'webinars' ? 'is-active' : '' %>">Webinars</a>
+      <a href="/" target="_blank" rel="noopener">Ver site ↗</a>
+      <form action="/admin/logout" method="post" class="admin-logout-form">
+        <button type="submit">Sair</button>
+      </form>
+    </nav>
+  </div>
+</header>
+<main class="admin-main">

@@ -1,0 +1,45 @@
+<%- include('partials/top', { titulo: 'Notícias', aba: 'noticias' }) %>
+
+<div class="admin-page-head">
+  <div>
+    <h1>Notícias</h1>
+    <p class="admin-muted"><%= total %> publicação(ões) no site</p>
+  </div>
+  <a href="/admin/noticias/nova" class="btn btn-primary">+ Nova notícia</a>
+</div>
+
+<% if (ok) { %><p class="admin-alert admin-alert--ok"><%= ok %></p><% } %>
+
+<form action="/admin/noticias" method="get" class="admin-busca">
+  <input type="search" name="q" value="<%= q %>" placeholder="Buscar pelo título…">
+  <button type="submit" class="btn btn-outline-primary">Buscar</button>
+  <% if (q) { %><a href="/admin/noticias" class="admin-muted">limpar</a><% } %>
+</form>
+
+<% if (!lista.length) { %>
+  <p class="admin-vazio">Nenhuma notícia encontrada.</p>
+<% } else { %>
+<div class="admin-tabela-wrap">
+  <table class="admin-tabela">
+    <thead>
+      <tr><th>Data</th><th>Título</th><th class="admin-acoes-col">Ações</th></tr>
+    </thead>
+    <tbody>
+      <% lista.forEach(function(n) { %>
+      <tr>
+        <td class="admin-nowrap"><%= n.dataFormatada %></td>
+        <td><a href="/noticias/<%= n.slug %>" target="_blank" rel="noopener"><%= n.titulo %></a></td>
+        <td class="admin-acoes">
+          <a href="/admin/noticias/<%= n.slug %>/editar" class="btn-mini">Editar</a>
+          <form action="/admin/noticias/<%= n.slug %>/excluir" method="post" class="admin-inline" data-confirmar="Excluir a notícia &quot;<%= n.titulo %>&quot;? Essa ação não pode ser desfeita.">
+            <button type="submit" class="btn-mini btn-mini--perigo">Excluir</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% } %>
+
+<%- include('partials/bottom') %>

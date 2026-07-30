@@ -1,0 +1,44 @@
+<%- include('partials/top', { titulo: webinar && webinar.id ? 'Editar webinar' : 'Novo webinar', aba: 'webinars' }) %>
+
+<div class="admin-page-head">
+  <h1><%= webinar && webinar.id ? 'Editar webinar' : 'Novo webinar' %></h1>
+  <a href="/admin/webinars" class="admin-muted">← Voltar</a>
+</div>
+
+<% if (erro) { %><p class="admin-alert admin-alert--erro"><%= erro %></p><% } %>
+
+<% const v = webinar || {}; %>
+<form method="post" class="admin-form admin-form--larga">
+  <label>
+    Imagem de divulgação *
+    <div class="admin-upload" data-tipo="imagem" data-destino="imagem">
+      <input type="file" accept="image/*" class="admin-upload-arquivo">
+      <span class="admin-upload-status"></span>
+    </div>
+    <input type="hidden" name="imagem" value="<%= v.imagem || '' %>">
+    <img src="<%= v.imagem || '' %>" alt="" class="admin-upload-preview <%= v.imagem ? '' : 'oculta' %>">
+  </label>
+
+  <label>
+    Link de inscrição (para webinar que ainda vai acontecer)
+    <input type="url" name="linkInscricao" value="<%= v.linkInscricao || '' %>" placeholder="https://…">
+  </label>
+
+  <label>
+    Slides da apresentação (para webinar já realizado)
+    <div class="admin-upload" data-tipo="pdf" data-destino="slides">
+      <input type="file" accept="application/pdf" class="admin-upload-arquivo">
+      <span class="admin-upload-status"></span>
+    </div>
+    <input type="text" name="slides" value="<%= v.slides || '' %>" placeholder="Envie o PDF acima ou cole um link https://…">
+  </label>
+
+  <p class="admin-dica">💡 Depois que o webinar acontecer, edite este cadastro: apague o link de inscrição e envie o PDF dos slides (ou cole o link). O botão do site muda automaticamente de "Registre-se aqui" para "Slides da apresentação".</p>
+
+  <div class="admin-form-acoes">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="/admin/webinars" class="btn btn-outline-primary">Cancelar</a>
+  </div>
+</form>
+
+<%- include('partials/bottom') %>

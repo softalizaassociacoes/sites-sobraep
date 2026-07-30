@@ -1,0 +1,49 @@
+<%- include('partials/top', { titulo: 'Webinars', aba: 'webinars' }) %>
+
+<div class="admin-page-head">
+  <div>
+    <h1>Webinars</h1>
+    <p class="admin-muted">A ordem abaixo é a ordem de exibição na página pública.</p>
+  </div>
+  <a href="/admin/webinars/novo" class="btn btn-primary">+ Novo webinar</a>
+</div>
+
+<% if (ok) { %><p class="admin-alert admin-alert--ok"><%= ok %></p><% } %>
+
+<% if (!lista.length) { %>
+  <p class="admin-vazio">Nenhum webinar cadastrado.</p>
+<% } else { %>
+<div class="admin-webinar-lista">
+  <% lista.forEach(function(w, i) { %>
+  <div class="admin-webinar-item">
+    <img src="<%= w.imagem %>" alt="Webinar" class="admin-webinar-img">
+    <div class="admin-webinar-info">
+      <% if (w.linkInscricao) { %>
+        <span class="admin-tag admin-tag--verde">Inscrições abertas</span>
+        <a href="<%= w.linkInscricao %>" target="_blank" rel="noopener" class="admin-link-quebra"><%= w.linkInscricao %></a>
+      <% } %>
+      <% if (w.slides) { %>
+        <span class="admin-tag">Slides disponíveis</span>
+        <a href="<%= w.slides %>" target="_blank" rel="noopener" class="admin-link-quebra"><%= w.slides %></a>
+      <% } %>
+    </div>
+    <div class="admin-webinar-acoes">
+      <form action="/admin/webinars/<%= w.id %>/mover" method="post" class="admin-inline">
+        <input type="hidden" name="dir" value="up">
+        <button type="submit" class="btn-mini" <%= i === 0 ? 'disabled' : '' %> title="Mover para cima">↑</button>
+      </form>
+      <form action="/admin/webinars/<%= w.id %>/mover" method="post" class="admin-inline">
+        <input type="hidden" name="dir" value="down">
+        <button type="submit" class="btn-mini" <%= i === lista.length - 1 ? 'disabled' : '' %> title="Mover para baixo">↓</button>
+      </form>
+      <a href="/admin/webinars/<%= w.id %>/editar" class="btn-mini">Editar</a>
+      <form action="/admin/webinars/<%= w.id %>/excluir" method="post" class="admin-inline" data-confirmar="Excluir este webinar? Essa ação não pode ser desfeita.">
+        <button type="submit" class="btn-mini btn-mini--perigo">Excluir</button>
+      </form>
+    </div>
+  </div>
+  <% }) %>
+</div>
+<% } %>
+
+<%- include('partials/bottom') %>

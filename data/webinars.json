@@ -1,0 +1,72 @@
+[
+  {
+    "id": "w-001",
+    "imagem": "/images/webinars/webinar-1.jpg",
+    "linkInscricao": "https://register.gotowebinar.com/register/6964763401273943386",
+    "slides": null,
+    "criadoEm": "2026-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "w-002",
+    "imagem": "/images/webinars/webinar-2.jpg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/Demystifying-Capacitive-Isolation-in-High-Efficiency-DC-DC-Converters.pdf",
+    "criadoEm": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "w-003",
+    "imagem": "/images/webinars/webinar-3.jpg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/PELSSOBRAEPWebinarSLBIllaFont.pdf",
+    "criadoEm": "2026-05-01T00:00:00.000Z"
+  },
+  {
+    "id": "w-004",
+    "imagem": "/images/webinars/webinar-4.jpeg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/PELS-WEBINAR-2026.pdf",
+    "criadoEm": "2026-03-01T00:00:00.000Z"
+  },
+  {
+    "id": "w-005",
+    "imagem": "/images/webinars/webinar-5.jpeg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/PELSSOBRAEPWebinar-B2Bsynergeticoperation.pdf",
+    "criadoEm": "2025-11-01T00:00:00.000Z"
+  },
+  {
+    "id": "w-006",
+    "imagem": "/images/webinars/webinar-6.jpeg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/Why-and-When-Power-Electronics-Calls-For-Artificial-Intelligence.pdf",
+    "criadoEm": "2025-09-15T00:00:00.000Z"
+  },
+  {
+    "id": "w-007",
+    "imagem": "/images/webinars/webinar-7.jpeg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/The-Challenges-of-Renewable-Energy-Sources.pdf",
+    "criadoEm": "2025-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "w-008",
+    "imagem": "/images/webinars/webinar-8.jpeg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/PELSWEB091024S.pdf",
+    "criadoEm": "2024-10-09T00:00:00.000Z"
+  },
+  {
+    "id": "w-009",
+    "imagem": "/images/webinars/webinar-9.jpeg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/PELSWEB072524S.pdf",
+    "criadoEm": "2024-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "w-010",
+    "imagem": "/images/webinars/webinar-10.jpeg",
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/PELSWEB060624S.pdf",
+    "criadoEm": "2024-06-06T00:00:00.000Z"
+  }
+]

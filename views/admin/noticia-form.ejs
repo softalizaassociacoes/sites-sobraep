@@ -1,0 +1,64 @@
+<%- include('partials/top', { titulo: noticia && noticia.slug ? 'Editar notícia' : 'Nova notícia', aba: 'noticias' }) %>
+
+<div class="admin-page-head">
+  <h1><%= noticia && noticia.slug ? 'Editar notícia' : 'Nova notícia' %></h1>
+  <a href="/admin/noticias" class="admin-muted">← Voltar</a>
+</div>
+
+<% if (erro) { %><p class="admin-alert admin-alert--erro"><%= erro %></p><% } %>
+
+<%
+  const v = noticia || {};
+  const dataValor = v.dataISO ? String(v.dataISO).slice(0, 10) : (v.data || new Date().toISOString().slice(0, 10));
+%>
+<form method="post" class="admin-form admin-form--larga" id="formNoticia">
+  <label>
+    Título *
+    <input type="text" name="titulo" value="<%= v.titulo || '' %>" required maxlength="200">
+  </label>
+
+  <div class="admin-form-linha">
+    <label>
+      Data de publicação *
+      <input type="date" name="data" value="<%= dataValor %>" required>
+    </label>
+    <label class="admin-flex1">
+      Imagem de destaque (opcional)
+      <div class="admin-upload" data-tipo="imagem" data-destino="imagem">
+        <input type="file" accept="image/*" class="admin-upload-arquivo">
+        <span class="admin-upload-status"></span>
+      </div>
+      <input type="hidden" name="imagem" value="<%= v.imagem || '' %>">
+      <img src="<%= v.imagem || '' %>" alt="" class="admin-upload-preview <%= v.imagem ? '' : 'oculta' %>">
+    </label>
+  </div>
+
+  <label>
+    Resumo (opcional — se vazio, é gerado automaticamente do conteúdo)
+    <textarea name="resumo" rows="2" maxlength="300"><%= v.resumo || '' %></textarea>
+  </label>
+
+  <label>Conteúdo *</label>
+  <div class="admin-editor" id="editorWrap">
+    <div class="admin-editor-toolbar">
+      <button type="button" data-cmd="bold" title="Negrito"><b>B</b></button>
+      <button type="button" data-cmd="italic" title="Itálico"><i>I</i></button>
+      <button type="button" data-cmd="insertUnorderedList" title="Lista">• Lista</button>
+      <button type="button" data-cmd="insertOrderedList" title="Lista numerada">1. Lista</button>
+      <button type="button" data-cmd="link" title="Inserir link">🔗 Link</button>
+      <button type="button" data-cmd="h3" title="Subtítulo">Subtítulo</button>
+      <button type="button" data-cmd="p" title="Parágrafo">Parágrafo</button>
+      <button type="button" data-cmd="removeFormat" title="Limpar formatação">Limpar</button>
+      <button type="button" id="alternarHtml" class="admin-editor-html-btn" title="Editar o HTML diretamente">&lt;/&gt; HTML</button>
+    </div>
+    <div class="admin-editor-area" id="editorArea" contenteditable="true"><%- v.corpoHtml || '' %></div>
+    <textarea name="corpoHtml" id="editorHtml" class="admin-editor-htmlarea oculta" rows="14"><%= v.corpoHtml || '' %></textarea>
+  </div>
+
+  <div class="admin-form-acoes">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="/admin/noticias" class="btn btn-outline-primary">Cancelar</a>
+  </div>
+</form>
+
+<%- include('partials/bottom') %>

@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const sgMail = require('@sendgrid/mail');
+const dados = require('./lib/dados');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -65,11 +66,7 @@ async function verificarCaptcha(token, ip) {
   }
 }
 
-const noticiasPath = path.join(__dirname, 'data', 'noticias.json');
-function getNoticias() {
-  if (!fs.existsSync(noticiasPath)) return [];
-  return JSON.parse(fs.readFileSync(noticiasPath, 'utf8'));
-}
+const getNoticias = () => dados.getNoticias();
 
 const POSTS_PER_PAGE = 10;
 
@@ -77,8 +74,11 @@ function render(view, extra = {}) {
   return (req, res) => res.render(view, { site, active: extra.active || view, ...extra });
 }
 
-app.get('/', (req, res) => {
-  const noticias = getNoticias().slice(0, 3);
+// Painel administrativo
+app.use('/admin', adminRouter);
+
+app.get('/', async (req, res) => {
+  const noticias = (await getNoticias()).slice(0, 3);
   res.render('index', { site, active: 'home', noticias });
 });
 
@@ -90,7 +90,10 @@ app.get('/socios-fundadores', render('socios-fundadores', { active: 'socios-fund
 app.get('/ex-presidentes', render('ex-presidentes', { active: 'ex-presidentes' }));
 app.get('/ex-editores-chefes', render('ex-editores-chefes', { active: 'ex-editores-chefes' }));
 app.get('/cobep', render('cobep', { active: 'cobep' }));
-app.get('/webinars', render('webinars', { active: 'webinars' }));
+app.get('/webinars', async (req, res) => {
+  const webinars = await dados.getWebinars();
+  res.render('webinars', { site, active: 'webinars', webinars });
+});
 app.get('/contato', (req, res) => {
   res.render('contato', { site, active: 'contato', enviado: req.query.enviado, erro: req.query.erro });
 });
@@ -125,8 +128,8 @@ app.post('/contato', async (req, res) => {
   }
 });
 
-app.get('/noticias', (req, res) => {
-  const all = getNoticias();
+app.get('/noticias', async (req, res) => {
+  const all = await getNoticias();
   const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
   const page = Math.min(Math.max(parseInt(req.query.page, 10) || 1, 1), totalPages);
   const start = (page - 1) * POSTS_PER_PAGE;
@@ -134,8 +137,8 @@ app.get('/noticias', (req, res) => {
   res.render('noticias', { site, active: 'noticias', noticias, page, totalPages });
 });
 
-app.get('/noticias/:slug', (req, res) => {
-  const all = getNoticias();
+app.get('/noticias/:slug', async (req, res) => {
+  const all = await getNoticias();
   const noticia = all.find((n) => n.slug === req.params.slug);
   if (!noticia) {
     return res.status(404).render('404', { site, active: '' });

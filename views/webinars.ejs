@@ -17,34 +17,18 @@
   <section class="section">
     <div class="container">
       <div class="card-grid">
-
+        <% (webinars || []).forEach(function(w) { %>
         <div class="webinar-card">
-          <img src="/images/webinars/webinar-1.jpg" alt="Próximo webinar SOBRAEP" style="border-radius:8px;">
+          <img src="<%= w.imagem %>" alt="Webinar SOBRAEP" style="border-radius:8px;">
           <div class="webinar-actions">
-            <a href="https://register.gotowebinar.com/register/6964763401273943386" target="_blank" rel="noopener" class="btn btn-primary">Registre-se aqui</a>
-          </div>
-        </div>
-
-        <% const slides = [
-          { img: 'webinar-2.jpg', pdf: '/docs/arquivos/Demystifying-Capacitive-Isolation-in-High-Efficiency-DC-DC-Converters.pdf' },
-          { img: 'webinar-3.jpg', pdf: '/docs/arquivos/PELSSOBRAEPWebinarSLBIllaFont.pdf' },
-          { img: 'webinar-4.jpeg', pdf: '/docs/arquivos/PELS-WEBINAR-2026.pdf' },
-          { img: 'webinar-5.jpeg', pdf: '/docs/arquivos/PELSSOBRAEPWebinar-B2Bsynergeticoperation.pdf' },
-          { img: 'webinar-6.jpeg', pdf: '/docs/arquivos/Why-and-When-Power-Electronics-Calls-For-Artificial-Intelligence.pdf' },
-          { img: 'webinar-7.jpeg', pdf: '/docs/arquivos/The-Challenges-of-Renewable-Energy-Sources.pdf' },
-          { img: 'webinar-8.jpeg', pdf: '/docs/arquivos/PELSWEB091024S.pdf' },
-          { img: 'webinar-9.jpeg', pdf: '/docs/arquivos/PELSWEB072524S.pdf' },
-          { img: 'webinar-10.jpeg', pdf: '/docs/arquivos/PELSWEB060624S.pdf' }
-        ]; %>
-        <% slides.forEach(function(w) { %>
-        <div class="webinar-card">
-          <img src="/images/webinars/<%= w.img %>" alt="Webinar SOBRAEP" style="border-radius:8px;">
-          <div class="webinar-actions">
-            <a href="<%= w.pdf %>" target="_blank" rel="noopener" class="btn btn-outline-primary">Slides da apresentação</a>
+            <% if (w.linkInscricao) { %>
+            <a href="<%= w.linkInscricao %>" target="_blank" rel="noopener" class="btn btn-primary">Registre-se aqui</a>
+            <% } else if (w.slides) { %>
+            <a href="<%= w.slides %>" target="_blank" rel="noopener" class="btn btn-outline-primary">Slides da apresentação</a>
+            <% } %>
           </div>
         </div>
         <% }) %>
-
       </div>
 
       <p style="margin-top:32px; text-align:center;">

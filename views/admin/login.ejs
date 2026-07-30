@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Entrar · Painel SOBRAEP</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body admin-login-body">
+<div class="admin-login-card">
+  <img src="/images/logo.png" alt="SOBRAEP" class="admin-login-logo">
+  <h1>Painel administrativo</h1>
+  <p class="admin-login-sub">Acesso restrito à equipe da SOBRAEP.</p>
+  <% if (erro) { %><p class="admin-alert admin-alert--erro"><%= erro %></p><% } %>
+  <form action="/admin/login" method="post" class="admin-form">
+    <label>
+      Usuário
+      <input type="text" name="usuario" autocomplete="username" required autofocus>
+    </label>
+    <label>
+      Senha
+      <input type="password" name="senha" autocomplete="current-password" required>
+    </label>
+    <button type="submit" class="btn btn-primary">Entrar</button>
+  </form>
+</div>
+</body>
+</html>
