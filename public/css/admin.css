@@ -35,7 +35,7 @@
   font-family: var(--font-heading);
   font-weight: 700;
 }
-.admin-brand img { height: 30px; width: auto; }
+.admin-brand img { height: 30px; width: auto; filter: brightness(0) invert(1); }
 .admin-nav { display: flex; align-items: center; gap: 6px; }
 .admin-nav a {
   color: rgba(255, 255, 255, 0.85);
