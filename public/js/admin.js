@@ -52,7 +52,31 @@
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('is-aberto')) fechar(); });
 })();
 
-// ---------- Upload (imagens e PDFs) ----------
+// ---------- Envio de arquivo ao servidor (compartilhado) ----------
+const LIMITE_UPLOAD = 4 * 1024 * 1024; // ~4 MB (limite da function do Vercel)
+
+// Envia o arquivo como corpo binário; resolve com { url }. onProgress(pct) opcional.
+function uploadArquivo(file, tipo, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const url = `/admin/api/upload?tipo=${encodeURIComponent(tipo)}&nome=${encodeURIComponent(file.name)}`;
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100));
+    });
+    xhr.addEventListener('load', () => {
+      let data = {};
+      try { data = JSON.parse(xhr.responseText); } catch (_) {}
+      if (xhr.status >= 200 && xhr.status < 300 && data.url) resolve(data);
+      else reject(new Error(data.error || (xhr.status === 413 ? 'arquivo grande demais' : `HTTP ${xhr.status}`)));
+    });
+    xhr.addEventListener('error', () => reject(new Error('erro de rede')));
+    xhr.send(file);
+  });
+}
+
+// ---------- Upload da imagem de destaque / slides (campos .admin-upload) ----------
 document.querySelectorAll('.admin-upload').forEach((wrap) => {
   const input = wrap.querySelector('.admin-upload-arquivo');
   const status = wrap.querySelector('.admin-upload-status');
@@ -70,8 +94,7 @@ document.querySelectorAll('.admin-upload').forEach((wrap) => {
     const ehImagem = file.type.startsWith('image/');
     if (tipo === 'imagem' && !ehImagem) return setStatus('Selecione um arquivo de imagem.', 'erro');
     if (tipo === 'pdf' && file.type !== 'application/pdf') return setStatus('Selecione um arquivo PDF.', 'erro');
-
-    if (file.size > 4 * 1024 * 1024) {
+    if (file.size > LIMITE_UPLOAD) {
       return setStatus('Arquivo muito grande (máx. 4 MB). Envie um menor ou peça à Softaliza.', 'erro');
     }
 
@@ -83,7 +106,7 @@ document.querySelectorAll('.admin-upload').forEach((wrap) => {
 
     setStatus('Enviando… 0%', '');
     if (submit) submit.disabled = true;
-    enviarArquivo(file, tipo)
+    uploadArquivo(file, tipo, (pct) => setStatus(`Enviando… ${pct}%`, ''))
       .then((resp) => {
         campo.value = resp.url;
         setStatus('Arquivo enviado ✓ (aparece no site em ~1 min)', 'ok');
@@ -99,27 +122,6 @@ document.querySelectorAll('.admin-upload').forEach((wrap) => {
     status.textContent = txt;
     status.className = 'admin-upload-status' + (estado ? ' is-' + estado : '');
   }
-
-  // Envia o arquivo como corpo binário, com progresso via XHR
-  function enviarArquivo(file, tipo) {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      const url = `/admin/api/upload?tipo=${encodeURIComponent(tipo)}&nome=${encodeURIComponent(file.name)}`;
-      xhr.open('POST', url);
-      xhr.setRequestHeader('Content-Type', file.type);
-      xhr.upload.addEventListener('progress', (e) => {
-        if (e.lengthComputable) setStatus(`Enviando… ${Math.round((e.loaded / e.total) * 100)}%`, '');
-      });
-      xhr.addEventListener('load', () => {
-        let data = {};
-        try { data = JSON.parse(xhr.responseText); } catch (_) {}
-        if (xhr.status >= 200 && xhr.status < 300 && data.url) resolve(data);
-        else reject(new Error(data.error || `HTTP ${xhr.status}`));
-      });
-      xhr.addEventListener('error', () => reject(new Error('erro de rede')));
-      xhr.send(file);
-    });
-  }
 });
 
 // ---------- Editor WYSIWYG ----------
@@ -130,9 +132,13 @@ if (area && htmlArea) {
   const toolbar = document.querySelector('.admin-editor-toolbar');
 
   toolbar.querySelectorAll('button[data-cmd]').forEach((btn) => {
+    const cmd = btn.dataset.cmd;
     btn.addEventListener('mousedown', (e) => e.preventDefault()); // não perde a seleção
+    if (cmd === 'imagem' || cmd === 'arquivo') {
+      btn.addEventListener('click', () => inserirArquivoNoTexto(cmd === 'imagem' ? 'imagem' : 'pdf'));
+      return;
+    }
     btn.addEventListener('click', () => {
-      const cmd = btn.dataset.cmd;
       area.focus();
       if (cmd === 'link') {
         const url = window.prompt('Endereço do link (https://…):', 'https://');
@@ -146,6 +152,63 @@ if (area && htmlArea) {
       }
       sincronizar();
     });
+  });
+
+  // Sobe uma imagem/PDF e insere no ponto do cursor (sem embutir base64).
+  let selecaoSalva = null;
+  area.addEventListener('blur', () => {
+    const sel = window.getSelection();
+    if (sel.rangeCount && area.contains(sel.anchorNode)) selecaoSalva = sel.getRangeAt(0);
+  });
+  function inserirArquivoNoTexto(tipo) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = tipo === 'imagem' ? 'image/*' : 'application/pdf';
+    input.addEventListener('change', async () => {
+      const file = input.files[0];
+      if (!file) return;
+      if (file.size > LIMITE_UPLOAD) {
+        alert('Arquivo muito grande (máx. 4 MB). Envie um menor ou peça à Softaliza.');
+        return;
+      }
+      const btnMsg = tipo === 'imagem' ? '🖼️ Enviando…' : '📎 Enviando…';
+      const btn = toolbar.querySelector(`[data-cmd="${tipo === 'imagem' ? 'imagem' : 'arquivo'}"]`);
+      const textoOriginal = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = btnMsg; btn.disabled = true; }
+      try {
+        const resp = await uploadArquivo(file, tipo);
+        area.focus();
+        // restaura a posição do cursor de antes de abrir o seletor de arquivo
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        if (selecaoSalva) sel.addRange(selecaoSalva);
+        const html = tipo === 'imagem'
+          ? `<img src="${resp.url}" alt="" style="max-width:100%;height:auto;">`
+          : `<a href="${resp.url}" target="_blank" rel="noopener">${escaparHtml(file.name)}</a>`;
+        document.execCommand('insertHTML', false, html + '&nbsp;');
+        sincronizar();
+      } catch (err) {
+        alert('Falha no envio: ' + (err.message || 'erro'));
+      } finally {
+        if (btn) { btn.textContent = textoOriginal; btn.disabled = false; }
+      }
+    });
+    input.click();
+  }
+  function escaparHtml(s) {
+    return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  }
+
+  // Bloqueia colar imagem direto (vira base64 gigante e estoura o envio).
+  area.addEventListener('paste', (e) => {
+    const itens = (e.clipboardData && e.clipboardData.items) || [];
+    for (const it of itens) {
+      if (it.kind === 'file' && it.type.startsWith('image/')) {
+        e.preventDefault();
+        alert('Para inserir imagem no texto, use o botão 🖼️ Imagem da barra — assim o site sobe o arquivo. Colar a imagem direto deixa a notícia pesada demais e o envio falha.');
+        return;
+      }
+    }
   });
 
   // Alterna entre editor visual e HTML cru
