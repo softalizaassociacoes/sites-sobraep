@@ -1,14 +1,5 @@
 [
   {
-    "slug": "noticia-teste",
-    "titulo": "noticia teste",
-    "dataISO": "2026-08-04T12:00:00.000Z",
-    "dataFormatada": "4 de agosto de 2026",
-    "imagem": "/images/uploads/logo-1-1785866134520.png",
-    "resumo": "vdvdvddv &nbsp;testeeeee fdfadfdfdf 1785358767055.pdf &nbsp;",
-    "corpoHtml": "vdvdvddv<div><img src=\"/images/uploads/logo-1-1785866116479.png\" alt=\"\">&nbsp;testeeeee</div><div>fdfadfdfdf</div><div><a href=\"/docs/arquivos/1785358767055-1785866126168.pdf\" target=\"_blank\" rel=\"noopener\">1785358767055.pdf</a>&nbsp;</div>"
-  },
-  {
     "slug": "premio-sobraep-2026-trabalhos-de-conclusao-de-curso-dissertacoes-e-teses",
     "titulo": "Prêmio SOBRAEP 2026 – Trabalhos de Conclusão de Curso, Dissertações e Teses",
     "dataISO": "2026-07-07T13:34:11+00:00",
