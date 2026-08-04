@@ -1,5 +1,14 @@
 [
   {
+    "slug": "teste-noticia",
+    "titulo": "Teste Noticia",
+    "dataISO": "2026-08-03T12:00:00.000Z",
+    "dataFormatada": "3 de agosto de 2026",
+    "imagem": "/images/uploads/logo-1-1785863797562.png",
+    "resumo": "Teste de resumo",
+    "corpoHtml": "Teste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumoTeste de resumo"
+  },
+  {
     "slug": "premio-sobraep-2026-trabalhos-de-conclusao-de-curso-dissertacoes-e-teses",
     "titulo": "Prêmio SOBRAEP 2026 – Trabalhos de Conclusão de Curso, Dissertações e Teses",
     "dataISO": "2026-07-07T13:34:11+00:00",
