@@ -1,0 +1,59 @@
+<%- include('partials/top', { titulo: 'Arquivos', aba: 'arquivos' }) %>
+
+<div class="admin-page-head">
+  <div>
+    <h1>Arquivos</h1>
+    <p class="admin-muted">Envie imagens e PDFs aqui e depois copie o link para usar nas notícias.</p>
+  </div>
+</div>
+
+<% if (ok) { %><p class="admin-alert admin-alert--ok"><%= ok %></p><% } %>
+<% if (erro) { %><p class="admin-alert admin-alert--erro"><%= erro %></p><% } %>
+
+<!-- Área de envio (arraste ou clique) -->
+<div class="arq-dropzone" id="arqDropzone">
+  <input type="file" id="arqInput" multiple accept="image/*,application/pdf" class="oculta">
+  <div class="arq-dropzone-conteudo">
+    <div class="arq-dropzone-icone">⬆️</div>
+    <p><strong>Arraste arquivos aqui</strong> ou <button type="button" id="arqBtnEscolher" class="arq-link-btn">clique para escolher</button></p>
+    <p class="admin-muted">Imagens (JPG, PNG, WEBP, GIF) e PDF. Vários de uma vez. Máx. 4 MB cada.</p>
+  </div>
+</div>
+<div class="arq-fila" id="arqFila"></div>
+
+<!-- Arquivos já enviados -->
+<% grupos.forEach(function(g) { %>
+<section class="arq-secao">
+  <h2 class="arq-secao-titulo"><%= g.rotulo %> <span class="admin-muted">(<%= g.itens.length %>)</span></h2>
+  <% if (!g.itens.length) { %>
+    <p class="admin-vazio">Nenhum arquivo ainda.</p>
+  <% } else { %>
+  <div class="arq-grade">
+    <% g.itens.forEach(function(f) { %>
+    <div class="arq-card" data-url="<%= f.url %>">
+      <div class="arq-card-preview">
+        <% if (g.chave === 'imagens') { %>
+          <img src="<%= f.url %>" alt="<%= f.nome %>" loading="lazy">
+        <% } else { %>
+          <div class="arq-card-pdf">PDF</div>
+        <% } %>
+      </div>
+      <div class="arq-card-info">
+        <span class="arq-card-nome" title="<%= f.nome %>"><%= f.nome %></span>
+        <div class="arq-card-acoes">
+          <button type="button" class="btn-mini arq-copiar" data-url="<%= f.url %>">Copiar link</button>
+          <a href="<%= f.url %>" target="_blank" rel="noopener" class="btn-mini">Abrir</a>
+          <form action="/admin/arquivos/excluir" method="post" class="admin-inline" data-confirmar="Excluir &quot;<%= f.nome %>&quot;? Se alguma notícia usa este arquivo, o link vai quebrar.">
+            <input type="hidden" name="caminho" value="public<%= f.url %>">
+            <button type="submit" class="btn-mini btn-mini--perigo">Excluir</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } %>
+</section>
+<% }) %>
+
+<%- include('partials/bottom') %>

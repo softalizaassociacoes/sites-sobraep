@@ -8,6 +8,7 @@
 const express = require('express');
 const auth = require('../lib/auth');
 const dados = require('../lib/dados');
+const github = require('../lib/github');
 
 const router = express.Router();
 
@@ -65,10 +66,50 @@ router.post('/api/upload', express.raw({ type: '*/*', limit: '4mb' }), async (re
       return res.status(400).json({ error: 'Arquivo vazio.' });
     }
     const url = await dados.subirArquivo(nome, req.body, tipo);
-    res.json({ url });
+    res.json({ url, nome: url.split('/').pop(), tipo });
   } catch (err) {
     console.error('Erro no upload:', err.message);
     res.status(400).json({ error: err.message });
+  }
+});
+
+// ---------- Biblioteca de arquivos ----------
+const PASTAS_ARQUIVOS = {
+  imagens: { dir: 'public/images/uploads', urlBase: '/images/uploads', rotulo: 'Imagens' },
+  documentos: { dir: 'public/docs/arquivos', urlBase: '/docs/arquivos', rotulo: 'Documentos (PDF)' }
+};
+
+router.get('/arquivos', async (req, res) => {
+  let grupos = [];
+  let erro = null;
+  try {
+    for (const chave of Object.keys(PASTAS_ARQUIVOS)) {
+      const p = PASTAS_ARQUIVOS[chave];
+      const itens = (await github.listarPasta(p.dir))
+        .map((f) => ({ nome: f.nome, url: `${p.urlBase}/${f.nome}`, tamanho: f.tamanho }))
+        .sort((a, b) => a.nome.localeCompare(b.nome));
+      grupos.push({ chave, rotulo: p.rotulo, itens });
+    }
+  } catch (err) {
+    console.error('Erro listando arquivos:', err.message);
+    erro = 'Não foi possível listar os arquivos agora. Tente recarregar.';
+  }
+  render(res, 'arquivos', { grupos, erro, ok: req.query.ok || null });
+});
+
+router.post('/arquivos/excluir', async (req, res) => {
+  try {
+    const caminho = String(req.body.caminho || '');
+    // segurança: só permite excluir dentro das pastas de upload conhecidas
+    const permitido = Object.values(PASTAS_ARQUIVOS).some((p) => caminho.startsWith(p.dir + '/'));
+    if (!permitido || caminho.includes('..')) {
+      return res.redirect('/admin/arquivos?ok=' + encodeURIComponent('Caminho inválido.'));
+    }
+    await github.excluirArquivo(caminho, null, `painel: remove ${caminho.split('/').pop()}`);
+    res.redirect('/admin/arquivos?ok=' + encodeURIComponent('Arquivo removido.'));
+  } catch (err) {
+    console.error('Erro excluindo arquivo:', err.message);
+    res.redirect('/admin/arquivos?ok=' + encodeURIComponent('Falha ao remover: ' + err.message));
   }
 });
 

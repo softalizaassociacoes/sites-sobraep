@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const sgMail = require('@sendgrid/mail');
 const dados = require('./lib/dados');
+const github = require('./lib/github');
 const adminRouter = require('./routes/admin');
 
 const app = express();
@@ -11,6 +12,33 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false, limit: '2mb' }));
 app.get('/favicon.ico', (req, res) => res.sendFile(path.join(__dirname, 'public/images/favicon-64.png')));
+
+// Serve arquivos enviados pelo painel IMEDIATAMENTE, lendo do GitHub, quando
+// ainda não estão no bundle do deploy (evita o "buraco" de ~1 min até o
+// redeploy). Só é alcançado se o express.static acima não encontrou o arquivo.
+const TIPOS_MIME = {
+  jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp',
+  gif: 'image/gif', svg: 'image/svg+xml', pdf: 'application/pdf'
+};
+async function servirDoGitHub(req, res, next) {
+  if (!github.temGitHub()) return next();
+  const nome = path.basename(req.params.nome || '');
+  if (!nome || nome.includes('..')) return next();
+  const ext = nome.split('.').pop().toLowerCase();
+  const rel = `public${req.path}`; // ex.: public/images/uploads/x.png
+  try {
+    const buf = await github.lerArquivoBinario(rel);
+    if (!buf) return next();
+    res.set('Content-Type', TIPOS_MIME[ext] || 'application/octet-stream');
+    res.set('Cache-Control', 'public, max-age=31536000, immutable');
+    return res.send(buf);
+  } catch (err) {
+    console.error('Erro servindo do GitHub:', req.path, err.message);
+    return next();
+  }
+}
+app.get('/images/uploads/:nome', servirDoGitHub);
+app.get('/docs/arquivos/:nome', servirDoGitHub);
 
 const site = {
   nome: 'SOBRAEP',

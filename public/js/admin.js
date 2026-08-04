@@ -124,6 +124,78 @@ document.querySelectorAll('.admin-upload').forEach((wrap) => {
   }
 });
 
+// ---------- Página de Arquivos: upload múltiplo (arrastar + fila) ----------
+(() => {
+  const dz = document.getElementById('arqDropzone');
+  if (!dz) return;
+  const input = document.getElementById('arqInput');
+  const fila = document.getElementById('arqFila');
+
+  dz.addEventListener('click', () => input.click());
+  ['dragover', 'dragenter'].forEach((ev) => dz.addEventListener(ev, (e) => {
+    e.preventDefault(); dz.classList.add('is-arrastando');
+  }));
+  ['dragleave', 'drop'].forEach((ev) => dz.addEventListener(ev, (e) => {
+    e.preventDefault(); dz.classList.remove('is-arrastando');
+  }));
+  dz.addEventListener('drop', (e) => { if (e.dataTransfer.files.length) enviarVarios(e.dataTransfer.files); });
+  input.addEventListener('change', () => { if (input.files.length) enviarVarios(input.files); input.value = ''; });
+
+  async function enviarVarios(lista) {
+    let houveSucesso = false;
+    for (const file of [...lista]) {
+      const linha = criarLinha(file.name);
+      const tipo = file.type === 'application/pdf' ? 'pdf' : (file.type.startsWith('image/') ? 'imagem' : null);
+      if (!tipo) { linha.set('Tipo não suportado (só imagem ou PDF)', 'erro'); continue; }
+      if (file.size > LIMITE_UPLOAD) { linha.set('Grande demais (máx. 4 MB)', 'erro'); continue; }
+      try {
+        await uploadArquivo(file, tipo, (pct) => linha.set(`Enviando… ${pct}%`));
+        linha.set('Enviado ✓', 'ok');
+        houveSucesso = true;
+      } catch (err) {
+        linha.set('Falha: ' + (err.message || 'erro'), 'erro');
+      }
+    }
+    if (houveSucesso) {
+      const aviso = criarLinha('Atualizando a lista…');
+      aviso.set('', 'ok');
+      setTimeout(() => location.reload(), 900);
+    }
+  }
+
+  function criarLinha(nome) {
+    const el = document.createElement('div');
+    el.className = 'arq-fila-item';
+    el.innerHTML = '<span class="arq-fila-nome"></span><span class="arq-fila-status"></span>';
+    el.querySelector('.arq-fila-nome').textContent = nome;
+    fila.appendChild(el);
+    return {
+      set(txt, estado) {
+        const s = el.querySelector('.arq-fila-status');
+        s.textContent = txt;
+        s.className = 'arq-fila-status' + (estado ? ' is-' + estado : '');
+      }
+    };
+  }
+})();
+
+// ---------- Copiar link de um arquivo (delegação) ----------
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('.arq-copiar');
+  if (!b) return;
+  const link = b.dataset.url;
+  const feedback = () => {
+    const orig = b.textContent;
+    b.textContent = 'Copiado ✓';
+    setTimeout(() => { b.textContent = orig; }, 1500);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(link).then(feedback).catch(() => window.prompt('Copie o link:', link));
+  } else {
+    window.prompt('Copie o link:', link);
+  }
+});
+
 // ---------- Editor WYSIWYG ----------
 const area = document.getElementById('editorArea');
 const htmlArea = document.getElementById('editorHtml');
