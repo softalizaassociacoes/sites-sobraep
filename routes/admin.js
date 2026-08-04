@@ -1,11 +1,11 @@
 /**
  * Painel administrativo (/admin): CRUD de notícias e webinars.
- * Protegido por sessão (lib/auth). Dados no Vercel Blob (lib/dados).
- * Upload de arquivos: client upload do Vercel Blob (rota /admin/api/upload),
- * contornando o limite de 4,5MB por request das functions do Vercel.
+ * Protegido por sessão (lib/auth). Dados e arquivos são gravados no próprio
+ * repositório via GitHub Contents API (lib/dados + lib/github) — cada
+ * gravação vira um commit que dispara o redeploy do site.
+ * Upload passa pela function (limite ~4,5MB por request do Vercel).
  */
 const express = require('express');
-const { handleUpload } = require('@vercel/blob/client');
 const auth = require('../lib/auth');
 const dados = require('../lib/dados');
 
@@ -47,25 +47,25 @@ router.post('/logout', (req, res) => {
 
 router.get('/', (req, res) => res.redirect('/admin/noticias'));
 
-// ---------- Upload (client upload do Vercel Blob) ----------
-router.post('/api/upload', async (req, res) => {
+// ---------- Upload (grava o arquivo no repositório via GitHub) ----------
+// Recebe o arquivo como corpo binário; nome e tipo vêm na query string.
+const TIPOS_OK = {
+  imagem: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
+  pdf: ['application/pdf']
+};
+router.post('/api/upload', express.raw({ type: '*/*', limit: '4mb' }), async (req, res) => {
   try {
-    const resposta = await handleUpload({
-      body: req.body,
-      request: req,
-      onBeforeGenerateToken: async (pathname) => {
-        if (!String(pathname).startsWith('uploads/')) {
-          throw new Error('Caminho de upload inválido.');
-        }
-        return {
-          allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'application/pdf'],
-          addRandomSuffix: true,
-          maximumSizeInBytes: 100 * 1024 * 1024
-        };
-      },
-      onUploadCompleted: async () => {}
-    });
-    res.json(resposta);
+    const tipo = req.query.tipo === 'pdf' ? 'pdf' : 'imagem';
+    const nome = String(req.query.nome || 'arquivo');
+    const contentType = req.headers['content-type'] || '';
+    if (!TIPOS_OK[tipo].includes(contentType)) {
+      return res.status(400).json({ error: `Tipo de arquivo não permitido (${contentType}).` });
+    }
+    if (!req.body || !req.body.length) {
+      return res.status(400).json({ error: 'Arquivo vazio.' });
+    }
+    const url = await dados.subirArquivo(nome, req.body, tipo);
+    res.json({ url });
   } catch (err) {
     console.error('Erro no upload:', err.message);
     res.status(400).json({ error: err.message });

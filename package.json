@@ -5,15 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --env-file-if-exists=.env --watch server.js",
-    "seed-blob": "node --env-file-if-exists=.env scripts/seed-blob.mjs"
+    "dev": "node --env-file-if-exists=.env --watch server.js"
   },
   "engines": {
     "node": "20.x"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",
-    "@vercel/blob": "^2.6.1",
     "ejs": "^3.1.10",
     "express": "^4.21.2"
   },

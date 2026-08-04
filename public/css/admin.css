@@ -60,6 +60,17 @@
 }
 .admin-logout-form button:hover { background: rgba(255, 255, 255, 0.15); }
 
+/* ---------- Aviso de propagação ---------- */
+.admin-aviso-propagacao {
+  background: #fff8e6;
+  border-bottom: 1px solid #f0e0b0;
+  color: #7a5c00;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 9px 20px;
+  line-height: 1.4;
+}
+
 /* ---------- Layout ---------- */
 .admin-main {
   max-width: 1080px;

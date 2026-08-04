@@ -1,5 +1,4 @@
-/* Painel admin: confirmações, editor WYSIWYG e upload direto ao Vercel Blob. */
-import { upload } from '/js/vendor/vercel-blob-client.js';
+/* Painel admin: confirmações, editor WYSIWYG e upload (grava no repositório via GitHub). */
 
 // ---------- Confirmação em formulários destrutivos (modal do próprio site) ----------
 (() => {
@@ -72,41 +71,56 @@ document.querySelectorAll('.admin-upload').forEach((wrap) => {
     if (tipo === 'imagem' && !ehImagem) return setStatus('Selecione um arquivo de imagem.', 'erro');
     if (tipo === 'pdf' && file.type !== 'application/pdf') return setStatus('Selecione um arquivo PDF.', 'erro');
 
+    if (file.size > 4 * 1024 * 1024) {
+      return setStatus('Arquivo muito grande (máx. 4 MB). Envie um menor ou peça à Softaliza.', 'erro');
+    }
+
+    // Preview imediato da imagem a partir do próprio arquivo escolhido
+    if (preview && ehImagem) {
+      preview.src = URL.createObjectURL(file);
+      preview.classList.remove('oculta');
+    }
+
     setStatus('Enviando… 0%', '');
     if (submit) submit.disabled = true;
-    try {
-      const ext = (file.name.split('.').pop() || (ehImagem ? 'jpg' : 'pdf')).toLowerCase();
-      const nome = `uploads/${tipo}/${Date.now()}-${slug(file.name.replace(/\.[^.]+$/, ''))}.${ext}`;
-      const blob = await upload(nome, file, {
-        access: 'public',
-        handleUploadUrl: '/admin/api/upload',
-        onUploadProgress: (p) => setStatus(`Enviando… ${Math.round(p.percentage)}%`, '')
-      });
-      campo.value = blob.url;
-      setStatus('Arquivo enviado ✓', 'ok');
-      if (preview && ehImagem) {
-        preview.src = blob.url;
-        preview.classList.remove('oculta');
-      }
-    } catch (err) {
-      console.error(err);
-      setStatus('Falha no envio: ' + (err.message || 'erro'), 'erro');
-    } finally {
-      if (submit) submit.disabled = false;
-    }
+    enviarArquivo(file, tipo)
+      .then((resp) => {
+        campo.value = resp.url;
+        setStatus('Arquivo enviado ✓ (aparece no site em ~1 min)', 'ok');
+      })
+      .catch((err) => {
+        console.error(err);
+        setStatus('Falha no envio: ' + (err.message || 'erro'), 'erro');
+      })
+      .finally(() => { if (submit) submit.disabled = false; });
   });
 
   function setStatus(txt, estado) {
     status.textContent = txt;
     status.className = 'admin-upload-status' + (estado ? ' is-' + estado : '');
   }
-});
 
-function slug(s) {
-  return String(s)
-    .normalize('NFD').replace(/[̀-ͯ]/g, '')
-    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'arquivo';
-}
+  // Envia o arquivo como corpo binário, com progresso via XHR
+  function enviarArquivo(file, tipo) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      const url = `/admin/api/upload?tipo=${encodeURIComponent(tipo)}&nome=${encodeURIComponent(file.name)}`;
+      xhr.open('POST', url);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.upload.addEventListener('progress', (e) => {
+        if (e.lengthComputable) setStatus(`Enviando… ${Math.round((e.loaded / e.total) * 100)}%`, '');
+      });
+      xhr.addEventListener('load', () => {
+        let data = {};
+        try { data = JSON.parse(xhr.responseText); } catch (_) {}
+        if (xhr.status >= 200 && xhr.status < 300 && data.url) resolve(data);
+        else reject(new Error(data.error || `HTTP ${xhr.status}`));
+      });
+      xhr.addEventListener('error', () => reject(new Error('erro de rede')));
+      xhr.send(file);
+    });
+  }
+});
 
 // ---------- Editor WYSIWYG ----------
 const area = document.getElementById('editorArea');
