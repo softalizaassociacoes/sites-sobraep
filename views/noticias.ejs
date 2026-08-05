@@ -16,8 +16,36 @@
 
   <section class="section">
     <div class="container">
+      <% // a paginação precisa carregar o termo buscado junto
+         const urlPagina = (p) => `/noticias?${q ? 'q=' + encodeURIComponent(q) + '&' : ''}page=${p}`; %>
+
+      <form action="/noticias" method="get" class="news-busca" role="search">
+        <label for="buscaNoticias" class="sr-only">Buscar notícias</label>
+        <input type="search" id="buscaNoticias" name="q" value="<%= q %>"
+               placeholder="Buscar por título, autor ou assunto…">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+        <% if (q) { %><a href="/noticias" class="news-busca-limpar">limpar busca</a><% } %>
+      </form>
+
+      <% if (q) { %>
+        <p class="news-busca-resultado">
+          <% if (totalEncontradas) { %>
+            <strong><%= totalEncontradas %></strong> notícia<%= totalEncontradas > 1 ? 's' : '' %>
+            encontrada<%= totalEncontradas > 1 ? 's' : '' %> para “<%= q %>”.
+          <% } else { %>
+            Nenhuma notícia encontrada para “<%= q %>”.
+          <% } %>
+        </p>
+      <% } %>
+
       <% if (!noticias.length) { %>
-        <p>Nenhuma notícia encontrada.</p>
+        <p class="news-vazio">
+          <% if (q) { %>
+            Tente outras palavras ou <a href="/noticias">veja todas as <%= totalGeral %> notícias</a>.
+          <% } else { %>
+            Nenhuma notícia encontrada.
+          <% } %>
+        </p>
       <% } else { %>
       <div class="news-grid">
         <% noticias.forEach(function(n) { %>
@@ -40,13 +68,15 @@
         <% }) %>
       </div>
 
+      <% if (totalPages > 1) { %>
       <nav class="pagination" aria-label="Paginação de notícias">
-        <a href="/noticias?page=<%= page - 1 %>" class="<%= page <= 1 ? 'is-disabled' : '' %>">‹</a>
+        <a href="<%= urlPagina(page - 1) %>" class="<%= page <= 1 ? 'is-disabled' : '' %>">‹</a>
         <% for (let p = 1; p <= totalPages; p++) { %>
-          <a href="/noticias?page=<%= p %>" class="<%= p === page ? 'is-active' : '' %>"><%= p %></a>
+          <a href="<%= urlPagina(p) %>" class="<%= p === page ? 'is-active' : '' %>"><%= p %></a>
         <% } %>
-        <a href="/noticias?page=<%= page + 1 %>" class="<%= page >= totalPages ? 'is-disabled' : '' %>">›</a>
+        <a href="<%= urlPagina(page + 1) %>" class="<%= page >= totalPages ? 'is-disabled' : '' %>">›</a>
       </nav>
+      <% } %>
       <% } %>
     </div>
   </section>

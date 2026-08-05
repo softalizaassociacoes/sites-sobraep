@@ -157,12 +157,17 @@ app.post('/contato', async (req, res) => {
 });
 
 app.get('/noticias', async (req, res) => {
-  const all = await getNoticias();
+  const q = String(req.query.q || '').trim().slice(0, 80);
+  const todas = await getNoticias();
+  const all = dados.filtrarNoticias(todas, q);
   const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
   const page = Math.min(Math.max(parseInt(req.query.page, 10) || 1, 1), totalPages);
   const start = (page - 1) * POSTS_PER_PAGE;
   const noticias = all.slice(start, start + POSTS_PER_PAGE);
-  res.render('noticias', { site, active: 'noticias', noticias, page, totalPages });
+  res.render('noticias', {
+    site, active: 'noticias', noticias, page, totalPages,
+    q, totalEncontradas: all.length, totalGeral: todas.length
+  });
 });
 
 app.get('/noticias/:slug', async (req, res) => {
