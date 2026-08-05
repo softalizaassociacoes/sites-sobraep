@@ -203,11 +203,52 @@ if (area && htmlArea) {
   const form = area.closest('form');
   const toolbar = document.querySelector('.admin-editor-toolbar');
 
+  // Ícones-link usados nos resultados do Prêmio SOBRAEP: 📖 aponta para o
+  // trabalho (dissertação/tese) e 💎 para o Currículo Lattes. Ficam como
+  // <img> de um SVG do site — assim continuam legíveis no modo HTML e
+  // sobrevivem inteiros quando a notícia é duplicada para outro ano.
+  const ICONES = {
+    'icone-trabalho': {
+      arquivo: 'trabalho',
+      rotulo: 'Ler o trabalho',
+      pergunta: 'Endereço da dissertação ou tese (https://…):'
+    },
+    'icone-lattes': {
+      arquivo: 'lattes',
+      rotulo: 'Currículo Lattes',
+      pergunta: 'Endereço do Currículo Lattes (http://lattes.cnpq.br/…):'
+    }
+  };
+
+  const urlValida = (u) => /^https?:\/\/\S+/i.test(u);
+
+  function pedirUrl(mensagem, valorAtual) {
+    const resposta = window.prompt(mensagem, valorAtual);
+    if (resposta === null) return null; // cancelou
+    const url = resposta.trim();
+    if (!urlValida(url)) {
+      alert('Endereço inválido. Ele precisa começar com http:// ou https://');
+      return null;
+    }
+    return url;
+  }
+
   toolbar.querySelectorAll('button[data-cmd]').forEach((btn) => {
     const cmd = btn.dataset.cmd;
     btn.addEventListener('mousedown', (e) => e.preventDefault()); // não perde a seleção
     if (cmd === 'imagem' || cmd === 'arquivo') {
       btn.addEventListener('click', () => inserirArquivoNoTexto(cmd === 'imagem' ? 'imagem' : 'pdf'));
+      return;
+    }
+    if (ICONES[cmd]) {
+      btn.addEventListener('click', () => {
+        const cfg = ICONES[cmd];
+        const url = pedirUrl(cfg.pergunta, 'https://');
+        if (!url) return;
+        area.focus();
+        document.execCommand('insertHTML', false, ' ' + htmlIcone(cfg, url));
+        sincronizar();
+      });
       return;
     }
     btn.addEventListener('click', () => {
@@ -270,6 +311,23 @@ if (area && htmlArea) {
   function escaparHtml(s) {
     return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   }
+
+  function htmlIcone(cfg, url) {
+    return `<a class="premio-link" href="${escaparHtml(url)}" target="_blank" rel="noopener" title="${cfg.rotulo}">` +
+      `<img src="/images/icones/${cfg.arquivo}.svg" alt="${cfg.rotulo}"></a>`;
+  }
+
+  // Clicar num ícone já existente troca só o endereço — é assim que a cópia de
+  // um ano vira a do ano seguinte sem precisar mexer no HTML.
+  area.addEventListener('click', (e) => {
+    const link = e.target.closest('.premio-link');
+    if (!link) return;
+    e.preventDefault(); // dentro do editor o link não deve navegar
+    const url = pedirUrl('Endereço deste ícone (https://…):', link.getAttribute('href') || 'https://');
+    if (!url) return;
+    link.setAttribute('href', url);
+    sincronizar();
+  });
 
   // Bloqueia colar imagem direto (vira base64 gigante e estoura o envio).
   area.addEventListener('paste', (e) => {

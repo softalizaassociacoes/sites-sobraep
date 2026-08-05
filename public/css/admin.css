@@ -103,6 +103,7 @@ a.admin-muted:hover { text-decoration: underline; }
 }
 .admin-alert--ok { background: #e8f4e1; color: #33691e; border: 1px solid #c5e3b3; }
 .admin-alert--erro { background: #fdecea; color: #b71c1c; border: 1px solid #f5c6c2; }
+.admin-alert--info { background: #ececf7; color: var(--color-primary-dark); border: 1px solid #cfcfe8; }
 .admin-vazio { color: var(--color-text-muted); padding: 40px 0; text-align: center; }
 
 /* ---------- Busca ---------- */
@@ -260,7 +261,12 @@ a.admin-muted:hover { text-decoration: underline; }
   color: var(--color-text);
 }
 .admin-editor-toolbar button:hover { background: #eeeef6; }
+/* botões que mostram o próprio ícone que inserem (Trabalho / Lattes) */
+.admin-editor-toolbar button:has(.admin-editor-icone) { display: inline-flex; align-items: center; gap: 5px; }
+.admin-editor-icone { display: inline-block; width: 15px; height: 15px; }
 .admin-editor-html-btn { margin-left: auto; }
+/* dentro do editor o ícone-link é clicável para trocar o endereço */
+.admin-editor-area .premio-link { cursor: pointer; }
 .admin-editor-area {
   padding: 16px 18px;
   min-height: 280px;

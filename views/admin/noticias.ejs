@@ -31,6 +31,7 @@
         <td><a href="/noticias/<%= n.slug %>" target="_blank" rel="noopener"><%= n.titulo %></a></td>
         <td class="admin-acoes">
           <a href="/admin/noticias/<%= n.slug %>/editar" class="btn-mini">Editar</a>
+          <a href="/admin/noticias/nova?copiarDe=<%= encodeURIComponent(n.slug) %>" class="btn-mini" title="Criar uma nova notícia a partir desta, para ajustar textos e links">Duplicar</a>
           <form action="/admin/noticias/<%= n.slug %>/excluir" method="post" class="admin-inline" data-confirmar="Excluir a notícia &quot;<%= n.titulo %>&quot;? Essa ação não pode ser desfeita.">
             <button type="submit" class="btn-mini btn-mini--perigo">Excluir</button>
           </form>

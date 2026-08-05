@@ -867,6 +867,32 @@ table.data-table tr:hover td { background: #fff6e6; }
 .post-body h2, .post-body h3 { margin-top: 1.4em; }
 .post-body a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
 
+/*
+ * Ícones-link do corpo da notícia (usados nos resultados do Prêmio SOBRAEP):
+ * 📖 leva ao trabalho (dissertação/tese) e 💎 ao Currículo Lattes.
+ * O painel insere esta marcação pelos botões da barra do editor, então as
+ * regras valem tanto no site quanto dentro do editor (o admin carrega este CSS).
+ */
+.premio-link {
+  display: inline-block;
+  vertical-align: -0.22em;
+  margin-left: 6px;
+  line-height: 0;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.premio-link:hover { transform: translateY(-1px); opacity: 0.85; }
+.premio-link img,
+.post-body .premio-link img {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 /* COBEP editions */
 .cobep-grid {
   display: grid;

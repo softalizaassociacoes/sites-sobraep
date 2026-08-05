@@ -22,7 +22,7 @@ router.use((req, res, next) => {
 });
 
 function render(res, view, extra = {}) {
-  res.render(`admin/${view}`, { erro: null, ok: null, ...extra });
+  res.render(`admin/${view}`, { erro: null, ok: null, copiaDe: null, ...extra });
 }
 
 // ---------- Login / logout ----------
@@ -121,8 +121,33 @@ router.get('/noticias', async (req, res) => {
   render(res, 'noticias', { lista, q, total: todas.length, ok: req.query.ok || null });
 });
 
-router.get('/noticias/nova', (req, res) => {
-  render(res, 'noticia-form', { noticia: null });
+/**
+ * Formulário de nova notícia. Com ?copiarDe=<slug>, vem pré-preenchido com o
+ * conteúdo da notícia indicada — é a "Duplicar" da listagem.
+ *
+ * A cópia só existe no formulário: nada é gravado (nem publicado) até o
+ * usuário clicar em Salvar. Assim a notícia de origem fica intacta e não vai
+ * ao ar uma cópia pela metade enquanto os textos e links do ano são ajustados.
+ */
+router.get('/noticias/nova', async (req, res) => {
+  const origem = String(req.query.copiarDe || '').trim();
+  if (!origem) return render(res, 'noticia-form', { noticia: null });
+
+  const base = (await dados.getNoticias()).find((n) => n.slug === origem);
+  if (!base) return res.redirect('/admin/noticias');
+
+  render(res, 'noticia-form', {
+    copiaDe: base.titulo,
+    noticia: {
+      // sem slug: o formulário se comporta como "nova notícia" e, ao salvar,
+      // ganha um slug próprio (gerarSlug evita colisão com o da origem)
+      titulo: base.titulo,
+      resumo: base.resumo,
+      imagem: base.imagem,
+      corpoHtml: base.corpoHtml,
+      data: new Date().toISOString().slice(0, 10)
+    }
+  });
 });
 
 router.post('/noticias/nova', async (req, res) => {

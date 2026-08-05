@@ -7,6 +7,13 @@
 
 <% if (erro) { %><p class="admin-alert admin-alert--erro"><%= erro %></p><% } %>
 
+<% if (copiaDe) { %>
+<p class="admin-alert admin-alert--info">
+  Esta é uma <strong>cópia</strong> de “<%= copiaDe %>”. Ajuste o título, a data, os textos e os links —
+  a notícia original continua no ar como está, e nada é publicado até você clicar em <strong>Salvar</strong>.
+</p>
+<% } %>
+
 <%
   const v = noticia || {};
   const dataValor = v.dataISO ? String(v.dataISO).slice(0, 10) : (v.data || new Date().toISOString().slice(0, 10));
@@ -46,6 +53,12 @@
       <button type="button" data-cmd="insertUnorderedList" title="Lista">• Lista</button>
       <button type="button" data-cmd="insertOrderedList" title="Lista numerada">1. Lista</button>
       <button type="button" data-cmd="link" title="Inserir link">🔗 Link</button>
+      <button type="button" data-cmd="icone-trabalho" title="Inserir o ícone de livro com link para a dissertação ou tese">
+        <img src="/images/icones/trabalho.svg" alt="" class="admin-editor-icone"> Trabalho
+      </button>
+      <button type="button" data-cmd="icone-lattes" title="Inserir o ícone de diamante com link para o Currículo Lattes">
+        <img src="/images/icones/lattes.svg" alt="" class="admin-editor-icone"> Lattes
+      </button>
       <button type="button" data-cmd="imagem" title="Inserir imagem (envia o arquivo)">🖼️ Imagem</button>
       <button type="button" data-cmd="arquivo" title="Inserir arquivo PDF (envia o arquivo)">📎 Arquivo</button>
       <button type="button" data-cmd="h3" title="Subtítulo">Subtítulo</button>
