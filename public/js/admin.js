@@ -209,12 +209,12 @@ if (area && htmlArea) {
   // sobrevivem inteiros quando a notícia é duplicada para outro ano.
   const ICONES = {
     'icone-trabalho': {
-      arquivo: 'trabalho',
+      arquivo: 'trabalho.svg',
       rotulo: 'Ler o trabalho',
       pergunta: 'Endereço da dissertação ou tese (https://…):'
     },
     'icone-lattes': {
-      arquivo: 'lattes',
+      arquivo: 'lattes.png', // logo oficial do Currículo Lattes
       rotulo: 'Currículo Lattes',
       pergunta: 'Endereço do Currículo Lattes (http://lattes.cnpq.br/…):'
     }
@@ -314,7 +314,7 @@ if (area && htmlArea) {
 
   function htmlIcone(cfg, url) {
     return `<a class="premio-link" href="${escaparHtml(url)}" target="_blank" rel="noopener" title="${cfg.rotulo}">` +
-      `<img src="/images/icones/${cfg.arquivo}.svg" alt="${cfg.rotulo}"></a>`;
+      `<img src="/images/icones/${cfg.arquivo}" alt="${cfg.rotulo}"></a>`;
   }
 
   // Clicar num ícone já existente troca só o endereço — é assim que a cópia de
