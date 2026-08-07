@@ -5,3 +5,6 @@ node_modules/
 
 .vercel
 .env*.local
+
+# fotos originais do Prêmio (GIFs pesados): o site usa os .jpg processados
+public/images/premios/*.gif
