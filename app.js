@@ -118,6 +118,7 @@ app.get('/socios-fundadores', render('socios-fundadores', { active: 'socios-fund
 app.get('/ex-presidentes', render('ex-presidentes', { active: 'ex-presidentes' }));
 app.get('/ex-editores-chefes', render('ex-editores-chefes', { active: 'ex-editores-chefes' }));
 app.get('/cobep', render('cobep', { active: 'cobep' }));
+app.get('/premio-sobraep', render('premio-sobraep', { active: 'premio-sobraep' }));
 app.get('/webinars', async (req, res) => {
   const webinars = await dados.getWebinars();
   res.render('webinars', { site, active: 'webinars', webinars });

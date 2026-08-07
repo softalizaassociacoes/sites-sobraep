@@ -820,6 +820,102 @@ table.data-table tr:hover td { background: #fff6e6; }
 .news-excerpt { font-size: 0.88rem; color: var(--color-text-muted); flex: 1; }
 .news-readmore { font-size: 0.85rem; font-weight: 700; color: var(--color-accent); }
 
+/* Página do Prêmio SOBRAEP */
+.premio-intro { max-width: 820px; margin: 0 0 56px; font-size: 1.04rem; line-height: 1.8; }
+.premio-intro p { margin: 0 0 1.1em; }
+.premio-intro-chamada {
+  margin-top: 1.6em;
+  padding-left: 18px;
+  border-left: 3px solid var(--color-secondary);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.premio-edicao { margin: 0 0 52px; }
+.premio-edicao-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--color-border);
+}
+.premio-edicao-head h2 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+.premio-edicao-link {
+  color: var(--color-accent);
+  font-size: 0.94rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.premio-edicao-link:hover { color: var(--color-primary); }
+
+/* Grade de vencedores — sem bordas de tabela, como pedido pelo cliente */
+.premio-vencedores {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 32px 24px;
+}
+.premio-vencedor { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+/* aspect-ratio + object-fit padroniza todos os retratos no mesmo tamanho,
+   independentemente da proporção do arquivo original */
+.premio-foto {
+  width: 100%;
+  max-width: 170px;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+}
+.premio-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.premio-foto--vazia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+}
+.premio-foto--vazia span {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.02em;
+}
+.premio-categoria {
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-secondary-dark);
+  background: #fff3dc;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+.premio-nome {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.35;
+}
+
+@media (max-width: 520px) {
+  .premio-vencedores { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 26px 18px; }
+  .premio-foto--vazia span { font-size: 1.9rem; }
+  .premio-edicao-head h2 { font-size: 1.6rem; }
+}
+
 /* Busca da página de notícias */
 .sr-only {
   position: absolute;

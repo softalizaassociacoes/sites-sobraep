@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Prêmio SOBRAEP', description: 'Vencedores do Prêmio SOBRAEP de Trabalho de Conclusão de Curso, Dissertação de Mestrado e Tese de Doutorado, ano a ano desde 2018.' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<%
+// Vencedores por edição, do mais recente para o mais antigo.
+// `foto` recebe o caminho da imagem em /images/premios/; enquanto estiver
+// null, o card mostra as iniciais do nome no lugar do retrato.
+const edicoes = [
+  {
+    ano: 2025,
+    link: '/noticias/resultado-do-premio-sobraep-de-tese-dissertacao-e-tcc-edicao-2025',
+    vencedores: [
+      { categoria: 'Melhor TCC', nome: 'Álvaro Lúcio Costa Amorim', foto: null },
+      { categoria: 'Melhor Dissertação', nome: 'Márcio Von Rondow Campos', foto: null },
+      { categoria: 'Melhor Tese', nome: 'João Marcus Soares Callegari', foto: null }
+    ]
+  },
+  {
+    ano: 2024,
+    link: '/noticias/resultado-do-premio-sobraep-de-tese-dissertacao-e-tcc-edicao-2024',
+    vencedores: [
+      { categoria: 'Melhor TCC', nome: 'Hermano Lazzarin Campos', foto: null },
+      { categoria: 'Melhor TCC', nome: 'Júlia Patrícia Vieira Silva', foto: null },
+      { categoria: 'Melhor Dissertação', nome: 'Anderson Aparecido Dionizio', foto: null },
+      { categoria: 'Melhor Tese', nome: 'João Victor Matos Farias', foto: null }
+    ]
+  },
+  {
+    ano: 2023,
+    link: '/noticias/resultado-do-premio-sobraep-de-dissertacao-e-de-tese-edicao-2023',
+    vencedores: [
+      { categoria: 'Melhor Dissertação', nome: 'Fabiano Gonzales Nimitti', foto: null },
+      { categoria: 'Melhor Tese', nome: 'Marcelo Vinícius de Paula', foto: null }
+    ]
+  },
+  {
+    ano: 2022,
+    link: '/noticias/resultado-do-premio-sobraep-de-dissertacao-e-de-tese-2022',
+    vencedores: [
+      { categoria: 'Melhor Dissertação', nome: 'Dayane do Carmo Mendonça', foto: null },
+      { categoria: 'Melhor Tese', nome: 'Augusto Matheus dos Santos Alonso', foto: null }
+    ]
+  },
+  {
+    ano: 2021,
+    link: '/noticias/resultado-do-premio-sobraep-de-dissertacao-e-de-tese-edicao-2021',
+    vencedores: [
+      { categoria: 'Melhor Dissertação', nome: 'Caio Guilherme da Silva Moraes', foto: null },
+      { categoria: 'Melhor Tese', nome: 'Lenon Schmitz', foto: null }
+    ]
+  },
+  {
+    ano: 2020,
+    link: '/noticias/resultado-do-premio-sobraep-de-dissertacao-e-de-tese-edicao-2020',
+    vencedores: [
+      { categoria: 'Melhor Dissertação', nome: 'Lucas Lima Rodrigues', foto: null },
+      { categoria: 'Melhor Tese', nome: 'Allan Fagner Cupertino', foto: null }
+    ]
+  },
+  {
+    ano: 2019,
+    link: '/noticias/resultados-dos-premios-sobraep',
+    vencedores: [
+      { categoria: 'Melhor Dissertação', nome: 'Augusto Matheus dos Santos Alonso', foto: null },
+      { categoria: 'Melhor Tese', nome: 'André Luiz de Lacerda Ferreira Murari', foto: null }
+    ]
+  },
+  {
+    ano: 2018,
+    link: '/noticias/divulgado-o-resultado-do-premio-sobraep-de-dissertacao-e-de-tese-edicao-2018',
+    vencedores: [
+      { categoria: 'Melhor Dissertação', nome: 'Pedro José dos Santos Neto', foto: null },
+      { categoria: 'Melhor Tese', nome: 'Paulo Junior Silva Costa', foto: null }
+    ]
+  }
+];
+
+// Iniciais para o card sem foto: primeiro e último nome, ignorando conectivos.
+function iniciais(nome) {
+  const partes = nome.split(/\s+/).filter((p) => !/^(de|da|do|das|dos|e)$/i.test(p));
+  const primeira = partes[0] || '';
+  const ultima = partes.length > 1 ? partes[partes.length - 1] : '';
+  return (primeira.charAt(0) + ultima.charAt(0)).toUpperCase();
+}
+%>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Prêmio SOBRAEP</h1>
+      <p>Reconhecendo a excelência em Eletrônica de Potência desde 2018.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="premio-intro">
+        <p>Criado em 2018, o Prêmio SOBRAEP surgiu com o propósito de reconhecer as melhores dissertações de mestrado e teses de doutorado desenvolvidas no Brasil na área de Eletrônica de Potência, valorizando trabalhos de elevada qualidade, originalidade e relevância científica e tecnológica.</p>
+        <p>Ao longo de sua trajetória, a premiação foi consolidada como uma iniciativa permanente da Associação Brasileira de Eletrônica de Potência (SOBRAEP) e ampliou progressivamente sua abrangência: inicialmente dedicada à pós-graduação, passou a contemplar também, a partir da edição de 2024, os trabalhos de conclusão de curso de graduação.</p>
+        <p>Atualmente, o Prêmio SOBRAEP abrange as categorias Trabalho de Conclusão de Curso, Dissertação de Mestrado e Tese de Doutorado, contribuindo para divulgar pesquisas de excelência, reconhecer autores e orientadores e estimular a formação de novos pesquisadores e o avanço científico, tecnológico e inovador da Eletrônica de Potência no país.</p>
+        <p class="premio-intro-chamada">Abaixo estão disponíveis os links para acesso aos vencedores do Prêmio SOBRAEP de cada ano, a partir de 2018.</p>
+      </div>
+
+      <% edicoes.forEach(function(ed) { %>
+      <section class="premio-edicao" aria-labelledby="edicao-<%= ed.ano %>">
+        <div class="premio-edicao-head">
+          <h2 id="edicao-<%= ed.ano %>"><%= ed.ano %></h2>
+          <a href="<%= ed.link %>" class="premio-edicao-link">Ver o resultado completo →</a>
+        </div>
+
+        <ul class="premio-vencedores">
+          <% ed.vencedores.forEach(function(v) { %>
+          <li class="premio-vencedor">
+            <div class="premio-foto <%= v.foto ? '' : 'premio-foto--vazia' %>">
+              <% if (v.foto) { %>
+                <img src="<%= v.foto %>" alt="<%= v.nome %>" loading="lazy">
+              <% } else { %>
+                <span aria-hidden="true"><%= iniciais(v.nome) %></span>
+              <% } %>
+            </div>
+            <span class="premio-categoria"><%= v.categoria %></span>
+            <span class="premio-nome"><%= v.nome %></span>
+          </li>
+          <% }) %>
+        </ul>
+      </section>
+      <% }) %>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>
