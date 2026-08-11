@@ -822,13 +822,21 @@ table.data-table tr:hover td { background: #fff6e6; }
 
 /* Página do Prêmio SOBRAEP */
 .premio-intro { max-width: 820px; margin: 0 0 56px; font-size: 1.04rem; line-height: 1.8; }
-.premio-intro p { margin: 0 0 1.1em; }
-.premio-intro-chamada {
+.premio-intro p {
+  margin: 0 0 1.1em;
+  text-align: justify;
+  /* a hifenização evita os vãos entre palavras que o justificado abre,
+     sobretudo em telas estreitas (o idioma vem do lang="pt-BR" do <html>) */
+  hyphens: auto;
+}
+/* seletor com o `p` para vencer `.premio-intro p` em especificidade */
+.premio-intro p.premio-intro-chamada {
   margin-top: 1.6em;
   padding-left: 18px;
   border-left: 3px solid var(--color-secondary);
   color: var(--color-primary);
   font-weight: 500;
+  text-align: left; /* chamada curta: justificar deixaria vãos na linha do meio */
 }
 
 .premio-edicao { margin: 0 0 52px; }
@@ -908,6 +916,12 @@ table.data-table tr:hover td { background: #fff6e6; }
   font-weight: 600;
   color: var(--color-primary);
   line-height: 1.35;
+}
+
+/* Em coluna estreita o justificado abre vãos de até 5x o espaço normal
+   entre as palavras; abaixo desta largura o alinhamento à esquerda lê melhor. */
+@media (max-width: 600px) {
+  .premio-intro p { text-align: left; }
 }
 
 @media (max-width: 520px) {
