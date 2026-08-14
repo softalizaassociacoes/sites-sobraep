@@ -2,8 +2,8 @@
   {
     "id": "w-001",
     "imagem": "/images/webinars/webinar-1.jpg",
-    "linkInscricao": "https://register.gotowebinar.com/register/6964763401273943386",
-    "slides": null,
+    "linkInscricao": null,
+    "slides": "/docs/arquivos/webinar-pels-sobraepv3-compressed-1786722036108.pdf",
     "criadoEm": "2026-07-01T00:00:00.000Z"
   },
   {
