@@ -47,7 +47,7 @@ const site = {
   sede: 'Florianópolis (SC)',
   email: 'presidente@sobraep.org.br',
   emailSecundario: 'heverton.pereira@ufv.br',
-  emailSecretaria: 'secretaria1@sobraep.com.br',
+  emailSecretaria: 'secretaria1@sobraep.org.br',
   telefone: '(31) 3612-6401',
   endereco: 'Prof. Heverton Augusto Pereira, Universidade Federal de Viçosa – UFV. Gerência de Especialistas em Sistemas Elétricos de Potência – GESEP. Departamento de Engenharia Elétrica, Viçosa – MG – Brasil, CEP 36570-900',
   facebook: 'https://www.facebook.com/sobraep/',
