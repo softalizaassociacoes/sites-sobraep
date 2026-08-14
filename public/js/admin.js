@@ -52,11 +52,47 @@
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('is-aberto')) fechar(); });
 })();
 
-// ---------- Envio de arquivo ao servidor (compartilhado) ----------
-const LIMITE_UPLOAD = 4 * 1024 * 1024; // ~4 MB (limite da function do Vercel)
+// ---------- Envio de arquivo (compartilhado) ----------
+// Com o Vercel Blob ativo o arquivo vai direto do navegador para o storage e
+// cabem até 100 MB. Sem ele, o arquivo passa pela function e vale o teto de
+// ~4,5 MB que a Vercel impõe por requisição — daí os dois limites.
+const LIMITE_VIA_SERVIDOR = 4 * 1024 * 1024;    // caminho antigo (function)
+const LIMITE_ENVIO_DIRETO = 100 * 1024 * 1024;  // caminho novo (Blob)
 
-// Envia o arquivo como corpo binário; resolve com { url }. onProgress(pct) opcional.
-function uploadArquivo(file, tipo, onProgress) {
+// Descobre uma vez por página se o envio direto está disponível.
+let envioDiretoOk = null;
+function limiteDeUpload() {
+  return envioDiretoOk === false ? LIMITE_VIA_SERVIDOR : LIMITE_ENVIO_DIRETO;
+}
+function textoLimite() {
+  return Math.round(limiteDeUpload() / 1024 / 1024) + ' MB';
+}
+
+// Faz o PUT dos bytes na URL assinada, reportando progresso.
+function enviarBytes(url, file, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', url);
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100));
+    });
+    xhr.addEventListener('load', () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        let data = {};
+        try { data = JSON.parse(xhr.responseText); } catch (_) {}
+        resolve(data);
+      } else {
+        reject(new Error(`HTTP ${xhr.status}`));
+      }
+    });
+    xhr.addEventListener('error', () => reject(new Error('erro de rede')));
+    xhr.send(file);
+  });
+}
+
+// Caminho antigo: manda o arquivo no corpo da requisição para a function.
+function uploadViaServidor(file, tipo, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const url = `/admin/api/upload?tipo=${encodeURIComponent(tipo)}&nome=${encodeURIComponent(file.name)}`;
@@ -74,6 +110,51 @@ function uploadArquivo(file, tipo, onProgress) {
     xhr.addEventListener('error', () => reject(new Error('erro de rede')));
     xhr.send(file);
   });
+}
+
+// Envia o arquivo e resolve com { url }. onProgress(pct) opcional.
+async function uploadArquivo(file, tipo, onProgress) {
+  // 1) pede uma URL assinada; 501 significa Blob não configurado neste ambiente
+  if (envioDiretoOk !== false) {
+    let assinatura = null;
+    try {
+      const resp = await fetch('/admin/api/upload-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: file.name,
+          tipo,
+          contentType: file.type || 'application/octet-stream',
+          tamanho: file.size
+        })
+      });
+      if (resp.status === 501) {
+        envioDiretoOk = false; // some do caminho novo pelo resto da sessão
+      } else {
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
+        assinatura = data;
+        envioDiretoOk = true;
+      }
+    } catch (err) {
+      if (envioDiretoOk === true) throw err; // Blob existe e recusou: erro real
+      envioDiretoOk = false;                 // falha ao negociar: usa o caminho antigo
+    }
+
+    // 2) envia os bytes direto ao storage
+    if (assinatura) {
+      const resposta = await enviarBytes(assinatura.presignedUrl, file, onProgress);
+      const url = resposta.url || resposta.downloadUrl;
+      if (!url) throw new Error('o envio não retornou o endereço do arquivo');
+      return { url, nome: assinatura.pathname.split('/').pop(), tipo };
+    }
+  }
+
+  // 3) sem Blob: caminho antigo, com o limite de 4 MB
+  if (file.size > LIMITE_VIA_SERVIDOR) {
+    throw new Error('arquivo grande demais para o envio pelo servidor (máx. 4 MB)');
+  }
+  return uploadViaServidor(file, tipo, onProgress);
 }
 
 // ---------- Upload da imagem de destaque / slides (campos .admin-upload) ----------
@@ -94,8 +175,8 @@ document.querySelectorAll('.admin-upload').forEach((wrap) => {
     const ehImagem = file.type.startsWith('image/');
     if (tipo === 'imagem' && !ehImagem) return setStatus('Selecione um arquivo de imagem.', 'erro');
     if (tipo === 'pdf' && file.type !== 'application/pdf') return setStatus('Selecione um arquivo PDF.', 'erro');
-    if (file.size > LIMITE_UPLOAD) {
-      return setStatus('Arquivo muito grande (máx. 4 MB). Envie um menor ou peça à Softaliza.', 'erro');
+    if (file.size > limiteDeUpload()) {
+      return setStatus(`Arquivo muito grande (máx. ${textoLimite()}). Envie um menor ou peça à Softaliza.`, 'erro');
     }
 
     // Preview imediato da imagem a partir do próprio arquivo escolhido
@@ -147,7 +228,7 @@ document.querySelectorAll('.admin-upload').forEach((wrap) => {
       const linha = criarLinha(file.name);
       const tipo = file.type === 'application/pdf' ? 'pdf' : (file.type.startsWith('image/') ? 'imagem' : null);
       if (!tipo) { linha.set('Tipo não suportado (só imagem ou PDF)', 'erro'); continue; }
-      if (file.size > LIMITE_UPLOAD) { linha.set('Grande demais (máx. 4 MB)', 'erro'); continue; }
+      if (file.size > limiteDeUpload()) { linha.set(`Grande demais (máx. ${textoLimite()})`, 'erro'); continue; }
       try {
         await uploadArquivo(file, tipo, (pct) => linha.set(`Enviando… ${pct}%`));
         linha.set('Enviado ✓', 'ok');
@@ -280,8 +361,8 @@ if (area && htmlArea) {
     input.addEventListener('change', async () => {
       const file = input.files[0];
       if (!file) return;
-      if (file.size > LIMITE_UPLOAD) {
-        alert('Arquivo muito grande (máx. 4 MB). Envie um menor ou peça à Softaliza.');
+      if (file.size > limiteDeUpload()) {
+        alert(`Arquivo muito grande (máx. ${textoLimite()}). Envie um menor ou peça à Softaliza.`);
         return;
       }
       const btnMsg = tipo === 'imagem' ? '🖼️ Enviando…' : '📎 Enviando…';

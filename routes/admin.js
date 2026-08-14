@@ -9,6 +9,7 @@ const express = require('express');
 const auth = require('../lib/auth');
 const dados = require('../lib/dados');
 const github = require('../lib/github');
+const blob = require('../lib/blob');
 
 const router = express.Router();
 
@@ -54,6 +55,29 @@ const TIPOS_OK = {
   imagem: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
   pdf: ['application/pdf']
 };
+/**
+ * Assina a URL para o navegador enviar o arquivo direto ao Blob, sem passar
+ * pela function — é o que permite arquivos acima do teto de ~4,5MB da Vercel.
+ * Responde 501 quando o Blob não está configurado, e aí o painel usa /api/upload.
+ */
+router.post('/api/upload-url', async (req, res) => {
+  if (!blob.temBlob()) {
+    return res.status(501).json({ error: 'Envio direto não configurado.' });
+  }
+  try {
+    const { presignedUrl, pathname } = await blob.gerarUrlDeEnvio({
+      nome: req.body.nome,
+      tipo: req.body.tipo,
+      contentType: req.body.contentType,
+      tamanho: req.body.tamanho
+    });
+    res.json({ presignedUrl, pathname });
+  } catch (err) {
+    console.error('Erro assinando envio:', err.message);
+    res.status(400).json({ error: err.message });
+  }
+});
+
 router.post('/api/upload', express.raw({ type: '*/*', limit: '4mb' }), async (req, res) => {
   try {
     const tipo = req.query.tipo === 'pdf' ? 'pdf' : 'imagem';
