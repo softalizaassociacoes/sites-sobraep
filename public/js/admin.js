@@ -449,3 +449,40 @@ if (area && htmlArea) {
   });
   sincronizar();
 }
+
+// ---------- Mapa do formulário de laboratório ----------
+// A equipe marca a posição clicando no mapa: pedir latitude/longitude seria
+// inviável, e uma lista de cidades não cobriria campus fora da sede.
+(() => {
+  const mapa = document.getElementById('adminMapa');
+  if (!mapa) return;
+  const alvo = document.getElementById('adminMapaAlvo');
+  const campoLeft = document.getElementById('campoLeft');
+  const campoTop = document.getElementById('campoTop');
+  const texto = document.getElementById('adminMapaTexto');
+
+  function mostrar(left, top) {
+    if (left === '' || left === null || top === '' || top === null) {
+      alvo.hidden = true;
+      campoLeft.value = campoTop.value = '';
+      texto.textContent = 'Sem posição: não aparece no mapa do site.';
+      return;
+    }
+    alvo.hidden = false;
+    alvo.style.left = left + '%';
+    alvo.style.top = top + '%';
+    campoLeft.value = left;
+    campoTop.value = top;
+    texto.textContent = `Posição marcada (${left}%, ${top}%).`;
+  }
+
+  mapa.addEventListener('click', (e) => {
+    const r = mapa.getBoundingClientRect();
+    const left = Math.round(((e.clientX - r.left) / r.width) * 1000) / 10;
+    const top = Math.round(((e.clientY - r.top) / r.height) * 1000) / 10;
+    mostrar(left, top);
+  });
+
+  document.getElementById('adminMapaLimpar').addEventListener('click', () => mostrar('', ''));
+  mostrar(mapa.dataset.left, mapa.dataset.top);
+})();

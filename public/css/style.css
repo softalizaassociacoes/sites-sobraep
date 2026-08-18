@@ -1369,3 +1369,215 @@ table.data-table tr:hover td { background: #fff6e6; }
   .membership-cta { align-items: flex-start; flex-direction: column; gap: 10px; }
   .president-block { padding: 24px; }
 }
+
+/* ---------- Mapa de laboratórios e grupos de pesquisa ---------- */
+.labs-intro { max-width: 760px; color: var(--color-text-muted); margin: 0 0 28px; }
+
+.labs-mapa-wrap {
+  background: linear-gradient(160deg, #fbfbfe, #f2f2f9);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 18px;
+  overflow: hidden;
+}
+/* o mapa é a referência de posicionamento dos marcadores, por isso a
+   proporção fixa: o SVG define a razão e os marcadores usam % dela */
+.labs-mapa {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  aspect-ratio: 612.51611 / 639.04297;
+}
+.labs-mapa-base, .labs-mapa-base svg { width: 100%; height: 100%; display: block; }
+.labs-mapa-base .uf {
+  fill: #e4e4f1;
+  stroke: #ffffff;
+  stroke-width: 0.8;
+  transition: fill 0.2s ease;
+}
+.labs-mapa:hover .uf { fill: #dedeed; }
+
+/* Marcadores */
+.labs-marcador {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  /* proporcional ao mapa: a dispersão dos marcadores foi calculada em 5,5%
+     da largura, então eles não voltam a se encostar quando o mapa encolhe */
+  width: 5.5%;
+  height: 5.5%;
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0;
+  border: 2px solid var(--color-white);
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: 0 2px 10px rgba(33, 33, 90, 0.22);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  z-index: 2;
+}
+.labs-marcador img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+.labs-marcador:hover, .labs-marcador:focus-visible {
+  transform: translate(-50%, -50%) scale(1.18);
+  box-shadow: 0 6px 18px rgba(33, 33, 90, 0.34);
+  z-index: 5;
+}
+.labs-marcador.is-ativo {
+  transform: translate(-50%, -50%) scale(1.18);
+  border-color: var(--color-secondary);
+  z-index: 6;
+}
+/* sem logo: mostra a sigla, que precisa caber no círculo */
+.labs-marcador--sigla {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border-color: var(--color-white);
+}
+.labs-marcador--sigla span {
+  font-family: var(--font-heading);
+  font-size: 0.56rem;
+  font-weight: 600;
+  color: var(--color-white);
+  line-height: 1;
+  padding: 2px;
+  text-align: center;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Pop-up: abre junto do marcador clicado */
+.labs-popup {
+  position: absolute;
+  z-index: 20;
+  width: 268px;
+  background: var(--color-white);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+  padding: 16px 18px 14px;
+  font-size: 0.9rem;
+}
+.labs-popup[hidden] { display: none; }
+.labs-popup-fechar {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  border: 0;
+  background: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px 6px;
+}
+.labs-popup-fechar:hover { color: var(--color-primary); }
+.labs-popup-topo { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; padding-right: 16px; }
+.labs-popup-logo {
+  flex: 0 0 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: #f2f2f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.labs-popup-logo img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+.labs-popup-logo span {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.72rem;
+  color: var(--color-primary);
+  text-align: center;
+  padding: 2px;
+  word-break: break-word;
+}
+.labs-popup-sigla {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+.labs-popup-nome { margin: 3px 0 0; font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.35; }
+.labs-popup-dados { margin: 0 0 12px; }
+.labs-popup-dados > div { display: flex; gap: 8px; padding: 3px 0; }
+.labs-popup-dados dt { flex: 0 0 78px; color: var(--color-text-muted); font-size: 0.78rem; }
+.labs-popup-dados dd { margin: 0; font-size: 0.82rem; color: var(--color-text); }
+.labs-popup-links { display: flex; flex-wrap: wrap; gap: 7px; }
+.labs-popup-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: #eeeef7;
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+.labs-popup-links a:hover { background: var(--color-primary); color: var(--color-white); }
+.labs-popup-vazio { color: var(--color-text-muted); font-size: 0.78rem; font-style: italic; }
+
+/* Números */
+.labs-numeros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 34px;
+  justify-content: center;
+}
+.labs-numeros > div {
+  flex: 1 1 150px;
+  max-width: 230px;
+  text-align: center;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 18px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.labs-numeros strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.9rem;
+  color: var(--color-primary);
+  line-height: 1;
+}
+.labs-numeros span { font-size: 0.84rem; color: var(--color-text-muted); }
+
+/* Grupos sem cidade cadastrada */
+.labs-sem-local { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--color-border); }
+.labs-sem-local h2 { font-size: 1.15rem; margin-bottom: 6px; }
+.labs-sem-local p { color: var(--color-text-muted); font-size: 0.9rem; margin: 0 0 12px; }
+.labs-sem-local ul { list-style: none; padding: 0; margin: 0; }
+.labs-sem-local li { padding: 7px 0; border-bottom: 1px solid var(--color-border); font-size: 0.92rem; }
+.labs-sem-local li:last-child { border-bottom: 0; }
+.labs-sem-local-links { margin-left: 8px; display: inline-flex; gap: 10px; }
+.labs-sem-local-links a { color: var(--color-accent); text-decoration: underline; font-size: 0.84rem; }
+
+@media (max-width: 720px) {
+  .labs-mapa-wrap { padding: 6px; }
+  .container:has(.labs-mapa-wrap) { padding-left: 10px; padding-right: 10px; }
+  .labs-marcador { min-width: 22px; min-height: 22px; border-width: 1.5px; }
+  .labs-marcador--sigla span { font-size: 0.45rem; }
+  /* na tela estreita o pop-up vira uma faixa fixa embaixo: um cartão de 268px
+     ao lado do marcador não caberia sem sair da área visível */
+  .labs-popup {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    top: auto !important;
+    width: auto;
+    max-height: 62vh;
+    overflow-y: auto;
+  }
+  .labs-numeros strong { font-size: 1.55rem; }
+}

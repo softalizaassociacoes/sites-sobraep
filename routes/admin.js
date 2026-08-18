@@ -309,4 +309,107 @@ function montarWebinar(body) {
   return { imagem, linkInscricao, slides };
 }
 
+// ---------- Laboratórios e grupos de pesquisa (mapa) ----------
+// O SVG é lido uma vez e reaproveitado no formulário, onde serve de superfície
+// de clique para a equipe marcar a posição sem precisar saber coordenadas.
+const mapaSvg = require('fs').readFileSync(
+  require('path').join(__dirname, '..', 'public/images/brasil.svg'), 'utf8');
+
+function montarLaboratorio(body, idFixo, idsExistentes) {
+  const texto = (campo, max) => String(body[campo] || '').trim().slice(0, max) || null;
+  const sigla = texto('sigla', 20);
+  if (!sigla) throw new Error('Informe a sigla.');
+
+  const numero = (campo) => {
+    const n = parseFloat(String(body[campo] || '').replace(',', '.'));
+    return Number.isFinite(n) ? Math.min(100, Math.max(0, Math.round(n * 1000) / 1000)) : null;
+  };
+  // posição só vale se os dois eixos vierem; senão o laboratório fica fora do mapa
+  const left = numero('left');
+  const top = numero('top');
+
+  const integrantes = parseInt(body.integrantes, 10);
+  const uf = texto('uf', 2);
+
+  return {
+    id: idFixo || dados.gerarSlug(sigla, idsExistentes),
+    sigla,
+    nome: texto('nome', 200),
+    instituicao: texto('instituicao', 150),
+    cidade: texto('cidade', 80),
+    uf: uf ? uf.toUpperCase() : null,
+    site: dados.urlOuNulo(body.site),
+    linkedin: dados.urlOuNulo(body.linkedin),
+    instagram: dados.urlOuNulo(body.instagram),
+    logo: texto('logo', 300),
+    integrantes: Number.isFinite(integrantes) && integrantes >= 0 ? integrantes : null,
+    left: left !== null && top !== null ? left : null,
+    top: left !== null && top !== null ? top : null
+  };
+}
+
+// os já posicionados aparecem no mapa do formulário para a equipe não marcar em cima
+const outrosNoMapa = (lista, idAtual) => lista
+  .filter((l) => l.id !== idAtual && l.left !== null && l.left !== undefined)
+  .map((l) => ({ sigla: l.sigla, left: l.left, top: l.top }));
+
+router.get('/laboratorios', async (req, res) => {
+  const lista = await dados.getLaboratorios();
+  render(res, 'laboratorios', {
+    lista,
+    semMapa: lista.filter((l) => l.left === null || l.left === undefined).length,
+    ok: req.query.ok || null
+  });
+});
+
+router.get('/laboratorios/novo', async (req, res) => {
+  const lista = await dados.getLaboratorios();
+  render(res, 'laboratorio-form', { lab: null, mapaSvg, outros: outrosNoMapa(lista, null) });
+});
+
+router.post('/laboratorios/novo', async (req, res) => {
+  const lista = await dados.getLaboratorios();
+  try {
+    lista.push(montarLaboratorio(req.body, null, lista.map((l) => l.id)));
+    lista.sort((a, b) => (a.uf || 'ZZ').localeCompare(b.uf || 'ZZ') || a.sigla.localeCompare(b.sigla));
+    await dados.saveLaboratorios(lista);
+    res.redirect('/admin/laboratorios?ok=Laborat%C3%B3rio%20cadastrado');
+  } catch (err) {
+    render(res, 'laboratorio-form', {
+      lab: req.body, mapaSvg, outros: outrosNoMapa(lista, null), erro: err.message
+    });
+  }
+});
+
+router.get('/laboratorios/:id/editar', async (req, res) => {
+  const lista = await dados.getLaboratorios();
+  const lab = lista.find((l) => l.id === req.params.id);
+  if (!lab) return res.redirect('/admin/laboratorios');
+  render(res, 'laboratorio-form', { lab, mapaSvg, outros: outrosNoMapa(lista, lab.id) });
+});
+
+router.post('/laboratorios/:id/editar', async (req, res) => {
+  const lista = await dados.getLaboratorios();
+  const idx = lista.findIndex((l) => l.id === req.params.id);
+  if (idx === -1) return res.redirect('/admin/laboratorios');
+  try {
+    lista[idx] = montarLaboratorio(req.body, lista[idx].id, []);
+    lista.sort((a, b) => (a.uf || 'ZZ').localeCompare(b.uf || 'ZZ') || a.sigla.localeCompare(b.sigla));
+    await dados.saveLaboratorios(lista);
+    res.redirect('/admin/laboratorios?ok=Laborat%C3%B3rio%20atualizado');
+  } catch (err) {
+    render(res, 'laboratorio-form', {
+      lab: { ...req.body, id: req.params.id }, mapaSvg,
+      outros: outrosNoMapa(lista, req.params.id), erro: err.message
+    });
+  }
+});
+
+router.post('/laboratorios/:id/excluir', async (req, res) => {
+  const lista = await dados.getLaboratorios();
+  const restantes = lista.filter((l) => l.id !== req.params.id);
+  if (restantes.length !== lista.length) await dados.saveLaboratorios(restantes);
+  res.redirect('/admin/laboratorios?ok=Laborat%C3%B3rio%20exclu%C3%ADdo');
+});
+
 module.exports = router;

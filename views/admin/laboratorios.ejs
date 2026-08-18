@@ -1,0 +1,47 @@
+<%- include('partials/top', { titulo: 'Laboratórios', aba: 'laboratorios' }) %>
+
+<div class="admin-page-head">
+  <div>
+    <h1>Laboratórios e Grupos de Pesquisa</h1>
+    <p class="admin-muted"><%= lista.length %> cadastrado(s) — <%= semMapa %> sem posição no mapa</p>
+  </div>
+  <a href="/admin/laboratorios/novo" class="btn btn-primary">+ Novo laboratório</a>
+</div>
+
+<% if (ok) { %><p class="admin-alert admin-alert--ok"><%= ok %></p><% } %>
+
+<% if (!lista.length) { %>
+  <p class="admin-vazio">Nenhum laboratório cadastrado.</p>
+<% } else { %>
+<div class="admin-tabela-wrap">
+  <table class="admin-tabela">
+    <thead>
+      <tr><th>Sigla</th><th>Instituição</th><th>Cidade</th><th>No mapa</th><th class="admin-acoes-col">Ações</th></tr>
+    </thead>
+    <tbody>
+      <% lista.forEach(function(l) { %>
+      <tr>
+        <td><strong><%= l.sigla %></strong></td>
+        <td><%= l.instituicao || '—' %></td>
+        <td class="admin-nowrap"><%= l.cidade ? l.cidade + '/' + l.uf : '—' %></td>
+        <td class="admin-nowrap">
+          <% if (l.left === null || l.left === undefined) { %>
+            <span class="admin-tag admin-tag--alerta">sem posição</span>
+          <% } else { %>
+            <span class="admin-tag admin-tag--ok">sim</span>
+          <% } %>
+        </td>
+        <td class="admin-acoes">
+          <a href="/admin/laboratorios/<%= l.id %>/editar" class="btn-mini">Editar</a>
+          <form action="/admin/laboratorios/<%= l.id %>/excluir" method="post" class="admin-inline" data-confirmar="Excluir &quot;<%= l.sigla %>&quot;? Essa ação não pode ser desfeita.">
+            <button type="submit" class="btn-mini btn-mini--perigo">Excluir</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% } %>
+
+<%- include('partials/bottom') %>

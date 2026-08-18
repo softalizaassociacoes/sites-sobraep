@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Laboratórios e Grupos de Pesquisa', description: 'Mapa dos laboratórios e grupos de pesquisa em Eletrônica de Potência associados à SOBRAEP, distribuídos pelo Brasil.' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Laboratórios e Grupos de Pesquisa</h1>
+      <p>Uma rede nacional de excelência em Eletrônica de Potência, acionamentos e suas aplicações.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="labs-intro">
+        Clique em um marcador no mapa para ver os dados do laboratório e acessar seus canais.
+      </p>
+
+      <div class="labs-mapa-wrap">
+        <div class="labs-mapa" id="labsMapa">
+          <div class="labs-mapa-base"><%- mapaSvg %></div>
+
+          <% laboratorios.forEach(function(l, i) { if (l.left === null) return; %>
+          <button type="button"
+                  class="labs-marcador <%= l.logo ? '' : 'labs-marcador--sigla' %>"
+                  style="left: <%= l.left %>%; top: <%= l.top %>%;"
+                  data-lab="<%= i %>"
+                  aria-label="<%= l.sigla %> — <%= l.cidade %>/<%= l.uf %>">
+            <% if (l.logo) { %>
+              <img src="<%= l.logo %>" alt="" loading="lazy">
+            <% } else { %>
+              <span><%= l.sigla %></span>
+            <% } %>
+          </button>
+          <% }) %>
+
+          <div class="labs-popup" id="labsPopup" role="dialog" aria-modal="false" aria-labelledby="labsPopupTitulo" hidden>
+            <button type="button" class="labs-popup-fechar" id="labsPopupFechar" aria-label="Fechar">&times;</button>
+            <div class="labs-popup-topo">
+              <div class="labs-popup-logo" id="labsPopupLogo"></div>
+              <div>
+                <p class="labs-popup-sigla" id="labsPopupTitulo"></p>
+                <p class="labs-popup-nome" id="labsPopupNome"></p>
+              </div>
+            </div>
+            <dl class="labs-popup-dados">
+              <div><dt>Instituição</dt><dd id="labsPopupInst"></dd></div>
+              <div><dt>Cidade</dt><dd id="labsPopupCidade"></dd></div>
+              <div class="labs-popup-integrantes" id="labsPopupIntegrantesLinha">
+                <dt>Integrantes</dt><dd id="labsPopupIntegrantes"></dd>
+              </div>
+            </dl>
+            <div class="labs-popup-links" id="labsPopupLinks"></div>
+          </div>
+        </div>
+      </div>
+
+      <% const semLocal = laboratorios.filter(function(l) { return l.left === null; }); %>
+      <% if (semLocal.length) { %>
+      <div class="labs-sem-local">
+        <h2>Sem localização informada</h2>
+        <p>Estes grupos ainda não têm cidade cadastrada e por isso não aparecem no mapa.</p>
+        <ul>
+          <% semLocal.forEach(function(l) { %>
+          <li>
+            <strong><%= l.sigla %></strong>
+            <% if (l.nome && l.nome !== l.sigla) { %>— <%= l.nome %><% } %>
+            <% if (l.site || l.linkedin || l.instagram) { %>
+              <span class="labs-sem-local-links">
+                <% if (l.site) { %><a href="<%= l.site %>" target="_blank" rel="noopener">site</a><% } %>
+                <% if (l.linkedin) { %><a href="<%= l.linkedin %>" target="_blank" rel="noopener">LinkedIn</a><% } %>
+                <% if (l.instagram) { %><a href="<%= l.instagram %>" target="_blank" rel="noopener">Instagram</a><% } %>
+              </span>
+            <% } %>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+      <% } %>
+
+      <div class="labs-numeros">
+        <div><strong><%= laboratorios.length %></strong><span>Grupos de pesquisa</span></div>
+        <div><strong><%= totalInstituicoes %></strong><span>Instituições</span></div>
+        <div><strong><%= totalEstados %></strong><span>Estados</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script id="labsDados" type="application/json"><%- JSON.stringify(laboratorios) %></script>
+<script src="/js/laboratorios.js" defer></script>
+
+<%- include('partials/footer') %>
+</body>
+</html>

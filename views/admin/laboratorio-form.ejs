@@ -1,0 +1,98 @@
+<%- include('partials/top', { titulo: lab && lab.id ? 'Editar laboratório' : 'Novo laboratório', aba: 'laboratorios' }) %>
+
+<div class="admin-page-head">
+  <h1><%= lab && lab.id ? 'Editar laboratório' : 'Novo laboratório' %></h1>
+  <a href="/admin/laboratorios" class="admin-muted">← Voltar</a>
+</div>
+
+<% if (erro) { %><p class="admin-alert admin-alert--erro"><%= erro %></p><% } %>
+
+<% const v = lab || {}; %>
+<form method="post" class="admin-form admin-form--larga" id="formLab">
+  <div class="admin-form-linha">
+    <label>
+      Sigla *
+      <input type="text" name="sigla" value="<%= v.sigla || '' %>" required maxlength="20" placeholder="Ex.: GESEP">
+    </label>
+    <label class="admin-flex1">
+      Nome completo
+      <input type="text" name="nome" value="<%= v.nome || '' %>" maxlength="200" placeholder="Ex.: Gerência de Especialistas de Sistemas Elétricos de Potência">
+    </label>
+  </div>
+
+  <label>
+    Instituição
+    <input type="text" name="instituicao" value="<%= v.instituicao || '' %>" maxlength="150" placeholder="Ex.: UFV - Universidade Federal de Viçosa">
+  </label>
+
+  <div class="admin-form-linha">
+    <label class="admin-flex1">
+      Cidade
+      <input type="text" name="cidade" value="<%= v.cidade || '' %>" maxlength="80" placeholder="Ex.: Viçosa">
+    </label>
+    <label>
+      UF
+      <input type="text" name="uf" value="<%= v.uf || '' %>" maxlength="2" style="text-transform:uppercase" placeholder="MG">
+    </label>
+    <label>
+      Nº de integrantes
+      <input type="number" name="integrantes" value="<%= v.integrantes != null ? v.integrantes : '' %>" min="0" max="9999">
+    </label>
+  </div>
+
+  <label>
+    Logomarca (opcional)
+    <div class="admin-upload" data-tipo="imagem" data-destino="logo">
+      <input type="file" accept="image/*" class="admin-upload-arquivo">
+      <span class="admin-upload-status"></span>
+    </div>
+    <input type="hidden" name="logo" value="<%= v.logo || '' %>">
+    <img src="<%= v.logo || '' %>" alt="" class="admin-upload-preview <%= v.logo ? '' : 'oculta' %>">
+  </label>
+
+  <div class="admin-form-linha">
+    <label class="admin-flex1">
+      Site
+      <input type="url" name="site" value="<%= v.site || '' %>" maxlength="300" placeholder="https://...">
+    </label>
+  </div>
+  <div class="admin-form-linha">
+    <label class="admin-flex1">
+      Instagram
+      <input type="url" name="instagram" value="<%= v.instagram || '' %>" maxlength="300" placeholder="https://www.instagram.com/...">
+    </label>
+    <label class="admin-flex1">
+      LinkedIn
+      <input type="url" name="linkedin" value="<%= v.linkedin || '' %>" maxlength="300" placeholder="https://www.linkedin.com/company/...">
+    </label>
+  </div>
+
+  <label>Posição no mapa</label>
+  <p class="admin-muted admin-mapa-ajuda">
+    Clique no mapa onde fica o laboratório. Os pontos claros são os que já estão
+    cadastrados — evite marcar em cima de um deles, senão os dois ficam sobrepostos
+    na página. Sem posição, o laboratório aparece só na lista abaixo do mapa.
+  </p>
+
+  <div class="admin-mapa" id="adminMapa" data-left="<%= v.left != null ? v.left : '' %>" data-top="<%= v.top != null ? v.top : '' %>">
+    <%- mapaSvg %>
+    <% outros.forEach(function(o) { %>
+      <span class="admin-mapa-outro" style="left: <%= o.left %>%; top: <%= o.top %>%;" title="<%= o.sigla %>"></span>
+    <% }) %>
+    <span class="admin-mapa-alvo" id="adminMapaAlvo" hidden></span>
+  </div>
+
+  <div class="admin-mapa-acoes">
+    <span class="admin-muted" id="adminMapaTexto"></span>
+    <button type="button" class="btn-mini" id="adminMapaLimpar">Remover posição</button>
+  </div>
+  <input type="hidden" name="left" id="campoLeft" value="<%= v.left != null ? v.left : '' %>">
+  <input type="hidden" name="top" id="campoTop" value="<%= v.top != null ? v.top : '' %>">
+
+  <div class="admin-form-acoes">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="/admin/laboratorios" class="btn btn-outline-primary">Cancelar</a>
+  </div>
+</form>
+
+<%- include('partials/bottom') %>

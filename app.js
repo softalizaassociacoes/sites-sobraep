@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const sgMail = require('@sendgrid/mail');
 const dados = require('./lib/dados');
 const github = require('./lib/github');
@@ -119,6 +120,32 @@ app.get('/ex-presidentes', render('ex-presidentes', { active: 'ex-presidentes' }
 app.get('/ex-editores-chefes', render('ex-editores-chefes', { active: 'ex-editores-chefes' }));
 app.get('/cobep', render('cobep', { active: 'cobep' }));
 app.get('/premio-sobraep', render('premio-sobraep', { active: 'premio-sobraep' }));
+
+/**
+ * Mapa dos laboratórios e grupos de pesquisa associados.
+ *
+ * O SVG do Brasil entra inline na página para que o CSS do site pinte os
+ * estados e os marcadores fiquem posicionados por cima, em porcentagem — assim
+ * o mapa acompanha a largura da tela sem recalcular nada.
+ *
+ * Os dados vêm de data/laboratorios.json pela mesma camada das notícias, então
+ * o que o painel grava aparece aqui sem depender de novo deploy.
+ */
+const mapaBrasil = fs.readFileSync(path.join(__dirname, 'public/images/brasil.svg'), 'utf8');
+
+app.get('/laboratorios', async (req, res) => {
+  const laboratorios = await dados.getLaboratorios();
+  const instituicoes = new Set(laboratorios.map((l) => l.instituicao).filter(Boolean));
+  const estados = new Set(laboratorios.map((l) => l.uf).filter(Boolean));
+  res.render('laboratorios', {
+    site,
+    active: 'laboratorios',
+    laboratorios,
+    mapaSvg: mapaBrasil,
+    totalInstituicoes: instituicoes.size,
+    totalEstados: estados.size
+  });
+});
 app.get('/webinars', async (req, res) => {
   const webinars = await dados.getWebinars();
   res.render('webinars', { site, active: 'webinars', webinars });
