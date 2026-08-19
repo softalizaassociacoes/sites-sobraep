@@ -9,7 +9,7 @@
     "site": "http://www.gpec.ufc.br/index.html",
     "linkedin": null,
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/gpec.png",
     "integrantes": 80,
     "left": 91.887,
     "top": 21.018
@@ -24,7 +24,7 @@
     "site": "https://portal.ifce.edu.br/campus/maracanau/laboratorios/laboratorios-do-eixo-da-industria/laboratorio-de-potencia-e-controle-lpc/",
     "linkedin": "https://www.linkedin.com/in/luiz-daniel-santos-bezerra-964054191/",
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/lpc.png",
     "integrantes": 15,
     "left": 88.806,
     "top": 25.522
@@ -39,7 +39,7 @@
     "site": "https://gep.eng.ufmg.br/",
     "linkedin": "https://www.linkedin.com/in/grupo-eletr%C3%B4nica-de-pot%C3%AAncia-62963538b/",
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/gep.png",
     "integrantes": 30,
     "left": 75.497,
     "top": 60.683
@@ -69,7 +69,7 @@
     "site": "https://dgp.cnpq.br/dgp/espelhogrupo/8543155460250055",
     "linkedin": "https://www.linkedin.com/company/tesla-engenharia-de-potência-ufmg",
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/tesla.png",
     "integrantes": 50,
     "left": 71.555,
     "top": 64.696
@@ -99,7 +99,7 @@
     "site": "https://nupep-ufu.com/",
     "linkedin": "https://www.linkedin.com/in/nupep-ufu/",
     "instagram": "https://www.instagram.com/nupep_ufu/",
-    "logo": null,
+    "logo": "/images/laboratorios/nupep.png",
     "integrantes": 13,
     "left": 65.61,
     "top": 62.005
@@ -114,7 +114,7 @@
     "site": "https://www.gesep.com.br/",
     "linkedin": "https://www.linkedin.com/company/gesep",
     "instagram": "https://www.instagram.com/gesep_br/",
-    "logo": null,
+    "logo": "/images/laboratorios/gesep.png",
     "integrantes": null,
     "left": 81.953,
     "top": 68.582
@@ -129,7 +129,7 @@
     "site": "http://www.ufpe.br/gepae/",
     "linkedin": null,
     "instagram": "https://www.instagram.com/gepae.ufpe",
-    "logo": null,
+    "logo": "/images/laboratorios/gepae.png",
     "integrantes": 45,
     "left": 97.25,
     "top": 34.145
@@ -144,7 +144,7 @@
     "site": null,
     "linkedin": null,
     "instagram": "https://www.instagram.com/lepqer/",
-    "logo": null,
+    "logo": "/images/laboratorios/lepqer.png",
     "integrantes": 30,
     "left": 58.329,
     "top": 71.484
@@ -189,7 +189,7 @@
     "site": "https://nitee.uff.br/",
     "linkedin": "https://www.linkedin.com/company/n%C3%BAcleo-de-inova%C3%A7%C3%A3o-tecnol%C3%B3gica-em-engenharia-el%C3%A9trica-nitee/",
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/nitee.png",
     "integrantes": 50,
     "left": 81.985,
     "top": 74.138
@@ -219,7 +219,7 @@
     "site": "https://www.ufsm.br/gedre",
     "linkedin": "https://www.linkedin.com/company/gedre-ufsm",
     "instagram": "https://www.instagram.com/gedre.ufsm",
-    "logo": null,
+    "logo": "/images/laboratorios/gedre.png",
     "integrantes": 50,
     "left": 51.201,
     "top": 86.913
@@ -234,7 +234,7 @@
     "site": "https://www.ufsm.br/grupos/gsec",
     "linkedin": "https://www.linkedin.com/company/electrical-and-computational-systems-research-and-development-group",
     "instagram": "https://www.instagram.com/gsecufsm/",
-    "logo": null,
+    "logo": "/images/laboratorios/gsec.png",
     "integrantes": 20,
     "left": 51.563,
     "top": 92.425
@@ -264,7 +264,7 @@
     "site": "https://www.gepai.com.br",
     "linkedin": null,
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/gepai.png",
     "integrantes": 11,
     "left": 68.718,
     "top": 84.736
@@ -294,7 +294,7 @@
     "site": "https://www.inep.ufsc.br",
     "linkedin": null,
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/inep.png",
     "integrantes": 80,
     "left": 61.343,
     "top": 86.564
@@ -309,7 +309,7 @@
     "site": null,
     "linkedin": null,
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/gati.png",
     "integrantes": 11,
     "left": 56.196,
     "top": 84.022
@@ -324,7 +324,7 @@
     "site": "https://www.npee.joinville.br/",
     "linkedin": "https://www.linkedin.com/company/npee/",
     "instagram": "https://www.instagram.com/npee_udesc/",
-    "logo": null,
+    "logo": "/images/laboratorios/npee.png",
     "integrantes": 92,
     "left": 62.12,
     "top": 81.199
@@ -354,7 +354,7 @@
     "site": "https://cirue.ufabc.edu.br/",
     "linkedin": "https://www.linkedin.com/posts/cirue_cirue-ufabc-santoandre-activity-7430689513632337920-tvTU/?originalSubdomain=pt",
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/cirue.png",
     "integrantes": null,
     "left": 71.466,
     "top": 70.249
@@ -369,7 +369,7 @@
     "site": "http://professor.ufabc.edu.br/~jose.azcue/LACEP/LACEP.html",
     "linkedin": null,
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/lacep.png",
     "integrantes": 10,
     "left": 72.263,
     "top": 76.606
@@ -399,7 +399,7 @@
     "site": null,
     "linkedin": "https://www.linkedin.com/company/jlpowerelectronics/?viewAsMember=true",
     "instagram": null,
-    "logo": null,
+    "logo": "/images/laboratorios/jl-power.png",
     "integrantes": 2,
     "left": null,
     "top": null

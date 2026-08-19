@@ -8,3 +8,6 @@ node_modules/
 
 # fotos originais do Prêmio (GIFs pesados): o site usa os .jpg processados
 public/images/premios/*.gif
+
+# originais das logomarcas (o site usa os .png processados na pasta acima)
+public/images/laboratorios/originais/
