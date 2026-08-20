@@ -1,0 +1,65 @@
+<%- include('partials/top', { titulo: 'Cadastros aguardando aprovação', aba: 'laboratorios' }) %>
+
+<div class="admin-page-head">
+  <div>
+    <h1>Aguardando aprovação</h1>
+    <p class="admin-muted">
+      <%= pendentes.length %> cadastro(s) enviado(s) pelo site ·
+      <%= totalPublicados %> já no mapa
+    </p>
+  </div>
+  <a href="/admin/laboratorios" class="btn btn-outline-primary">Ver os publicados</a>
+</div>
+
+<% if (ok) { %><p class="admin-alert admin-alert--ok"><%= ok %></p><% } %>
+
+<% if (!pendentes.length) { %>
+  <p class="admin-vazio">
+    Nenhum cadastro na fila. Os grupos que se cadastram pela página de
+    laboratórios aparecem aqui para revisão.
+  </p>
+<% } else { %>
+  <p class="admin-muted admin-pendentes-ajuda">
+    Ao aprovar, o formulário abre preenchido com o que o grupo enviou — basta
+    conferir, marcar a posição no mapa e salvar. A logomarca é enviada por
+    e-mail à parte e pode ser anexada nesse mesmo momento.
+  </p>
+
+  <div class="admin-pendentes">
+    <% pendentes.forEach(function (p) { %>
+    <article class="admin-pendente">
+      <div class="admin-pendente-topo">
+        <div>
+          <h2><%= p.sigla %><% if (p.nome) { %> <span><%= p.nome %></span><% } %></h2>
+          <p class="admin-muted">
+            <%= p.instituicao || 'sem instituição' %> ·
+            <%= p.cidade ? p.cidade + '/' + p.uf : 'sem cidade' %>
+            <% if (p.integrantes) { %> · <%= p.integrantes %> integrantes<% } %>
+          </p>
+        </div>
+        <span class="admin-pendente-data">
+          <%= new Date(p.recebidoEm).toLocaleDateString('pt-BR') %>
+        </span>
+      </div>
+
+      <dl class="admin-pendente-dados">
+        <% if (p.responsavel) { %><div><dt>Responsável</dt><dd><%= p.responsavel %></dd></div><% } %>
+        <% if (p.email) { %><div><dt>E-mail</dt><dd><a href="mailto:<%= p.email %>"><%= p.email %></a></dd></div><% } %>
+        <% if (p.site) { %><div><dt>Site</dt><dd><a href="<%= p.site %>" target="_blank" rel="noopener"><%= p.site %></a></dd></div><% } %>
+        <% if (p.instagram) { %><div><dt>Instagram</dt><dd><a href="<%= p.instagram %>" target="_blank" rel="noopener"><%= p.instagram %></a></dd></div><% } %>
+        <% if (p.linkedin) { %><div><dt>LinkedIn</dt><dd><a href="<%= p.linkedin %>" target="_blank" rel="noopener"><%= p.linkedin %></a></dd></div><% } %>
+      </dl>
+
+      <div class="admin-pendente-acoes">
+        <a href="/admin/laboratorios/novo?pendente=<%= p.id %>" class="btn-mini btn-mini--ok">Aprovar e publicar</a>
+        <form action="/admin/laboratorios/pendentes/<%= p.id %>/recusar" method="post" class="admin-inline"
+              data-confirmar="Recusar o cadastro de &quot;<%= p.sigla %>&quot;? Ele sai da fila e não vai para o mapa.">
+          <button type="submit" class="btn-mini btn-mini--perigo">Recusar</button>
+        </form>
+      </div>
+    </article>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/bottom') %>

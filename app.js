@@ -193,6 +193,24 @@ app.post('/laboratorios/cadastro', async (req, res) => {
   );
   if (!captchaOk) return res.redirect('/laboratorios/cadastro?erro=captcha');
 
+  // 1) entra na fila de aprovação do painel — é o que evita a redigitação
+  const LIMITE_FILA = 60; // trava de segurança contra envio em massa
+  let naFila = false;
+  try {
+    const fila = await dados.getPendentes();
+    if (fila.length >= LIMITE_FILA) throw new Error('fila de cadastros cheia');
+    fila.push({
+      id: 'p-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      recebidoEm: new Date().toISOString(),
+      ...dadosLab
+    });
+    await dados.savePendentes(fila);
+    naFila = true;
+  } catch (err) {
+    // o aviso por e-mail abaixo ainda sai, então o cadastro não se perde
+    console.error('Erro gravando cadastro pendente:', err.message);
+  }
+
   const rotulos = {
     sigla: 'Sigla', nome: 'Nome completo', instituicao: 'Instituição',
     cidade: 'Cidade', uf: 'Estado', responsavel: 'Responsável',
@@ -219,8 +237,10 @@ app.post('/laboratorios/cadastro', async (req, res) => {
     });
     res.redirect('/laboratorios/cadastro?enviado=1');
   } catch (err) {
-    console.error('Erro no cadastro de laboratório:', err.response?.body || err.message);
-    res.redirect('/laboratorios/cadastro?erro=1');
+    console.error('Erro no aviso de cadastro:', err.response?.body || err.message);
+    // o e-mail é só notificação: com o cadastro já na fila, quem enviou não
+    // tem por que ver uma falha
+    res.redirect(naFila ? '/laboratorios/cadastro?enviado=1' : '/laboratorios/cadastro?erro=1');
   }
 });
 

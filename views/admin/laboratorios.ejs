@@ -5,7 +5,12 @@
     <h1>Laboratórios e Grupos de Pesquisa</h1>
     <p class="admin-muted"><%= lista.length %> cadastrado(s) — <%= semMapa %> sem posição no mapa</p>
   </div>
-  <a href="/admin/laboratorios/novo" class="btn btn-primary">+ Novo laboratório</a>
+  <div class="admin-page-acoes">
+    <a href="/admin/laboratorios/pendentes" class="btn btn-outline-primary">
+      Aguardando aprovação<% if (pendentes) { %> (<%= pendentes %>)<% } %>
+    </a>
+    <a href="/admin/laboratorios/novo" class="btn btn-primary">+ Novo laboratório</a>
+  </div>
 </div>
 
 <% if (ok) { %><p class="admin-alert admin-alert--ok"><%= ok %></p><% } %>

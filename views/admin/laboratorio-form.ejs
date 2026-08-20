@@ -9,6 +9,13 @@
 
 <% const v = lab || {}; %>
 <form method="post" class="admin-form admin-form--larga" id="formLab">
+  <% if (pendenteId) { %>
+    <p class="admin-alert admin-alert--info">
+      Cadastro enviado pelo site. Confira os dados, <strong>marque a posição no mapa</strong>
+      e salve — ao salvar, ele sai da fila de aprovação.
+    </p>
+    <input type="hidden" name="pendenteId" value="<%= pendenteId %>">
+  <% } %>
   <div class="admin-form-linha">
     <label>
       Sigla *

@@ -493,3 +493,34 @@ a.admin-muted:hover { text-decoration: underline; }
 .admin-tag { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 0.76rem; font-weight: 500; }
 .admin-tag--ok { background: #e8f4e1; color: #33691e; }
 .admin-tag--alerta { background: #fdecea; color: #b71c1c; }
+
+/* ---------- Fila de cadastros aguardando aprovação ---------- */
+.admin-page-acoes { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.admin-pendentes-ajuda { font-size: 0.88rem; margin: -6px 0 18px; max-width: 760px; line-height: 1.55; }
+
+.admin-pendentes { display: grid; gap: 16px; }
+.admin-pendente {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-secondary);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+}
+.admin-pendente-topo {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.admin-pendente-topo h2 { margin: 0 0 3px; font-size: 1.05rem; }
+.admin-pendente-topo h2 span { font-weight: 400; font-size: 0.9rem; color: var(--color-text); }
+.admin-pendente-topo p { margin: 0; font-size: 0.85rem; }
+.admin-pendente-data { font-size: 0.78rem; color: var(--color-text-muted); white-space: nowrap; }
+
+.admin-pendente-dados { margin: 0 0 14px; display: grid; gap: 4px; }
+.admin-pendente-dados > div { display: flex; gap: 10px; font-size: 0.85rem; }
+.admin-pendente-dados dt { flex: 0 0 92px; color: var(--color-text-muted); }
+.admin-pendente-dados dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.admin-pendente-dados a { color: var(--color-primary); text-decoration: underline; }
+
+.admin-pendente-acoes { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-mini--ok { color: #2e7d32; border-color: #bcdcb8; }
+.btn-mini--ok:hover { background: #e8f4e1; }

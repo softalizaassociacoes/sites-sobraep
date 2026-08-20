@@ -23,7 +23,7 @@ router.use((req, res, next) => {
 });
 
 function render(res, view, extra = {}) {
-  res.render(`admin/${view}`, { erro: null, ok: null, copiaDe: null, ...extra });
+  res.render(`admin/${view}`, { erro: null, ok: null, copiaDe: null, pendenteId: null, ...extra });
 }
 
 // ---------- Login / logout ----------
@@ -357,16 +357,60 @@ const outrosNoMapa = (lista, idAtual) => lista
 
 router.get('/laboratorios', async (req, res) => {
   const lista = await dados.getLaboratorios();
+  const pendentes = await dados.getPendentes();
   render(res, 'laboratorios', {
     lista,
+    pendentes: pendentes.length,
     semMapa: lista.filter((l) => l.left === null || l.left === undefined).length,
     ok: req.query.ok || null
   });
 });
 
+/**
+ * Fila de cadastros enviados pelo site.
+ *
+ * Aprovar não publica direto: abre o formulário normal já preenchido com o que
+ * o grupo enviou, porque falta a posição no mapa (o formulário público não tem
+ * como pedir isso) e porque a SOBRAEP quer conferir antes. Ao salvar, o
+ * pendente sai da fila.
+ */
+router.get('/laboratorios/pendentes', async (req, res) => {
+  const pendentes = await dados.getPendentes();
+  const lista = await dados.getLaboratorios();
+  render(res, 'laboratorios-pendentes', {
+    // ordena pela data recebida, e não pela ordem de inserção no arquivo
+    pendentes: pendentes.slice().sort((a, b) => String(b.recebidoEm || '').localeCompare(String(a.recebidoEm || ''))),
+    totalPublicados: lista.length,
+    ok: req.query.ok || null
+  });
+});
+
+router.post('/laboratorios/pendentes/:id/recusar', async (req, res) => {
+  const fila = await dados.getPendentes();
+  const restantes = fila.filter((p) => p.id !== req.params.id);
+  if (restantes.length !== fila.length) await dados.savePendentes(restantes);
+  res.redirect('/admin/laboratorios/pendentes?ok=Cadastro%20recusado');
+});
+
 router.get('/laboratorios/novo', async (req, res) => {
   const lista = await dados.getLaboratorios();
-  render(res, 'laboratorio-form', { lab: null, mapaSvg, outros: outrosNoMapa(lista, null) });
+  let lab = null;
+  let pendenteId = null;
+  // veio da fila de aprovação: preenche com o que o grupo enviou
+  const dePendente = String(req.query.pendente || '').trim();
+  if (dePendente) {
+    const p = (await dados.getPendentes()).find((x) => x.id === dePendente);
+    if (p) {
+      pendenteId = p.id;
+      lab = {
+        sigla: p.sigla, nome: p.nome, instituicao: p.instituicao,
+        cidade: p.cidade, uf: p.uf, responsavel: p.responsavel, email: p.email,
+        integrantes: p.integrantes, site: p.site,
+        instagram: p.instagram, linkedin: p.linkedin
+      };
+    }
+  }
+  render(res, 'laboratorio-form', { lab, mapaSvg, outros: outrosNoMapa(lista, null), pendenteId });
 });
 
 router.post('/laboratorios/novo', async (req, res) => {
@@ -375,6 +419,12 @@ router.post('/laboratorios/novo', async (req, res) => {
     lista.push(montarLaboratorio(req.body, null, lista.map((l) => l.id)));
     lista.sort((a, b) => (a.uf || 'ZZ').localeCompare(b.uf || 'ZZ') || a.sigla.localeCompare(b.sigla));
     await dados.saveLaboratorios(lista);
+    const daFila = String(req.body.pendenteId || '').trim();
+    if (daFila) {
+      const fila = await dados.getPendentes();
+      const restantes = fila.filter((p) => p.id !== daFila);
+      if (restantes.length !== fila.length) await dados.savePendentes(restantes);
+    }
     res.redirect('/admin/laboratorios?ok=Laborat%C3%B3rio%20cadastrado');
   } catch (err) {
     render(res, 'laboratorio-form', {
