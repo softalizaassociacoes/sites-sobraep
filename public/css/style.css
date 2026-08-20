@@ -1408,6 +1408,15 @@ table.data-table tr:hover td { background: #fff6e6; }
 .labs-mapa-base .uf.tem-lab { fill: #c9c9e6; cursor: pointer; }
 .labs-mapa-base .uf.tem-lab:hover { fill: var(--color-secondary); }
 .labs-mapa-base .uf.tem-lab.is-ativo { fill: var(--color-primary); }
+/* O foco do navegador desenha um retângulo em volta da caixa do estado, que
+   fica solto sobre o mapa. Trocado por um traço que acompanha o contorno do
+   próprio estado — some o retângulo sem perder o indicador de teclado. */
+.labs-mapa-base .uf.tem-lab:focus { outline: none; }
+.labs-mapa-base .uf.tem-lab:focus-visible {
+  outline: none;
+  stroke: var(--color-secondary-dark);
+  stroke-width: 2.4;
+}
 
 /* marcador da cidade: discreto, já que a identidade visual foi para a lista */
 .labs-ponto {

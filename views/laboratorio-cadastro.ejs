@@ -114,10 +114,7 @@
             </label>
           </fieldset>
 
-          <% if (site.recaptchaSiteKey) { %>
-            <div class="g-recaptcha" data-sitekey="<%= site.recaptchaSiteKey %>"></div>
-            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-          <% } %>
+          <input type="hidden" name="g-recaptcha-response" id="recaptchaToken">
 
           <div class="labs-form-acoes">
             <button type="submit" class="btn btn-primary">Enviar cadastro</button>
@@ -130,5 +127,26 @@
 </main>
 
 <%- include('partials/footer') %>
+<% if (site.recaptchaSiteKey) { %>
+<script src="https://www.google.com/recaptcha/api.js?render=<%= site.recaptchaSiteKey %>"></script>
+<script>
+(function () {
+  var form = document.querySelector('.labs-form');
+  if (!form || typeof grecaptcha === 'undefined') return;
+  var siteKey = '<%= site.recaptchaSiteKey %>';
+  form.addEventListener('submit', function (e) {
+    if (form.dataset.captchaReady === '1') return; // já tem token, deixa enviar
+    e.preventDefault();
+    grecaptcha.ready(function () {
+      grecaptcha.execute(siteKey, { action: 'cadastro_laboratorio' }).then(function (token) {
+        document.getElementById('recaptchaToken').value = token;
+        form.dataset.captchaReady = '1';
+        form.submit();
+      });
+    });
+  });
+})();
+</script>
+<% } %>
 </body>
 </html>
