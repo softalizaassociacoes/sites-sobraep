@@ -357,6 +357,23 @@
     "top": 86.564
   },
   {
+    "id": "jl-power",
+    "sigla": "JL Power",
+    "nome": "JL Power Electronics",
+    "instituicao": null,
+    "cidade": "Florianópolis",
+    "responsavel": "Marcos José Jacoboski",
+    "email": "jlconversores@gmail.com",
+    "uf": "SC",
+    "site": null,
+    "linkedin": "https://www.linkedin.com/company/jlpowerelectronics/?viewAsMember=true",
+    "instagram": null,
+    "logo": "/images/laboratorios/jl-power.png",
+    "integrantes": 2,
+    "left": 65.1,
+    "top": 85.9
+  },
+  {
     "id": "npee",
     "sigla": "nPEE",
     "nome": "Núcleo de Processamento de Energia Elétrica",
@@ -440,22 +457,5 @@
     "logo": null,
     "left": 67.32,
     "top": 73.895
-  },
-  {
-    "id": "jl-power",
-    "sigla": "JL Power",
-    "nome": "JL Power Electronics",
-    "instituicao": null,
-    "cidade": "Florianópolis/SC",
-    "responsavel": "Marcos José Jacoboski",
-    "email": "jlconversores@gmail.com",
-    "uf": null,
-    "site": null,
-    "linkedin": "https://www.linkedin.com/company/jlpowerelectronics/?viewAsMember=true",
-    "instagram": null,
-    "logo": "/images/laboratorios/jl-power.png",
-    "integrantes": 2,
-    "left": 65.1,
-    "top": 85.9
   }
 ]
