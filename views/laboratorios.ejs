@@ -6,6 +6,18 @@
 <body>
 <%- include('partials/header') %>
 
+<%
+  // Estados que têm laboratório: só eles ficam clicáveis no mapa.
+  const porUf = {};
+  laboratorios.forEach(function (l) {
+    if (!l.uf) return;
+    (porUf[l.uf] = porUf[l.uf] || []).push(l);
+  });
+  const ufsComLab = Object.keys(porUf).sort();
+  const semLocal = laboratorios.filter(function (l) { return l.left === null || l.left === undefined; });
+  const totalMembros = laboratorios.reduce(function (s, l) { return s + (l.integrantes || 0); }, 0);
+%>
+
 <main id="conteudo">
   <section class="page-hero">
     <div class="container">
@@ -16,82 +28,127 @@
 
   <section class="section">
     <div class="container">
-      <p class="labs-intro">
-        Clique em um marcador no mapa para ver os dados do laboratório e acessar seus canais.
-      </p>
-
-      <div class="labs-mapa-wrap">
-        <div class="labs-mapa" id="labsMapa">
-          <div class="labs-mapa-base"><%- mapaSvg %></div>
-
-          <% laboratorios.forEach(function(l, i) { if (l.left === null) return; %>
-          <button type="button"
-                  class="labs-marcador <%= l.logo ? '' : 'labs-marcador--sigla' %>"
-                  style="left: <%= l.left %>%; top: <%= l.top %>%;"
-                  data-lab="<%= i %>"
-                  aria-label="<%= l.sigla %> — <%= l.cidade %>/<%= l.uf %>">
-            <% if (l.logo) { %>
-              <img src="<%= l.logo %>" alt="" loading="lazy">
-            <% } else { %>
-              <span><%= l.sigla %></span>
-            <% } %>
-          </button>
-          <% }) %>
-
-          <div class="labs-popup" id="labsPopup" role="dialog" aria-modal="false" aria-labelledby="labsPopupTitulo" hidden>
-            <button type="button" class="labs-popup-fechar" id="labsPopupFechar" aria-label="Fechar">&times;</button>
-            <div class="labs-popup-topo">
-              <div class="labs-popup-logo" id="labsPopupLogo"></div>
-              <div>
-                <p class="labs-popup-sigla" id="labsPopupTitulo"></p>
-                <p class="labs-popup-nome" id="labsPopupNome"></p>
-              </div>
-            </div>
-            <dl class="labs-popup-dados">
-              <div><dt>Instituição</dt><dd id="labsPopupInst"></dd></div>
-              <div><dt>Cidade</dt><dd id="labsPopupCidade"></dd></div>
-              <div class="labs-popup-integrantes" id="labsPopupIntegrantesLinha">
-                <dt>Integrantes</dt><dd id="labsPopupIntegrantes"></dd>
-              </div>
-            </dl>
-            <div class="labs-popup-links" id="labsPopupLinks"></div>
-          </div>
-        </div>
+      <div class="labs-numeros">
+        <div><strong><%= laboratorios.length %></strong><span>Grupos de pesquisa</span></div>
+        <div><strong><%= totalInstituicoes %></strong><span>Instituições</span></div>
+        <div><strong><%= ufsComLab.length %></strong><span>Estados</span></div>
+        <div><strong><%= totalMembros %>+</strong><span>Integrantes</span></div>
       </div>
 
-      <% const semLocal = laboratorios.filter(function(l) { return l.left === null; }); %>
+      <p class="labs-intro">
+        Clique em um estado do mapa para ver os grupos daquela região, ou percorra a
+        lista ao lado — ao passar por um item, uma linha mostra onde ele fica no mapa.
+      </p>
+
+      <div class="labs-painel">
+        <!-- Mapa -->
+        <div class="labs-mapa-col">
+          <div class="labs-mapa" id="labsMapa">
+            <div class="labs-mapa-base"><%- mapaSvg %></div>
+
+            <% laboratorios.forEach(function (l, i) { if (l.left === null) return; %>
+            <button type="button" class="labs-ponto" style="left: <%= l.left %>%; top: <%= l.top %>%;"
+                    data-lab="<%= i %>" data-uf="<%= l.uf %>"
+                    aria-label="<%= l.sigla %> — <%= l.cidade %>/<%= l.uf %>"></button>
+            <% }) %>
+
+            <!-- as linhas até a lista são desenhadas aqui, por JS -->
+            <svg class="labs-linhas" id="labsLinhas" aria-hidden="true"></svg>
+          </div>
+
+          <p class="labs-mapa-legenda">
+            <span class="labs-legenda-uf"></span> estados com grupos cadastrados —
+            clique para filtrar
+          </p>
+        </div>
+
+        <!-- Lista lateral -->
+        <aside class="labs-lista-col" aria-label="Lista de laboratórios">
+          <div class="labs-lista-topo">
+            <p class="labs-lista-titulo" id="labsFiltroTitulo">Todos os grupos</p>
+            <button type="button" class="labs-limpar" id="labsLimpar" hidden>ver todos</button>
+          </div>
+
+          <ul class="labs-lista" id="labsLista">
+            <% laboratorios.forEach(function (l, i) { %>
+            <li class="labs-item" data-lab="<%= i %>" data-uf="<%= l.uf || '' %>">
+              <button type="button" class="labs-item-btn">
+                <span class="labs-item-logo <%= l.logo ? '' : 'labs-item-logo--vazia' %>">
+                  <% if (l.logo) { %>
+                    <img src="<%= l.logo %>" alt="" loading="lazy">
+                  <% } else { %>
+                    <span><%= l.sigla %></span>
+                  <% } %>
+                </span>
+                <span class="labs-item-texto">
+                  <span class="labs-item-sigla"><%= l.sigla %></span>
+                  <span class="labs-item-local">
+                    <%= l.cidade ? l.cidade + '/' + l.uf : 'sem cidade cadastrada' %>
+                  </span>
+                  <span class="labs-item-meta">
+                    <%= l.instituicao || '' %><% if (l.integrantes) { %> · <%= l.integrantes %> integrantes<% } %>
+                  </span>
+                </span>
+              </button>
+            </li>
+            <% }) %>
+          </ul>
+          <p class="labs-lista-vazia" id="labsListaVazia" hidden>Nenhum grupo neste estado.</p>
+        </aside>
+      </div>
+
+      <!-- Detalhe do grupo -->
+      <div class="labs-popup" id="labsPopup" role="dialog" aria-modal="false" aria-labelledby="labsPopupTitulo" hidden>
+        <button type="button" class="labs-popup-fechar" id="labsPopupFechar" aria-label="Fechar">&times;</button>
+        <div class="labs-popup-topo">
+          <div class="labs-popup-logo" id="labsPopupLogo"></div>
+          <div>
+            <p class="labs-popup-sigla" id="labsPopupTitulo"></p>
+            <p class="labs-popup-nome" id="labsPopupNome"></p>
+          </div>
+        </div>
+        <dl class="labs-popup-dados">
+          <div><dt>Instituição</dt><dd id="labsPopupInst"></dd></div>
+          <div><dt>Cidade</dt><dd id="labsPopupCidade"></dd></div>
+          <div id="labsPopupRespLinha"><dt>Responsável</dt><dd id="labsPopupResp"></dd></div>
+          <div id="labsPopupIntegrantesLinha"><dt>Integrantes</dt><dd id="labsPopupIntegrantes"></dd></div>
+        </dl>
+        <div class="labs-popup-links" id="labsPopupLinks"></div>
+      </div>
+
+      <!-- Chamada para novos cadastros -->
+      <div class="labs-cadastro">
+        <div>
+          <h2>Seu grupo ainda não está no mapa?</h2>
+          <p>
+            A rede é aberta a laboratórios e grupos de pesquisa em Eletrônica de Potência
+            de todo o país. Envie os dados do seu grupo e ele entra no mapa na próxima
+            atualização, feita mensalmente.
+          </p>
+        </div>
+        <a href="/laboratorios/cadastro" class="btn btn-primary">Cadastrar meu grupo</a>
+      </div>
+
       <% if (semLocal.length) { %>
       <div class="labs-sem-local">
         <h2>Sem localização informada</h2>
         <p>Estes grupos ainda não têm cidade cadastrada e por isso não aparecem no mapa.</p>
         <ul>
-          <% semLocal.forEach(function(l) { %>
+          <% semLocal.forEach(function (l) { %>
           <li>
             <strong><%= l.sigla %></strong>
             <% if (l.nome && l.nome !== l.sigla) { %>— <%= l.nome %><% } %>
-            <% if (l.site || l.linkedin || l.instagram) { %>
-              <span class="labs-sem-local-links">
-                <% if (l.site) { %><a href="<%= l.site %>" target="_blank" rel="noopener">site</a><% } %>
-                <% if (l.linkedin) { %><a href="<%= l.linkedin %>" target="_blank" rel="noopener">LinkedIn</a><% } %>
-                <% if (l.instagram) { %><a href="<%= l.instagram %>" target="_blank" rel="noopener">Instagram</a><% } %>
-              </span>
-            <% } %>
           </li>
           <% }) %>
         </ul>
       </div>
       <% } %>
-
-      <div class="labs-numeros">
-        <div><strong><%= laboratorios.length %></strong><span>Grupos de pesquisa</span></div>
-        <div><strong><%= totalInstituicoes %></strong><span>Instituições</span></div>
-        <div><strong><%= totalEstados %></strong><span>Estados</span></div>
-      </div>
     </div>
   </section>
 </main>
 
 <script id="labsDados" type="application/json"><%- JSON.stringify(laboratorios) %></script>
+<script id="labsUfs" type="application/json"><%- JSON.stringify(ufsComLab) %></script>
 <script src="/js/laboratorios.js" defer></script>
 
 <%- include('partials/footer') %>

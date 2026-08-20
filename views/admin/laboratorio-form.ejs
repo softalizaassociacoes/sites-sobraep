@@ -27,6 +27,17 @@
 
   <div class="admin-form-linha">
     <label class="admin-flex1">
+      Responsável
+      <input type="text" name="responsavel" value="<%= v.responsavel || '' %>" maxlength="120">
+    </label>
+    <label class="admin-flex1">
+      E-mail de contato
+      <input type="email" name="email" value="<%= v.email || '' %>" maxlength="120">
+    </label>
+  </div>
+
+  <div class="admin-form-linha">
+    <label class="admin-flex1">
       Cidade
       <input type="text" name="cidade" value="<%= v.cidade || '' %>" maxlength="80" placeholder="Ex.: Viçosa">
     </label>

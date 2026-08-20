@@ -337,6 +337,8 @@ function montarLaboratorio(body, idFixo, idsExistentes) {
     nome: texto('nome', 200),
     instituicao: texto('instituicao', 150),
     cidade: texto('cidade', 80),
+    responsavel: texto('responsavel', 120),
+    email: texto('email', 120),
     uf: uf ? uf.toUpperCase() : null,
     site: dados.urlOuNulo(body.site),
     linkedin: dados.urlOuNulo(body.linkedin),

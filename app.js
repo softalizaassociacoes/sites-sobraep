@@ -146,6 +146,84 @@ app.get('/laboratorios', async (req, res) => {
     totalEstados: estados.size
   });
 });
+const UFS = ['AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT',
+  'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO'];
+
+app.get('/laboratorios/cadastro', (req, res) => {
+  res.render('laboratorio-cadastro', {
+    site, active: 'laboratorios', ufs: UFS,
+    enviado: req.query.enviado, erro: req.query.erro
+  });
+});
+
+/**
+ * Cadastro de novo grupo vindo do site.
+ *
+ * O envio não grava direto no mapa: chega por e-mail para a secretaria, que
+ * confere e cadastra pelo painel. Gravar sem revisão exporia o arquivo de
+ * dados a qualquer visitante.
+ *
+ * O e-mail sai com os campos na mesma ordem do formulário do painel, para o
+ * cadastro ser só copiar e colar.
+ */
+app.post('/laboratorios/cadastro', async (req, res) => {
+  const campo = (nome, max) => String(req.body[nome] || '').trim().slice(0, max);
+  const dadosLab = {
+    sigla: campo('sigla', 20),
+    nome: campo('nome', 200),
+    instituicao: campo('instituicao', 150),
+    cidade: campo('cidade', 80),
+    uf: campo('uf', 2).toUpperCase(),
+    responsavel: campo('responsavel', 120),
+    email: campo('email', 120),
+    integrantes: campo('integrantes', 5),
+    site: campo('site', 300),
+    instagram: campo('instagram', 300),
+    linkedin: campo('linkedin', 300)
+  };
+
+  if (!dadosLab.sigla || !dadosLab.instituicao || !dadosLab.cidade ||
+      !dadosLab.email || !UFS.includes(dadosLab.uf)) {
+    return res.redirect('/laboratorios/cadastro?erro=1');
+  }
+
+  const captchaOk = await verificarCaptcha(
+    req.body['g-recaptcha-response'],
+    req.headers['x-forwarded-for'] || req.socket?.remoteAddress
+  );
+  if (!captchaOk) return res.redirect('/laboratorios/cadastro?erro=captcha');
+
+  const rotulos = {
+    sigla: 'Sigla', nome: 'Nome completo', instituicao: 'Instituição',
+    cidade: 'Cidade', uf: 'Estado', responsavel: 'Responsável',
+    email: 'E-mail', integrantes: 'Nº de integrantes',
+    site: 'Site', instagram: 'Instagram', linkedin: 'LinkedIn'
+  };
+  const corpo = Object.keys(rotulos)
+    .map((k) => `${rotulos[k]}: ${dadosLab[k] || '—'}`)
+    .join('\n');
+
+  try {
+    if (!process.env.SENDGRID_API_KEY || !process.env.SENDGRID_FROM) {
+      throw new Error('SendGrid não configurado');
+    }
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    await sgMail.send({
+      to: [site.emailSecretaria, 'marcos@softaliza.com.br'],
+      from: { email: process.env.SENDGRID_FROM, name: 'Site SOBRAEP' },
+      replyTo: dadosLab.email,
+      subject: `[Mapa de laboratórios] Novo cadastro: ${dadosLab.sigla}`,
+      text: `Um grupo se cadastrou pelo site para entrar no mapa de laboratórios.\n\n${corpo}\n\n` +
+        `Para publicar: Painel > Laboratórios > Novo laboratório, com estes mesmos campos.\n` +
+        `A logomarca vem por e-mail à parte, com a sigla no assunto.`
+    });
+    res.redirect('/laboratorios/cadastro?enviado=1');
+  } catch (err) {
+    console.error('Erro no cadastro de laboratório:', err.response?.body || err.message);
+    res.redirect('/laboratorios/cadastro?erro=1');
+  }
+});
+
 app.get('/webinars', async (req, res) => {
   const webinars = await dados.getWebinars();
   res.render('webinars', { site, active: 'webinars', webinars });

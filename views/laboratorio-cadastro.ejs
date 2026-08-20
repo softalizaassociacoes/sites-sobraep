@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<%- include('partials/head', { title: 'Cadastrar laboratório ou grupo de pesquisa', description: 'Envie os dados do seu laboratório ou grupo de pesquisa em Eletrônica de Potência para entrar no mapa da SOBRAEP.' }) %>
+</head>
+<body>
+<%- include('partials/header') %>
+
+<main id="conteudo">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Cadastrar laboratório ou grupo</h1>
+      <p>Preencha os dados abaixo para entrar no mapa de laboratórios da SOBRAEP.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <% if (enviado) { %>
+        <div class="form-aviso form-aviso--ok">
+          <h2>Cadastro enviado</h2>
+          <p>
+            Recebemos os dados do seu grupo. A SOBRAEP revisa os cadastros e atualiza o
+            mapa mensalmente — em breve ele estará no ar.
+          </p>
+          <a href="/laboratorios" class="btn btn-outline-primary">Voltar ao mapa</a>
+        </div>
+      <% } else { %>
+
+        <% if (erro) { %>
+          <p class="form-aviso form-aviso--erro">
+            <%= erro === 'captcha' ? 'Não foi possível confirmar que você não é um robô. Tente novamente.'
+                : 'Preencha ao menos a sigla, a instituição, a cidade e um e-mail de contato.' %>
+          </p>
+        <% } %>
+
+        <p class="labs-form-intro">
+          Os campos marcados com * são obrigatórios. Os demais ajudam a completar a
+          ficha do grupo no mapa e podem ser enviados depois.
+        </p>
+
+        <form method="post" action="/laboratorios/cadastro" class="labs-form">
+          <fieldset>
+            <legend>Identificação</legend>
+            <div class="labs-form-linha">
+              <label>
+                Sigla *
+                <input type="text" name="sigla" required maxlength="20" placeholder="Ex.: GESEP">
+              </label>
+              <label class="labs-form-flex">
+                Nome completo do laboratório ou grupo
+                <input type="text" name="nome" maxlength="200">
+              </label>
+            </div>
+            <label>
+              Instituição *
+              <input type="text" name="instituicao" required maxlength="150" placeholder="Ex.: UFV - Universidade Federal de Viçosa">
+            </label>
+            <div class="labs-form-linha">
+              <label class="labs-form-flex">
+                Cidade *
+                <input type="text" name="cidade" required maxlength="80">
+              </label>
+              <label>
+                Estado *
+                <select name="uf" required>
+                  <option value="">--</option>
+                  <% ufs.forEach(function (uf) { %><option value="<%= uf %>"><%= uf %></option><% }) %>
+                </select>
+              </label>
+              <label>
+                Nº aproximado de integrantes
+                <input type="number" name="integrantes" min="0" max="9999">
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Contato</legend>
+            <div class="labs-form-linha">
+              <label class="labs-form-flex">
+                Responsável
+                <input type="text" name="responsavel" maxlength="120">
+              </label>
+              <label class="labs-form-flex">
+                E-mail de contato *
+                <input type="email" name="email" required maxlength="120">
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Presença on-line</legend>
+            <label>
+              Site
+              <input type="url" name="site" maxlength="300" placeholder="https://...">
+            </label>
+            <div class="labs-form-linha">
+              <label class="labs-form-flex">
+                Instagram
+                <input type="url" name="instagram" maxlength="300" placeholder="https://www.instagram.com/...">
+              </label>
+              <label class="labs-form-flex">
+                LinkedIn
+                <input type="url" name="linkedin" maxlength="300" placeholder="https://www.linkedin.com/company/...">
+              </label>
+            </div>
+            <label>
+              Logomarca
+              <span class="labs-form-ajuda">
+                Envie o arquivo para <a href="mailto:<%= site.emailSecretaria %>"><%= site.emailSecretaria %></a>
+                com a sigla do grupo no assunto. Aceita PNG, JPG ou PDF, em qualquer tamanho.
+              </span>
+            </label>
+          </fieldset>
+
+          <% if (site.recaptchaSiteKey) { %>
+            <div class="g-recaptcha" data-sitekey="<%= site.recaptchaSiteKey %>"></div>
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+          <% } %>
+
+          <div class="labs-form-acoes">
+            <button type="submit" class="btn btn-primary">Enviar cadastro</button>
+            <a href="/laboratorios" class="btn btn-outline-primary">Cancelar</a>
+          </div>
+        </form>
+      <% } %>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+</body>
+</html>
