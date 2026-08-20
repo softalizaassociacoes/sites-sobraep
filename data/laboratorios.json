@@ -5,16 +5,16 @@
     "nome": "GRUPO DE PROCESSAMENTO DE ENERGIA E CONTROLE",
     "instituicao": "UFC - Universidade Federal do Ceará",
     "cidade": "Fortaleza",
-    "uf": "CE",
     "responsavel": "Fernando Luiz Marcelo Antunes / Demercil de Souza Oliveira Júnior",
     "email": "contatogpec@dee.ufc.br",
-    "integrantes": 80,
+    "uf": "CE",
     "site": "http://www.gpec.ufc.br/index.html",
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": "/images/laboratorios/gpec.png",
-    "left": 91.887,
-    "top": 21.018
+    "integrantes": 80,
+    "left": 92.5,
+    "top": 23.4
   },
   {
     "id": "lpc",
@@ -51,6 +51,23 @@
     "top": 60.683
   },
   {
+    "id": "gesep",
+    "sigla": "GESEP",
+    "nome": "Gerência de Especialistas de Sistemas Elétricos de Potência",
+    "instituicao": "UFV",
+    "cidade": "Viçosa",
+    "uf": "MG",
+    "responsavel": "Heverton Augusto Pereira",
+    "email": "heverton.pereira@ufv.br",
+    "integrantes": null,
+    "site": "https://www.gesep.com.br/",
+    "instagram": "https://www.instagram.com/gesep_br/",
+    "linkedin": "https://www.linkedin.com/company/gesep",
+    "logo": "/images/laboratorios/gesep.png",
+    "left": 81.953,
+    "top": 68.582
+  },
+  {
     "id": "lcce",
     "sigla": "LCCE",
     "nome": "Laboratório de Conversão e Controle da Energia",
@@ -66,6 +83,23 @@
     "logo": null,
     "left": 80.375,
     "top": 63.409
+  },
+  {
+    "id": "nupep",
+    "sigla": "NUPEP",
+    "nome": "Núcleo de Pesquisa em Eletrônica de Potência",
+    "instituicao": "UFU - Universidade Federal de Uberlândia",
+    "cidade": "Uberlândia",
+    "uf": "MG",
+    "responsavel": "Luiz Carlos Gomes de Freitas",
+    "email": "lcgfreitas@ufu.br",
+    "integrantes": 13,
+    "site": "https://nupep-ufu.com/",
+    "instagram": "https://www.instagram.com/nupep_ufu/",
+    "linkedin": "https://www.linkedin.com/in/nupep-ufu/",
+    "logo": "/images/laboratorios/nupep.png",
+    "left": 65.61,
+    "top": 62.005
   },
   {
     "id": "tesla",
@@ -102,40 +136,6 @@
     "top": 67.376
   },
   {
-    "id": "nupep",
-    "sigla": "NUPEP",
-    "nome": "Núcleo de Pesquisa em Eletrônica de Potência",
-    "instituicao": "UFU - Universidade Federal de Uberlândia",
-    "cidade": "Uberlândia",
-    "uf": "MG",
-    "responsavel": "Luiz Carlos Gomes de Freitas",
-    "email": "lcgfreitas@ufu.br",
-    "integrantes": 13,
-    "site": "https://nupep-ufu.com/",
-    "instagram": "https://www.instagram.com/nupep_ufu/",
-    "linkedin": "https://www.linkedin.com/in/nupep-ufu/",
-    "logo": "/images/laboratorios/nupep.png",
-    "left": 65.61,
-    "top": 62.005
-  },
-  {
-    "id": "gesep",
-    "sigla": "GESEP",
-    "nome": "Gerência de Especialistas de Sistemas Elétricos de Potência",
-    "instituicao": "UFV",
-    "cidade": "Viçosa",
-    "uf": "MG",
-    "responsavel": "Heverton Augusto Pereira",
-    "email": "heverton.pereira@ufv.br",
-    "integrantes": null,
-    "site": "https://www.gesep.com.br/",
-    "instagram": "https://www.instagram.com/gesep_br/",
-    "linkedin": "https://www.linkedin.com/company/gesep",
-    "logo": "/images/laboratorios/gesep.png",
-    "left": 81.953,
-    "top": 68.582
-  },
-  {
     "id": "gepae",
     "sigla": "GEPAE",
     "nome": "Grupo de Eletrônica de Potência e Acionamentos Elétricos",
@@ -151,23 +151,6 @@
     "logo": "/images/laboratorios/gepae.png",
     "left": 97.25,
     "top": 34.145
-  },
-  {
-    "id": "lepqer",
-    "sigla": "LEPQER",
-    "nome": "Laboratório de Eletrônica de Potência Qualidade de Energia e Energias Renováveis",
-    "instituicao": "UTFPR-CP - Universidade Tecnológica Federal do Paraná - Campus Cornélio Procópio",
-    "cidade": "Cornélio Procópio",
-    "uf": "PR",
-    "responsavel": "Sergio Augusto Oliveira da Silva",
-    "email": "augus@utfpr.edu.br",
-    "integrantes": 30,
-    "site": null,
-    "instagram": "https://www.instagram.com/lepqer/",
-    "linkedin": null,
-    "logo": "/images/laboratorios/lepqer.png",
-    "left": 58.329,
-    "top": 71.484
   },
   {
     "id": "laaepe",
@@ -187,6 +170,23 @@
     "top": 75.69
   },
   {
+    "id": "lepqer",
+    "sigla": "LEPQER",
+    "nome": "Laboratório de Eletrônica de Potência Qualidade de Energia e Energias Renováveis",
+    "instituicao": "UTFPR-CP - Universidade Tecnológica Federal do Paraná - Campus Cornélio Procópio",
+    "cidade": "Cornélio Procópio",
+    "uf": "PR",
+    "responsavel": "Sergio Augusto Oliveira da Silva",
+    "email": "augus@utfpr.edu.br",
+    "integrantes": 30,
+    "site": null,
+    "instagram": "https://www.instagram.com/lepqer/",
+    "linkedin": null,
+    "logo": "/images/laboratorios/lepqer.png",
+    "left": 58.329,
+    "top": 71.484
+  },
+  {
     "id": "utfpr-pg",
     "sigla": "UTFPR-PG",
     "nome": "Grupo de Pesquisa: Eletrônica de Potência para a Transição Energética, Laboratório: LEV - Laboratório de Eletrificação Veicular",
@@ -204,23 +204,6 @@
     "top": 78.615
   },
   {
-    "id": "nitee",
-    "sigla": "NITEE",
-    "nome": "Núcleo de Inovação Tecnológica em Engenharia Elétrica",
-    "instituicao": "UFF - Universidade Federal Fluminense",
-    "cidade": "Niterói",
-    "uf": "RJ",
-    "responsavel": "Bruno Wanderley França",
-    "email": "bwfranca@id.uff.br",
-    "integrantes": 50,
-    "site": "https://nitee.uff.br/",
-    "instagram": null,
-    "linkedin": "https://www.linkedin.com/company/n%C3%BAcleo-de-inova%C3%A7%C3%A3o-tecnol%C3%B3gica-em-engenharia-el%C3%A9trica-nitee/",
-    "logo": "/images/laboratorios/nitee.png",
-    "left": 81.985,
-    "top": 74.138
-  },
-  {
     "id": "lemt",
     "sigla": "LEMT",
     "nome": "Laboratory of Energy Management Technologies",
@@ -236,6 +219,23 @@
     "logo": null,
     "left": 76.587,
     "top": 72.864
+  },
+  {
+    "id": "nitee",
+    "sigla": "NITEE",
+    "nome": "Núcleo de Inovação Tecnológica em Engenharia Elétrica",
+    "instituicao": "UFF - Universidade Federal Fluminense",
+    "cidade": "Niterói",
+    "uf": "RJ",
+    "responsavel": "Bruno Wanderley França",
+    "email": "bwfranca@id.uff.br",
+    "integrantes": 50,
+    "site": "https://nitee.uff.br/",
+    "instagram": null,
+    "linkedin": "https://www.linkedin.com/company/n%C3%BAcleo-de-inova%C3%A7%C3%A3o-tecnol%C3%B3gica-em-engenharia-el%C3%A9trica-nitee/",
+    "logo": "/images/laboratorios/nitee.png",
+    "left": 81.985,
+    "top": 74.138
   },
   {
     "id": "gedre",
@@ -289,6 +289,23 @@
     "top": 79.518
   },
   {
+    "id": "gati",
+    "sigla": "GATI",
+    "nome": "Grupo de pesquisa em aplicações tecnológicas industriais",
+    "instituicao": "UNOESC - Universidade do Oeste de Santa Catarina",
+    "cidade": "Joaçaba",
+    "uf": "SC",
+    "responsavel": "Marconi Januário",
+    "email": "jean.prigol@unoesc.edu.br",
+    "integrantes": 11,
+    "site": null,
+    "instagram": null,
+    "linkedin": null,
+    "logo": "/images/laboratorios/gati.png",
+    "left": 56.196,
+    "top": 84.022
+  },
+  {
     "id": "gepai",
     "sigla": "GEPAI",
     "nome": "Grupo de Pesquisas em Eletrônica de Potência e Acionamentos Industriais",
@@ -340,23 +357,6 @@
     "top": 86.564
   },
   {
-    "id": "gati",
-    "sigla": "GATI",
-    "nome": "Grupo de pesquisa em aplicações tecnológicas industriais",
-    "instituicao": "UNOESC - Universidade do Oeste de Santa Catarina",
-    "cidade": "Joaçaba",
-    "uf": "SC",
-    "responsavel": "Marconi Januário",
-    "email": "jean.prigol@unoesc.edu.br",
-    "integrantes": 11,
-    "site": null,
-    "instagram": null,
-    "linkedin": null,
-    "logo": "/images/laboratorios/gati.png",
-    "left": 56.196,
-    "top": 84.022
-  },
-  {
     "id": "npee",
     "sigla": "nPEE",
     "nome": "Núcleo de Processamento de Energia Elétrica",
@@ -372,23 +372,6 @@
     "logo": "/images/laboratorios/npee.png",
     "left": 62.12,
     "top": 81.199
-  },
-  {
-    "id": "unicamp",
-    "sigla": "Unicamp",
-    "nome": "Eletrônica de Potência, Acionamentos Elétricos e Sistemas",
-    "instituicao": "Unicamp",
-    "cidade": "Campinas",
-    "uf": "SP",
-    "responsavel": "José Antenor Pomilio",
-    "email": "antenor@unicamp.br",
-    "integrantes": 50,
-    "site": "https://dgp.cnpq.br/dgp/espelhogrupo/7513527302049134",
-    "instagram": null,
-    "linkedin": null,
-    "logo": null,
-    "left": 67.32,
-    "top": 73.895
   },
   {
     "id": "cirue",
@@ -440,6 +423,23 @@
     "logo": null,
     "left": 65.958,
     "top": 68.57
+  },
+  {
+    "id": "unicamp",
+    "sigla": "Unicamp",
+    "nome": "Eletrônica de Potência, Acionamentos Elétricos e Sistemas",
+    "instituicao": "Unicamp",
+    "cidade": "Campinas",
+    "uf": "SP",
+    "responsavel": "José Antenor Pomilio",
+    "email": "antenor@unicamp.br",
+    "integrantes": 50,
+    "site": "https://dgp.cnpq.br/dgp/espelhogrupo/7513527302049134",
+    "instagram": null,
+    "linkedin": null,
+    "logo": null,
+    "left": 67.32,
+    "top": 73.895
   },
   {
     "id": "jl-power",
