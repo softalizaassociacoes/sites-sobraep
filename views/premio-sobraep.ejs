@@ -12,6 +12,13 @@
 // null, o card mostra as iniciais do nome no lugar do retrato.
 const edicoes = [
   {
+    ano: 2026,
+    link: '/noticias/premio-sobraep-2026-trabalhos-de-conclusao-de-curso-dissertacoes-e-teses-2',
+    situacao: 'Edital em aberto',
+    rotuloLink: 'Ver o edital',
+    vencedores: []
+  },
+  {
     ano: 2025,
     link: '/noticias/resultado-do-premio-sobraep-de-tese-dissertacao-e-tcc-edicao-2025',
     vencedores: [
@@ -34,6 +41,11 @@ const edicoes = [
     ano: 2023,
     link: '/noticias/resultado-do-premio-sobraep-de-dissertacao-e-de-tese-edicao-2023',
     vencedores: [
+      { categoria: 'Melhor TFC', nome: 'Bruno de Araújo Coutinho', foto: '/images/premios/bruno-de-araujo-coutinho.jpg' },
+      { categoria: 'Melhor TFC', nome: 'Igor Matheus Leal Rodrigues', foto: '/images/premios/igor-matheus-leal-rodrigues.jpg' },
+      { categoria: 'Melhor TFC', nome: 'Igor Oliani', foto: '/images/premios/igor-oliani.jpg' },
+      { categoria: 'Melhor TFC', nome: 'Lucas Ramiro da Silva', foto: '/images/premios/lucas-ramiro-da-silva.jpg' },
+      { categoria: 'Melhor TFC', nome: 'Pedro Henrique Gomes Vilela', foto: '/images/premios/pedro-henrique-gomes-vilela.jpg' },
       { categoria: 'Melhor Dissertação', nome: 'Fabiano Gonzales Nimitti', foto: '/images/premios/fabiano-gonzales-nimitti.jpg' },
       { categoria: 'Melhor Tese', nome: 'Marcelo Vinícius de Paula', foto: '/images/premios/marcelo-vinicius-de-paula.jpg' }
     ]
@@ -101,7 +113,7 @@ function iniciais(nome) {
     <div class="container">
       <div class="premio-intro">
         <p>Criado em 2018, o Prêmio SOBRAEP surgiu com o propósito de reconhecer as melhores dissertações de mestrado e teses de doutorado desenvolvidas no Brasil na área de Eletrônica de Potência, valorizando trabalhos de elevada qualidade, originalidade e relevância científica e tecnológica.</p>
-        <p>Ao longo de sua trajetória, a premiação foi consolidada como uma iniciativa permanente da Associação Brasileira de Eletrônica de Potência (SOBRAEP) e ampliou progressivamente sua abrangência: inicialmente dedicada à pós-graduação, passou a contemplar também, a partir da edição de 2024, os trabalhos de conclusão de curso de graduação.</p>
+        <p>Ao longo de sua trajetória, a premiação consolidou-se como uma iniciativa permanente da Associação Brasileira de Eletrônica de Potência (SOBRAEP) e ampliou progressivamente sua abrangência. Inicialmente foi dedicada à pós-graduação, premiando as melhores dissertações e teses. Em 2023, foi criado o Prêmio SOBRAEP de Trabalho Final de Curso&nbsp;&ndash;&nbsp;TFC, que premiou os cinco melhores trabalhos finais de curso de graduação na área de Eletrônica de Potência. Este prêmio foi incorporado ao então Prêmio SOBRAEP de Dissertações e Teses e, em 2024, passou a se chamar Prêmio SOBRAEP de Trabalho de Conclusão de Curso, Dissertações e Teses.</p>
         <p>Atualmente, o Prêmio SOBRAEP abrange as categorias Trabalho de Conclusão de Curso, Dissertação de Mestrado e Tese de Doutorado, contribuindo para divulgar pesquisas de excelência, reconhecer autores e orientadores e estimular a formação de novos pesquisadores e o avanço científico, tecnológico e inovador da Eletrônica de Potência no país.</p>
         <p class="premio-intro-chamada">Abaixo estão disponíveis os links para acesso aos vencedores do Prêmio SOBRAEP de cada ano, a partir de 2018.</p>
       </div>
@@ -110,9 +122,11 @@ function iniciais(nome) {
       <section class="premio-edicao" aria-labelledby="edicao-<%= ed.ano %>">
         <div class="premio-edicao-head">
           <h2 id="edicao-<%= ed.ano %>"><%= ed.ano %></h2>
-          <a href="<%= ed.link %>" class="premio-edicao-link">Ver o resultado completo →</a>
+          <% if (ed.situacao) { %><span class="premio-situacao"><%= ed.situacao %></span><% } %>
+          <a href="<%= ed.link %>" class="premio-edicao-link"><%= ed.rotuloLink || 'Ver o resultado completo' %> →</a>
         </div>
 
+        <% if (ed.vencedores.length) { %>
         <ul class="premio-vencedores">
           <% ed.vencedores.forEach(function(v) { %>
           <li class="premio-vencedor">
@@ -128,6 +142,7 @@ function iniciais(nome) {
           </li>
           <% }) %>
         </ul>
+        <% } %>
       </section>
       <% }) %>
     </div>

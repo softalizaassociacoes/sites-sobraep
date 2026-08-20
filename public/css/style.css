@@ -840,6 +840,7 @@ table.data-table tr:hover td { background: #fff6e6; }
 }
 
 .premio-edicao { margin: 0 0 52px; }
+.premio-edicao:has(.premio-situacao) { margin-bottom: 34px; }
 .premio-edicao-head {
   display: flex;
   align-items: baseline;
@@ -854,6 +855,19 @@ table.data-table tr:hover td { background: #fff6e6; }
   font-size: 1.9rem;
   letter-spacing: -0.02em;
 }
+/* selo do ano cujo edital ainda está aberto (sem vencedores divulgados) */
+.premio-situacao {
+  display: inline-block;
+  padding: 4px 13px;
+  border-radius: 100px;
+  background: #e8f4e1;
+  color: #33691e;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .premio-edicao-link {
   color: var(--color-accent);
   font-size: 0.94rem;
