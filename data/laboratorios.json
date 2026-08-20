@@ -446,16 +446,16 @@
     "sigla": "JL Power",
     "nome": "JL Power Electronics",
     "instituicao": null,
-    "cidade": null,
-    "uf": null,
+    "cidade": "Florianópolis/SC",
     "responsavel": "Marcos José Jacoboski",
     "email": "jlconversores@gmail.com",
-    "integrantes": 2,
+    "uf": null,
     "site": null,
-    "instagram": null,
     "linkedin": "https://www.linkedin.com/company/jlpowerelectronics/?viewAsMember=true",
+    "instagram": null,
     "logo": "/images/laboratorios/jl-power.png",
-    "left": null,
-    "top": null
+    "integrantes": 2,
+    "left": 65.1,
+    "top": 85.9
   }
 ]
