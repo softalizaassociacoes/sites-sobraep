@@ -13,8 +13,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/gpec.png",
     "integrantes": 80,
-    "left": 92.5,
-    "top": 23.4
+    "left": 90.81,
+    "top": 22.36
   },
   {
     "id": "lpc",
@@ -30,8 +30,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/in/luiz-daniel-santos-bezerra-964054191/",
     "logo": "/images/laboratorios/lpc.png",
-    "left": 88.806,
-    "top": 25.522
+    "left": 89.84,
+    "top": 24.12
   },
   {
     "id": "gep",
@@ -47,8 +47,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/in/grupo-eletr%C3%B4nica-de-pot%C3%AAncia-62963538b/",
     "logo": "/images/laboratorios/gep.png",
-    "left": 75.497,
-    "top": 60.683
+    "left": 76.76,
+    "top": 66.41
   },
   {
     "id": "gesep",
@@ -64,8 +64,8 @@
     "instagram": "https://www.instagram.com/gesep_br/",
     "logo": "/images/laboratorios/gesep.png",
     "integrantes": null,
-    "left": 81.953,
-    "top": 68.582
+    "left": 79.39,
+    "top": 66.71
   },
   {
     "id": "lcce",
@@ -81,8 +81,8 @@
     "instagram": null,
     "logo": "/images/uploads/logo-1787330161236.jpg",
     "integrantes": 10,
-    "left": 80.375,
-    "top": 63.409
+    "left": 76.66,
+    "top": 64.41
   },
   {
     "id": "nupep",
@@ -98,8 +98,8 @@
     "instagram": "https://www.instagram.com/nupep_ufu/",
     "linkedin": "https://www.linkedin.com/in/nupep-ufu/",
     "logo": "/images/laboratorios/nupep.png",
-    "left": 65.61,
-    "top": 62.005
+    "left": 65.62,
+    "top": 61.99
   },
   {
     "id": "tesla",
@@ -115,8 +115,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/company/tesla-engenharia-de-potência-ufmg",
     "logo": "/images/laboratorios/tesla.png",
-    "left": 71.555,
-    "top": 64.696
+    "left": 76.89,
+    "top": 62.43
   },
   {
     "id": "ufsj",
@@ -132,8 +132,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 76.398,
-    "top": 67.376
+    "left": 75.65,
+    "top": 68.07
   },
   {
     "id": "gepae",
@@ -149,8 +149,8 @@
     "instagram": "https://www.instagram.com/gepae.ufpe",
     "linkedin": null,
     "logo": "/images/laboratorios/gepae.png",
-    "left": 97.25,
-    "top": 34.145
+    "left": 99.0,
+    "top": 33.97
   },
   {
     "id": "laaepe",
@@ -166,8 +166,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 61.922,
-    "top": 75.69
+    "left": 61.71,
+    "top": 77.45
   },
   {
     "id": "lepqer",
@@ -183,8 +183,8 @@
     "instagram": "https://www.instagram.com/lepqer/",
     "linkedin": null,
     "logo": "/images/laboratorios/lepqer.png",
-    "left": 58.329,
-    "top": 71.484
+    "left": 59.56,
+    "top": 72.93
   },
   {
     "id": "utfpr-pg",
@@ -200,8 +200,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 57.196,
-    "top": 78.615
+    "left": 59.87,
+    "top": 78.21
   },
   {
     "id": "lemt",
@@ -217,8 +217,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/company/lemtufrj/",
     "logo": null,
-    "left": 76.587,
-    "top": 72.864
+    "left": 79.05,
+    "top": 69.46
   },
   {
     "id": "nitee",
@@ -234,8 +234,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/company/n%C3%BAcleo-de-inova%C3%A7%C3%A3o-tecnol%C3%B3gica-em-engenharia-el%C3%A9trica-nitee/",
     "logo": "/images/laboratorios/nitee.png",
-    "left": 81.985,
-    "top": 74.138
+    "left": 77.05,
+    "top": 69.5
   },
   {
     "id": "gedre",
@@ -251,8 +251,8 @@
     "instagram": "https://www.instagram.com/gedre.ufsm",
     "linkedin": "https://www.linkedin.com/company/gedre-ufsm",
     "logo": "/images/laboratorios/gedre.png",
-    "left": 51.201,
-    "top": 86.913
+    "left": 52.07,
+    "top": 88.78
   },
   {
     "id": "gsec",
@@ -268,8 +268,8 @@
     "instagram": "https://www.instagram.com/gsecufsm/",
     "linkedin": "https://www.linkedin.com/company/electrical-and-computational-systems-research-and-development-group",
     "logo": "/images/laboratorios/gsec.png",
-    "left": 51.563,
-    "top": 92.425
+    "left": 50.91,
+    "top": 90.42
   },
   {
     "id": "fotovoltaica",
@@ -285,8 +285,8 @@
     "instagram": null,
     "logo": null,
     "integrantes": null,
-    "left": 67.302,
-    "top": 79.518
+    "left": 61.85,
+    "top": 83.35
   },
   {
     "id": "gati",
@@ -302,8 +302,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/gati.png",
-    "left": 56.196,
-    "top": 84.022
+    "left": 57.36,
+    "top": 83.16
   },
   {
     "id": "gepai",
@@ -319,8 +319,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/gepai.png",
-    "left": 68.718,
-    "top": 84.736
+    "left": 63.14,
+    "top": 85.97
   },
   {
     "id": "geppel",
@@ -336,8 +336,8 @@
     "instagram": null,
     "logo": "/images/uploads/logo-geppel-1-1787330238102.jpeg",
     "integrantes": 6,
-    "left": 66.021,
-    "top": 89.536
+    "left": 63.32,
+    "top": 81.89
   },
   {
     "id": "inep",
@@ -353,8 +353,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/inep.png",
-    "left": 61.343,
-    "top": 86.564
+    "left": 63.72,
+    "top": 84.05
   },
   {
     "id": "jl-power",
@@ -370,8 +370,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/jl-power.png",
     "integrantes": 2,
-    "left": 65.1,
-    "top": 85.9
+    "left": 65.16,
+    "top": 82.66
   },
   {
     "id": "npee",
@@ -387,8 +387,8 @@
     "instagram": "https://www.instagram.com/npee_udesc/",
     "linkedin": "https://www.linkedin.com/company/npee/",
     "logo": "/images/laboratorios/npee.png",
-    "left": 62.12,
-    "top": 81.199
+    "left": 64.47,
+    "top": 80.23
   },
   {
     "id": "cirue",
@@ -404,8 +404,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/posts/cirue_cirue-ufabc-santoandre-activity-7430689513632337920-tvTU/?originalSubdomain=pt",
     "logo": "/images/laboratorios/cirue.png",
-    "left": 71.466,
-    "top": 70.249
+    "left": 68.61,
+    "top": 73.92
   },
   {
     "id": "lacep",
@@ -421,8 +421,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/lacep.png",
-    "left": 72.263,
-    "top": 76.606
+    "left": 70.05,
+    "top": 72.42
   },
   {
     "id": "lafape",
@@ -438,8 +438,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 65.958,
-    "top": 68.57
+    "left": 66.61,
+    "top": 69.95
   },
   {
     "id": "unicamp",
@@ -455,7 +455,7 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 67.32,
-    "top": 73.895
+    "left": 68.18,
+    "top": 71.71
   }
 ]

@@ -485,4 +485,53 @@ if (area && htmlArea) {
 
   document.getElementById('adminMapaLimpar').addEventListener('click', () => mostrar('', ''));
   mostrar(mapa.dataset.left, mapa.dataset.top);
+  // usado pelo bloco que posiciona a partir da cidade
+  window.__labsMarcar = mostrar;
+})();
+
+// ---------- Posição pela cidade (formulário de laboratório) ----------
+// Marcar clicando no mapa é impreciso: no zoom normal, um pixel vale
+// quilômetros. Aqui a cidade e o estado definem o ponto pela base do IBGE, e o
+// clique no mapa fica como ajuste fino.
+(() => {
+  const mapa = document.getElementById('adminMapa');
+  if (!mapa) return;
+  const form = document.getElementById('formLab');
+  const cidade = form.querySelector('[name="cidade"]');
+  const uf = form.querySelector('[name="uf"]');
+  const texto = document.getElementById('adminMapaTexto');
+  if (!cidade || !uf) return;
+
+  let ultimaBusca = '';
+
+  async function posicionarPelaCidade() {
+    const c = cidade.value.trim();
+    const u = uf.value.trim().toUpperCase();
+    if (!c || u.length !== 2) return;
+    const chave = `${c}|${u}`;
+    if (chave === ultimaBusca) return; // não repete a consulta à toa
+    ultimaBusca = chave;
+
+    texto.textContent = 'Procurando a cidade…';
+    try {
+      const resp = await fetch(`/admin/api/geo?cidade=${encodeURIComponent(c)}&uf=${encodeURIComponent(u)}`);
+      const data = await resp.json();
+      if (!resp.ok) {
+        const dica = data.sugestoes && data.sugestoes.length
+          ? ` Você quis dizer: ${data.sugestoes.slice(0, 3).join(', ')}?`
+          : '';
+        texto.textContent = `Cidade não encontrada em ${u}.${dica} Clique no mapa para marcar.`;
+        return;
+      }
+      // marcarNoMapa é definido no bloco do mapa clicável, acima
+      if (typeof window.__labsMarcar === 'function') window.__labsMarcar(data.left, data.top);
+      texto.textContent = `Posição de ${c}/${u} marcada. Clique no mapa se quiser ajustar.`;
+    } catch (err) {
+      texto.textContent = 'Não foi possível localizar a cidade agora. Clique no mapa para marcar.';
+    }
+  }
+
+  cidade.addEventListener('blur', posicionarPelaCidade);
+  uf.addEventListener('change', posicionarPelaCidade);
+  uf.addEventListener('blur', posicionarPelaCidade);
 })();

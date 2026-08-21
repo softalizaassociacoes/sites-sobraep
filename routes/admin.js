@@ -10,6 +10,7 @@ const auth = require('../lib/auth');
 const dados = require('../lib/dados');
 const github = require('../lib/github');
 const blob = require('../lib/blob');
+const geo = require('../lib/geo');
 
 const router = express.Router();
 
@@ -325,8 +326,14 @@ function montarLaboratorio(body, idFixo, idsExistentes) {
     return Number.isFinite(n) ? Math.min(100, Math.max(0, Math.round(n * 1000) / 1000)) : null;
   };
   // posição só vale se os dois eixos vierem; senão o laboratório fica fora do mapa
-  const left = numero('left');
-  const top = numero('top');
+  let left = numero('left');
+  let top = numero('top');
+  // sem posição informada, deriva da cidade — é o caminho normal desde que o
+  // formulário passou a posicionar sozinho; o clique no mapa vira ajuste fino
+  if ((left === null || top === null) && body.cidade && body.uf) {
+    const pos = geo.posicaoDaCidade(body.cidade, body.uf);
+    if (pos) { left = pos.left; top = pos.top; }
+  }
 
   const integrantes = parseInt(body.integrantes, 10);
   const uf = texto('uf', 2);
@@ -374,6 +381,18 @@ router.get('/laboratorios', async (req, res) => {
  * como pedir isso) e porque a SOBRAEP quer conferir antes. Ao salvar, o
  * pendente sai da fila.
  */
+/** Posição da cidade no mapa, para o formulário posicionar sozinho. */
+router.get('/api/geo', (req, res) => {
+  const pos = geo.posicaoDaCidade(req.query.cidade, req.query.uf);
+  if (!pos) {
+    return res.status(404).json({
+      error: 'Cidade não encontrada nesse estado.',
+      sugestoes: geo.sugerirCidades(req.query.cidade, req.query.uf)
+    });
+  }
+  res.json(pos);
+});
+
 router.get('/laboratorios/pendentes', async (req, res) => {
   const pendentes = await dados.getPendentes();
   const lista = await dados.getLaboratorios();
