@@ -10,8 +10,14 @@
   // Estados que têm laboratório: só eles ficam clicáveis no mapa.
   const porUf = {};
   laboratorios.forEach(function (l) {
-    if (!l.uf) return;
-    (porUf[l.uf] = porUf[l.uf] || []).push(l);
+    // o grupo aparece em todos os estados onde tem polo
+    var ufs = (l.polos && l.polos.length)
+      ? l.polos.map(function (p) { return p.uf; })
+      : [l.uf];
+    ufs.filter(Boolean).forEach(function (uf) {
+      porUf[uf] = porUf[uf] || [];
+      if (porUf[uf].indexOf(l) === -1) porUf[uf].push(l);
+    });
   });
   const ufsComLab = Object.keys(porUf).sort();
   const semLocal = laboratorios.filter(function (l) { return l.left === null || l.left === undefined; });
@@ -44,15 +50,41 @@
         <!-- Mapa -->
         <div class="labs-mapa-col">
           <div class="labs-mapa" id="labsMapa">
-            <div class="labs-mapa-base"><%- mapaSvg %></div>
+            <div class="labs-zoom" role="group" aria-label="Zoom do mapa">
+              <button type="button" id="labsZoomMais" aria-label="Aproximar">+</button>
+              <button type="button" id="labsZoomMenos" aria-label="Afastar">&minus;</button>
+              <button type="button" id="labsZoomReset" aria-label="Voltar ao tamanho normal">⟲</button>
+              <span class="labs-zoom-nivel" id="labsZoomNivel">100%</span>
+            </div>
 
-            <% laboratorios.forEach(function (l, i) { if (l.left === null) return; %>
-            <button type="button" class="labs-ponto" style="left: <%= l.left %>%; top: <%= l.top %>%;"
-                    data-lab="<%= i %>" data-uf="<%= l.uf %>"
-                    aria-label="<%= l.sigla %> — <%= l.cidade %>/<%= l.uf %>"></button>
-            <% }) %>
+            <div class="labs-palco" id="labsPalco">
+              <div class="labs-mapa-base"><%- mapaSvg %></div>
 
-            <!-- as linhas até a lista são desenhadas aqui, por JS -->
+            <% laboratorios.forEach(function (l, i) {
+                 // um grupo pode ter polos em cidades diferentes: cada um vira
+                 // um marcador, mas todos apontam para o mesmo laboratório
+                 var pontos = (l.polos && l.polos.length)
+                   ? l.polos
+                   : (l.left === null ? [] : [{ cidade: l.cidade, uf: l.uf, left: l.left, top: l.top }]);
+                 pontos.forEach(function (p) { %>
+            <button type="button" class="labs-ponto<%= (l.polos && l.polos.length > 1) ? ' labs-ponto--polo' : '' %>"
+                    style="left: <%= p.left %>%; top: <%= p.top %>%;"
+                    data-lab="<%= i %>" data-uf="<%= p.uf %>"
+                    aria-label="<%= l.sigla %> — <%= p.cidade %>/<%= p.uf %><%= (l.polos && l.polos.length > 1) ? ' (um dos ' + l.polos.length + ' polos)' : '' %>"></button>
+            <% }); }) %>
+
+            </div><!-- /labs-palco -->
+
+            <!-- cartão que aparece quando o grupo não está à vista na lista -->
+            <div class="labs-cartao" id="labsCartao" hidden>
+              <span class="labs-cartao-logo"></span>
+              <span class="labs-cartao-texto">
+                <strong class="labs-cartao-sigla"></strong>
+                <span class="labs-cartao-local"></span>
+              </span>
+            </div>
+
+            <!-- as linhas até a lista ou até o cartão são desenhadas aqui -->
             <svg class="labs-linhas" id="labsLinhas" aria-hidden="true"></svg>
           </div>
 
@@ -71,7 +103,10 @@
 
           <ul class="labs-lista" id="labsLista">
             <% laboratorios.forEach(function (l, i) { %>
-            <li class="labs-item" data-lab="<%= i %>" data-uf="<%= l.uf || '' %>">
+            <% var ufsDoGrupo = (l.polos && l.polos.length)
+                 ? l.polos.map(function (p) { return p.uf; }).filter(Boolean)
+                 : (l.uf ? [l.uf] : []); %>
+            <li class="labs-item" data-lab="<%= i %>" data-ufs="<%= ufsDoGrupo.join(',') %>">
               <button type="button" class="labs-item-btn">
                 <span class="labs-item-logo <%= l.logo ? '' : 'labs-item-logo--vazia' %>">
                   <% if (l.logo) { %>
@@ -83,7 +118,12 @@
                 <span class="labs-item-texto">
                   <span class="labs-item-sigla"><%= l.sigla %></span>
                   <span class="labs-item-local">
-                    <%= l.cidade ? l.cidade + '/' + l.uf : 'sem cidade cadastrada' %>
+                    <% if (l.polos && l.polos.length > 1) { %>
+                      <%= l.polos.map(function (p) { return p.cidade; }).join(' · ') %>
+                      <span class="labs-item-polos"><%= l.polos.length %> polos</span>
+                    <% } else { %>
+                      <%= l.cidade ? l.cidade + '/' + l.uf : 'sem cidade cadastrada' %>
+                    <% } %>
                   </span>
                   <span class="labs-item-meta">
                     <%= l.instituicao || '' %><% if (l.integrantes) { %> · <%= l.integrantes %> integrantes<% } %>
@@ -109,7 +149,7 @@
         </div>
         <dl class="labs-popup-dados">
           <div><dt>Instituição</dt><dd id="labsPopupInst"></dd></div>
-          <div><dt>Cidade</dt><dd id="labsPopupCidade"></dd></div>
+          <div><dt id="labsPopupCidadeRotulo">Cidade</dt><dd id="labsPopupCidade"></dd></div>
           <div id="labsPopupRespLinha"><dt>Responsável</dt><dd id="labsPopupResp"></dd></div>
           <div id="labsPopupIntegrantesLinha"><dt>Integrantes</dt><dd id="labsPopupIntegrantes"></dd></div>
         </dl>

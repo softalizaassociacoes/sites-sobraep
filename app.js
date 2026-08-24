@@ -135,8 +135,18 @@ const mapaBrasil = fs.readFileSync(path.join(__dirname, 'public/images/brasil.sv
 
 app.get('/laboratorios', async (req, res) => {
   const laboratorios = await dados.getLaboratorios();
-  const instituicoes = new Set(laboratorios.map((l) => l.instituicao).filter(Boolean));
-  const estados = new Set(laboratorios.map((l) => l.uf).filter(Boolean));
+  // um grupo com polos conta uma vez em "grupos", mas soma cada cidade e
+  // instituição dos polos nos demais números
+  const instituicoes = new Set();
+  const estados = new Set();
+  for (const l of laboratorios) {
+    if (l.instituicao) instituicoes.add(l.instituicao);
+    if (l.uf) estados.add(l.uf);
+    for (const p of l.polos || []) {
+      if (p.instituicao) instituicoes.add(p.instituicao);
+      if (p.uf) estados.add(p.uf);
+    }
+  }
   res.render('laboratorios', {
     site,
     active: 'laboratorios',

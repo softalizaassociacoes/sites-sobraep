@@ -524,3 +524,18 @@ a.admin-muted:hover { text-decoration: underline; }
 .admin-pendente-acoes { display: flex; gap: 8px; flex-wrap: wrap; }
 .btn-mini--ok { color: #2e7d32; border-color: #bcdcb8; }
 .btn-mini--ok:hover { background: #e8f4e1; }
+
+.admin-campo-ajuda {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.admin-campo-ajuda code {
+  background: #f1f1f8;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.95em;
+}

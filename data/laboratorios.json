@@ -47,32 +47,15 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/in/grupo-eletr%C3%B4nica-de-pot%C3%AAncia-62963538b/",
     "logo": "/images/laboratorios/gep.png",
-    "left": 76.76,
-    "top": 66.41
-  },
-  {
-    "id": "gesep",
-    "sigla": "GESEP",
-    "nome": "Gerência de Especialistas de Sistemas Elétricos de Potência",
-    "instituicao": "UFV - Universidade Federal de Viçosa",
-    "cidade": "Viçosa",
-    "responsavel": "Heverton Augusto Pereira",
-    "email": "heverton.pereira@ufv.br",
-    "uf": "MG",
-    "site": "https://www.gesep.com.br/",
-    "linkedin": "https://www.linkedin.com/company/gesep",
-    "instagram": "https://www.instagram.com/gesep_br/",
-    "logo": "/images/laboratorios/gesep.png",
-    "integrantes": null,
-    "left": 79.39,
-    "top": 66.71
+    "left": 75.9,
+    "top": 66.26
   },
   {
     "id": "gesep-2",
     "sigla": "GESEP",
     "nome": "Gerência de Especialistas em Sistemas Elétricos de Potência",
     "instituicao": "UFV/UFJF/CEFET-MG",
-    "cidade": "Juíz de Fora",
+    "cidade": "Viçosa",
     "responsavel": "Heverton Augusto Pereira",
     "email": "heverton.pereira@ufv.br",
     "uf": "MG",
@@ -81,25 +64,31 @@
     "instagram": "https://www.instagram.com/gesep_br/",
     "logo": "/images/uploads/gesep-ufv-1787593389738.jpg",
     "integrantes": 10,
-    "left": 78.2,
-    "top": 69.29
-  },
-  {
-    "id": "gesep-3",
-    "sigla": "GESEP",
-    "nome": "Gerência de Especialistas em Sistemas Elétricos de Potência",
-    "instituicao": "UFV/UFJF/CEFET-MG",
-    "cidade": "Belo Horizonte",
-    "responsavel": "Heverton Augusto Pereira",
-    "email": "heverton.pereira@ufv.br",
-    "uf": "MG",
-    "site": "https://www.gesep.com.br/",
-    "linkedin": "https://br.linkedin.com/company/gesep",
-    "instagram": "https://www.instagram.com/gesep_br/",
-    "logo": "/images/uploads/gesep-ufv-1787593443490.jpg",
-    "integrantes": 10,
-    "left": 76.7,
-    "top": 64.55
+    "left": 79.39,
+    "top": 66.71,
+    "polos": [
+      {
+        "cidade": "Viçosa",
+        "uf": "MG",
+        "instituicao": "UFV - Universidade Federal de Viçosa",
+        "left": 79.39,
+        "top": 66.71
+      },
+      {
+        "cidade": "Juiz de Fora",
+        "uf": "MG",
+        "instituicao": "UFV/UFJF/CEFET-MG",
+        "left": 77.72,
+        "top": 67.15
+      },
+      {
+        "cidade": "Belo Horizonte",
+        "uf": "MG",
+        "instituicao": "UFV/UFJF/CEFET-MG",
+        "left": 76.7,
+        "top": 64.55
+      }
+    ]
   },
   {
     "id": "lcce",
@@ -115,8 +104,8 @@
     "instagram": null,
     "logo": "/images/uploads/logo-1787330161236.jpg",
     "integrantes": 10,
-    "left": 76.66,
-    "top": 64.41
+    "left": 77.04,
+    "top": 62
   },
   {
     "id": "nupep",
@@ -149,8 +138,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/company/tesla-engenharia-de-potência-ufmg",
     "logo": "/images/laboratorios/tesla.png",
-    "left": 76.89,
-    "top": 62.43
+    "left": 76.22,
+    "top": 63.82
   },
   {
     "id": "ufsj",
@@ -166,8 +155,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 75.65,
-    "top": 68.07
+    "left": 75.56,
+    "top": 68.23
   },
   {
     "id": "gepae",
@@ -183,8 +172,8 @@
     "instagram": "https://www.instagram.com/gepae.ufpe",
     "linkedin": null,
     "logo": "/images/laboratorios/gepae.png",
-    "left": 99,
-    "top": 33.97
+    "left": 98.66,
+    "top": 33.75
   },
   {
     "id": "laaepe",
@@ -200,8 +189,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 61.71,
-    "top": 77.45
+    "left": 60.35,
+    "top": 76.43
   },
   {
     "id": "lepqer",
@@ -234,8 +223,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 59.87,
-    "top": 78.21
+    "left": 60.95,
+    "top": 78.34
   },
   {
     "id": "lemt",
@@ -251,8 +240,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/company/lemtufrj/",
     "logo": null,
-    "left": 79.05,
-    "top": 69.46
+    "left": 78.37,
+    "top": 69.63
   },
   {
     "id": "nitee",
@@ -268,8 +257,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/company/n%C3%BAcleo-de-inova%C3%A7%C3%A3o-tecnol%C3%B3gica-em-engenharia-el%C3%A9trica-nitee/",
     "logo": "/images/laboratorios/nitee.png",
-    "left": 77.05,
-    "top": 69.5
+    "left": 76.41,
+    "top": 70.04
   },
   {
     "id": "gedre",
@@ -285,8 +274,8 @@
     "instagram": "https://www.instagram.com/gedre.ufsm",
     "linkedin": "https://www.linkedin.com/company/gedre-ufsm",
     "logo": "/images/laboratorios/gedre.png",
-    "left": 52.07,
-    "top": 88.78
+    "left": 50.73,
+    "top": 88.96
   },
   {
     "id": "gsec",
@@ -302,8 +291,8 @@
     "instagram": "https://www.instagram.com/gsecufsm/",
     "linkedin": "https://www.linkedin.com/company/electrical-and-computational-systems-research-and-development-group",
     "logo": "/images/laboratorios/gsec.png",
-    "left": 50.91,
-    "top": 90.42
+    "left": 52.25,
+    "top": 90.24
   },
   {
     "id": "fotovoltaica",
@@ -319,8 +308,8 @@
     "instagram": null,
     "logo": null,
     "integrantes": null,
-    "left": 61.85,
-    "top": 83.35
+    "left": 62.43,
+    "top": 85.68
   },
   {
     "id": "gati",
@@ -336,8 +325,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/gati.png",
-    "left": 57.36,
-    "top": 83.16
+    "left": 58.02,
+    "top": 82.17
   },
   {
     "id": "gepai",
@@ -353,8 +342,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/gepai.png",
-    "left": 63.14,
-    "top": 85.97
+    "left": 64.37,
+    "top": 85
   },
   {
     "id": "geppel",
@@ -370,8 +359,8 @@
     "instagram": null,
     "logo": "/images/uploads/logo-geppel-1-1787330238102.jpeg",
     "integrantes": 6,
-    "left": 63.32,
-    "top": 81.89
+    "left": 62.8,
+    "top": 81.72
   },
   {
     "id": "inep",
@@ -387,8 +376,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/inep.png",
-    "left": 63.72,
-    "top": 84.05
+    "left": 64.72,
+    "top": 83.05
   },
   {
     "id": "jl-power",
@@ -404,8 +393,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/jl-power.png",
     "integrantes": 2,
-    "left": 65.16,
-    "top": 82.66
+    "left": 62.83,
+    "top": 83.72
   },
   {
     "id": "npee",
@@ -421,8 +410,8 @@
     "instagram": "https://www.instagram.com/npee_udesc/",
     "linkedin": "https://www.linkedin.com/company/npee/",
     "logo": "/images/laboratorios/npee.png",
-    "left": 64.47,
-    "top": 80.23
+    "left": 64.45,
+    "top": 80.6
   },
   {
     "id": "cirue",
@@ -438,8 +427,8 @@
     "instagram": null,
     "linkedin": "https://www.linkedin.com/posts/cirue_cirue-ufabc-santoandre-activity-7430689513632337920-tvTU/?originalSubdomain=pt",
     "logo": "/images/laboratorios/cirue.png",
-    "left": 68.61,
-    "top": 73.92
+    "left": 70.08,
+    "top": 73.05
   },
   {
     "id": "lacep",
@@ -455,8 +444,8 @@
     "instagram": null,
     "linkedin": null,
     "logo": "/images/laboratorios/lacep.png",
-    "left": 70.05,
-    "top": 72.42
+    "left": 68.1,
+    "top": 73.39
   },
   {
     "id": "lafape",
@@ -489,7 +478,7 @@
     "instagram": null,
     "linkedin": null,
     "logo": null,
-    "left": 68.18,
-    "top": 71.71
+    "left": 68.19,
+    "top": 71.38
   }
 ]

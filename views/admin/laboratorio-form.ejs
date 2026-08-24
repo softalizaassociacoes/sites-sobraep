@@ -85,6 +85,17 @@
     </label>
   </div>
 
+  <label>
+    Polos adicionais (opcional)
+    <span class="admin-campo-ajuda">
+      Para grupos com unidades em mais de uma cidade, como o GESEP. Uma por linha,
+      no formato <code>Cidade/UF</code> ou <code>Cidade/UF | Instituição</code>.
+      A cidade informada acima já entra como o primeiro polo — não repita aqui.
+      O grupo continua contando como <strong>um só</strong> no total da página.
+    </span>
+    <textarea name="polos" rows="3" placeholder="Juiz de Fora/MG | UFJF&#10;Belo Horizonte/MG | CEFET-MG"><%= polosTexto || '' %></textarea>
+  </label>
+
   <label>Posição no mapa</label>
   <p class="admin-muted admin-mapa-ajuda">
     A posição é preenchida sozinha a partir da <strong>cidade e do estado</strong>
@@ -102,7 +113,7 @@
 
   <div class="admin-mapa-acoes">
     <span class="admin-muted" id="adminMapaTexto"></span>
-    <button type="button" class="btn-mini" id="adminMapaLimpar">Remover posição</button>
+    <button type="button" class="btn-mini" id="adminMapaLimpar">Voltar à posição da cidade</button>
   </div>
   <input type="hidden" name="left" id="campoLeft" value="<%= v.left != null ? v.left : '' %>">
   <input type="hidden" name="top" id="campoTop" value="<%= v.top != null ? v.top : '' %>">

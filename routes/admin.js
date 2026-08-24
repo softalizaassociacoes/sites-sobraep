@@ -24,7 +24,7 @@ router.use((req, res, next) => {
 });
 
 function render(res, view, extra = {}) {
-  res.render(`admin/${view}`, { erro: null, ok: null, copiaDe: null, pendenteId: null, ...extra });
+  res.render(`admin/${view}`, { erro: null, ok: null, copiaDe: null, pendenteId: null, polosTexto: '', ...extra });
 }
 
 // ---------- Login / logout ----------
@@ -316,6 +316,44 @@ function montarWebinar(body) {
 const mapaSvg = require('fs').readFileSync(
   require('path').join(__dirname, '..', 'public/images/brasil.svg'), 'utf8');
 
+/**
+ * "Cidade/UF | Instituição" por linha -> lista de polos com posição.
+ * Linhas sem cidade reconhecida na base são descartadas em silêncio: o campo é
+ * livre e não vale bloquear o cadastro inteiro por causa de uma linha solta.
+ */
+function montarPolos(texto, principal) {
+  const polos = [];
+  const ver = new Set();
+  const juntar = (cidade, uf, instituicao) => {
+    if (!cidade || !uf) return;
+    const pos = geo.posicaoDaCidade(cidade, uf);
+    if (!pos) return;
+    const chave = geo.normalizar(cidade) + '|' + uf.toUpperCase();
+    if (ver.has(chave)) return;
+    ver.add(chave);
+    polos.push({
+      cidade: cidade.trim(),
+      uf: uf.toUpperCase(),
+      instituicao: instituicao || null,
+      left: pos.left,
+      top: pos.top
+    });
+  };
+
+  // a cidade do próprio laboratório é sempre o primeiro polo
+  juntar(principal.cidade, principal.uf, principal.instituicao);
+
+  for (const linha of String(texto || '').split('\n')) {
+    const bruta = linha.trim();
+    if (!bruta) continue;
+    const [local, inst] = bruta.split('|').map((x) => (x || '').trim());
+    const m = local.match(/^(.+?)[\/,-]\s*([A-Za-z]{2})$/);
+    if (!m) continue;
+    juntar(m[1].trim(), m[2], inst || null);
+  }
+  return polos.length > 1 ? polos : null;
+}
+
 function montarLaboratorio(body, idFixo, idsExistentes) {
   const texto = (campo, max) => String(body[campo] || '').trim().slice(0, max) || null;
   const sigla = texto('sigla', 20);
@@ -353,8 +391,21 @@ function montarLaboratorio(body, idFixo, idsExistentes) {
     logo: texto('logo', 300),
     integrantes: Number.isFinite(integrantes) && integrantes >= 0 ? integrantes : null,
     left: left !== null && top !== null ? left : null,
-    top: left !== null && top !== null ? top : null
+    top: left !== null && top !== null ? top : null,
+    polos: montarPolos(body.polos, {
+      cidade: texto('cidade', 80),
+      uf: uf ? uf.toUpperCase() : null,
+      instituicao: texto('instituicao', 150)
+    })
   };
+}
+
+/** Converte os polos de volta para o texto do formulário, sem o primeiro. */
+function polosParaTexto(lab) {
+  if (!lab || !lab.polos || lab.polos.length < 2) return '';
+  return lab.polos.slice(1)
+    .map((p) => p.cidade + '/' + p.uf + (p.instituicao ? ' | ' + p.instituicao : ''))
+    .join('\n');
 }
 
 // os já posicionados aparecem no mapa do formulário para a equipe não marcar em cima
@@ -456,7 +507,7 @@ router.get('/laboratorios/:id/editar', async (req, res) => {
   const lista = await dados.getLaboratorios();
   const lab = lista.find((l) => l.id === req.params.id);
   if (!lab) return res.redirect('/admin/laboratorios');
-  render(res, 'laboratorio-form', { lab, mapaSvg, outros: outrosNoMapa(lista, lab.id) });
+  render(res, 'laboratorio-form', { lab, mapaSvg, outros: outrosNoMapa(lista, lab.id), polosTexto: polosParaTexto(lab) });
 });
 
 router.post('/laboratorios/:id/editar', async (req, res) => {

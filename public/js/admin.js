@@ -483,7 +483,17 @@ if (area && htmlArea) {
     mostrar(left, top);
   });
 
-  document.getElementById('adminMapaLimpar').addEventListener('click', () => mostrar('', ''));
+  // "voltar à posição da cidade": limpa o ajuste manual e deixa o servidor
+  // derivar de novo pela cidade; sem cidade, o grupo fica fora do mapa
+  document.getElementById('adminMapaLimpar').addEventListener('click', () => {
+    mostrar('', '');
+    const form = document.getElementById('formLab');
+    const cid = form && form.querySelector('[name="cidade"]');
+    const uf = form && form.querySelector('[name="uf"]');
+    if (cid && uf && cid.value.trim() && uf.value.trim()) {
+      texto.textContent = 'Ao salvar, a posição volta a ser a de ' + cid.value.trim() + '/' + uf.value.trim().toUpperCase() + '.';
+    }
+  });
   mostrar(mapa.dataset.left, mapa.dataset.top);
   // usado pelo bloco que posiciona a partir da cidade
   window.__labsMarcar = mostrar;
