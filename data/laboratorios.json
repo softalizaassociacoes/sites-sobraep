@@ -85,6 +85,23 @@
     "top": 69.29
   },
   {
+    "id": "gesep-3",
+    "sigla": "GESEP",
+    "nome": "Gerência de Especialistas em Sistemas Elétricos de Potência",
+    "instituicao": "UFV/UFJF/CEFET-MG",
+    "cidade": "Belo Horizonte",
+    "responsavel": "Heverton Augusto Pereira",
+    "email": "heverton.pereira@ufv.br",
+    "uf": "MG",
+    "site": "https://www.gesep.com.br/",
+    "linkedin": "https://br.linkedin.com/company/gesep",
+    "instagram": "https://www.instagram.com/gesep_br/",
+    "logo": "/images/uploads/gesep-ufv-1787593443490.jpg",
+    "integrantes": 10,
+    "left": 76.7,
+    "top": 64.55
+  },
+  {
     "id": "lcce",
     "sigla": "LCCE",
     "nome": "Laboratório de Conversão e Controle da Energia",
