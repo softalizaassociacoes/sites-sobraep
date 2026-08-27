@@ -1626,7 +1626,11 @@ table.data-table tr:hover td { background: #fff6e6; }
 }
 
 /* ---------- Zoom próprio do mapa ---------- */
-.labs-mapa { overflow: hidden; touch-action: pan-y pinch-zoom; }
+/* O recorte do zoom fica no viewport, não no mapa inteiro: o cartão e as
+   linhas moram fora dele e seriam cortados — era o que sumia com o marcador
+   de Recife, colado na borda direita. */
+.labs-mapa { touch-action: pan-y pinch-zoom; }
+.labs-viewport { position: absolute; inset: 0; overflow: hidden; border-radius: 12px; }
 .labs-palco {
   position: absolute;
   inset: 0;

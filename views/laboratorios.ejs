@@ -57,6 +57,7 @@
               <span class="labs-zoom-nivel" id="labsZoomNivel">100%</span>
             </div>
 
+            <div class="labs-viewport">
             <div class="labs-palco" id="labsPalco">
               <div class="labs-mapa-base"><%- mapaSvg %></div>
 
@@ -74,8 +75,9 @@
             <% }); }) %>
 
             </div><!-- /labs-palco -->
+            </div><!-- /labs-viewport -->
 
-            <!-- cartão que aparece quando o grupo não está à vista na lista -->
+            <!-- cartão do grupo em foco: aparece sempre, fora da área recortada -->
             <div class="labs-cartao" id="labsCartao" hidden>
               <span class="labs-cartao-logo"></span>
               <span class="labs-cartao-texto">

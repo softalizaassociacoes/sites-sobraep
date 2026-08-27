@@ -7,10 +7,9 @@
  *
  * Três comportamentos merecem explicação:
  *
- * - Quando o grupo escolhido não está visível na lista (filtrado por outro
- *   estado, ou fora da parte rolada), a linha apontaria para o vazio. Nesse
- *   caso aparece um cartão com a logomarca ao lado do mapa, e a linha vai até
- *   ele.
+ * - Ao passar por um ponto, a logomarca do grupo aparece num cartão ao lado do
+ *   mapa e a linha tracejada vai até ele — sempre, esteja o grupo visível na
+ *   lista ou não. A lista continua servindo para procurar e filtrar.
  * - O mapa tem zoom próprio, porque o zoom do navegador amplia a página
  *   inteira. Os pontos encolhem na mesma medida em que o mapa cresce, senão
  *   cobririam cidades vizinhas justamente quando se quer precisão.
@@ -195,8 +194,9 @@
   el.limpar.addEventListener('click', () => filtrar(null));
 
   // ---------- cartão flutuante ----------
-  // Aparece quando o grupo escolhido não está visível na lista; sem ele a
-  // linha tracejada terminaria numa área vazia.
+  // Mostra a logomarca do grupo em foco ao lado do mapa. Fica fora da área
+  // recortada pelo zoom, senão um ponto colado na borda — Recife é o caso —
+  // teria o cartão cortado junto com o mapa.
   function mostrarCartao(lab, ponto) {
     const logo = cartao.querySelector('.labs-cartao-logo');
     logo.innerHTML = '';
@@ -228,29 +228,18 @@
   const esconderCartao = () => { cartao.hidden = true; };
 
   // ---------- linha tracejada ----------
-  function alvoDaLinha(indice) {
-    const item = itens.find((li) => li.dataset.lab === String(indice));
-    if (!item || item.hidden) return null;
-    // só serve se estiver de fato à vista na área rolável
-    const r = item.getBoundingClientRect();
-    const cx = lista.getBoundingClientRect();
-    const visivel = r.bottom > cx.top + 4 && r.top < cx.bottom - 4;
-    return visivel ? item : null;
-  }
-
   function desenharLinha(indice, ponto) {
     const p = ponto || pontos.find((x) => x.dataset.lab === String(indice));
     if (!p) return apagarLinha();
     if (window.matchMedia('(max-width: 900px)').matches) return apagarLinha();
 
+    // A linha aponta sempre para o cartão, nunca para a lista. Antes ela ia
+    // para o item quando ele estava à vista, e isso dependia da resolução e de
+    // quantos grupos cabiam sem rolar: num item na borda da área rolável, a
+    // linha terminava colada no limite e parecia não apontar para nada.
     const lab = dados[indice];
-    let destino = alvoDaLinha(indice);
-    if (destino) {
-      esconderCartao();
-    } else {
-      mostrarCartao(lab, p);
-      destino = cartao;
-    }
+    mostrarCartao(lab, p);
+    const destino = cartao;
 
     const base = svgLinhas.getBoundingClientRect();
     const a = p.getBoundingClientRect();
@@ -368,14 +357,10 @@
     p.addEventListener('click', (e) => {
       e.stopPropagation();
       destacar(indice, p);
+      // rola a lista até o grupo por conveniência; a linha não depende disso
       const item = itens.find((li) => li.dataset.lab === String(indice));
-      // traz o grupo para a área visível antes de traçar a linha
-      if (item && !item.hidden) {
-        item.scrollIntoView({ block: 'nearest' });
-        requestAnimationFrame(() => desenharLinha(indice, p));
-      } else {
-        desenharLinha(indice, p);
-      }
+      if (item && !item.hidden) item.scrollIntoView({ block: 'nearest' });
+      desenharLinha(indice, p);
       abrir(indice);
     });
   });
@@ -386,9 +371,6 @@
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fechar(); limparDestaque(); } });
   window.addEventListener('resize', () => {
     if (destacado !== null) desenharLinha(destacado, pontoDestacado); else apagarLinha();
-  });
-  lista.addEventListener('scroll', () => {
-    if (destacado !== null) desenharLinha(destacado, pontoDestacado);
   });
 
   aplicarTransformacao();
