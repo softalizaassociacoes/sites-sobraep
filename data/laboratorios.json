@@ -207,16 +207,17 @@
     "nome": "Laboratório de Eletrônica de Potência Qualidade de Energia e Energias Renováveis",
     "instituicao": "UTFPR-CP - Universidade Tecnológica Federal do Paraná - Campus Cornélio Procópio",
     "cidade": "Cornélio Procópio",
-    "uf": "PR",
     "responsavel": "Sergio Augusto Oliveira da Silva",
     "email": "augus@utfpr.edu.br",
-    "integrantes": 30,
+    "uf": "PR",
     "site": null,
-    "instagram": "https://www.instagram.com/lepqer/",
     "linkedin": null,
+    "instagram": "https://www.instagram.com/lepqer/",
     "logo": "/images/laboratorios/lepqer.png",
+    "integrantes": 30,
     "left": 59.56,
-    "top": 72.93
+    "top": 72.93,
+    "polos": null
   },
   {
     "id": "utfpr-pg",
