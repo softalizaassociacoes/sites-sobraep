@@ -333,16 +333,17 @@
     "nome": "Grupo de pesquisa em aplicações tecnológicas industriais",
     "instituicao": "UNOESC - Universidade do Oeste de Santa Catarina",
     "cidade": "Joaçaba",
-    "uf": "SC",
     "responsavel": "Marconi Januário",
     "email": "jean.prigol@unoesc.edu.br",
-    "integrantes": 11,
+    "uf": "SC",
     "site": null,
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": "/images/laboratorios/gati.png",
+    "integrantes": 11,
     "left": 58.02,
-    "top": 82.17
+    "top": 82.17,
+    "polos": null
   },
   {
     "id": "gepai",
