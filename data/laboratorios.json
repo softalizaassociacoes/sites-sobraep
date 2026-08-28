@@ -243,16 +243,17 @@
     "nome": "Laboratory of Energy Management Technologies",
     "instituicao": "COPPE/UFRJ - Universidade Federal do Rio de Janeiro",
     "cidade": "Rio de Janeiro",
-    "uf": "RJ",
     "responsavel": "Luis Guilherme Barbosa Rolim",
     "email": "gabrielimamello@gmail.com",
-    "integrantes": 22,
+    "uf": "RJ",
     "site": "https://lemt.coppe.ufrj.br/",
-    "instagram": null,
     "linkedin": "https://www.linkedin.com/company/lemtufrj/",
+    "instagram": null,
     "logo": null,
-    "left": 78.37,
-    "top": 69.63
+    "integrantes": 22,
+    "left": 78.24,
+    "top": 69.65,
+    "polos": null
   },
   {
     "id": "nitee",
