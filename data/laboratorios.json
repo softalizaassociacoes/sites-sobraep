@@ -23,16 +23,17 @@
     "nome": "Laboratório de Potência e Controle",
     "instituicao": "IFCE - Campus Maracanaú",
     "cidade": "Maracanaú",
-    "uf": "CE",
     "responsavel": "Luiz Daniel Santos Bezerra",
     "email": "danielbezerra@ifce.edu.br",
-    "integrantes": 15,
+    "uf": "CE",
     "site": "https://portal.ifce.edu.br/campus/maracanau/laboratorios/laboratorios-do-eixo-da-industria/laboratorio-de-potencia-e-controle-lpc/",
-    "instagram": null,
     "linkedin": "https://www.linkedin.com/in/luiz-daniel-santos-bezerra-964054191/",
+    "instagram": null,
     "logo": "/images/laboratorios/lpc.png",
+    "integrantes": 15,
     "left": 89.84,
-    "top": 24.12
+    "top": 24.12,
+    "polos": null
   },
   {
     "id": "gep",
