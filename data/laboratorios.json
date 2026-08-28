@@ -477,16 +477,17 @@
     "nome": "Laboratório de Fontes Alternativas e Processamento de Energia",
     "instituicao": "USP - Universidade de São Paulo",
     "cidade": "São Carlos",
-    "uf": "SP",
     "responsavel": "Ricardo Quadros Machado",
     "email": "rquadros@sc.usp.br",
-    "integrantes": 25,
+    "uf": "SP",
     "site": "https://sel.eesc.usp.br/lafape/",
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": null,
+    "integrantes": 25,
     "left": 66.61,
-    "top": 69.95
+    "top": 69.95,
+    "polos": null
   },
   {
     "id": "unicamp",
