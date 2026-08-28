@@ -261,16 +261,17 @@
     "nome": "Núcleo de Inovação Tecnológica em Engenharia Elétrica",
     "instituicao": "UFF - Universidade Federal Fluminense",
     "cidade": "Niterói",
-    "uf": "RJ",
     "responsavel": "Bruno Wanderley França",
     "email": "bwfranca@id.uff.br",
-    "integrantes": 50,
+    "uf": "RJ",
     "site": "https://nitee.uff.br/",
-    "instagram": null,
     "linkedin": "https://www.linkedin.com/company/n%C3%BAcleo-de-inova%C3%A7%C3%A3o-tecnol%C3%B3gica-em-engenharia-el%C3%A9trica-nitee/",
+    "instagram": null,
     "logo": "/images/laboratorios/nitee.png",
-    "left": 76.41,
-    "top": 70.04
+    "integrantes": 50,
+    "left": 78.16,
+    "top": 69.66,
+    "polos": null
   },
   {
     "id": "gedre",
