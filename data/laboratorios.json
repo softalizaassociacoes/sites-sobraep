@@ -279,16 +279,17 @@
     "nome": "Inteligência em Iluminação",
     "instituicao": "UFSM - Universidade Federal de Santa Maria",
     "cidade": "Santa Maria",
-    "uf": "RS",
     "responsavel": "Marco Antonio Dalla Costa",
     "email": "gedre@gedre.ufsm.br",
-    "integrantes": 50,
+    "uf": "RS",
     "site": "https://www.ufsm.br/gedre",
-    "instagram": "https://www.instagram.com/gedre.ufsm",
     "linkedin": "https://www.linkedin.com/company/gedre-ufsm",
+    "instagram": "https://www.instagram.com/gedre.ufsm",
     "logo": "/images/laboratorios/gedre.png",
-    "left": 50.73,
-    "top": 88.96
+    "integrantes": 50,
+    "left": 51.49,
+    "top": 89.6,
+    "polos": null
   },
   {
     "id": "gsec",
