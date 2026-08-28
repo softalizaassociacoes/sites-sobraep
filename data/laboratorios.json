@@ -459,16 +459,17 @@
     "nome": "Laboratório de Acionamentos e Conversores Eletrônicos de Potência",
     "instituicao": "UFABC - Universidade Federal do ABC",
     "cidade": "Santo André",
-    "uf": "SP",
     "responsavel": "José Luis Azcue Puma",
     "email": "jose.azcue@ufabc.edu.br",
-    "integrantes": 10,
+    "uf": "SP",
     "site": "http://professor.ufabc.edu.br/~jose.azcue/LACEP/LACEP.html",
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": "/images/laboratorios/lacep.png",
-    "left": 68.1,
-    "top": 73.39
+    "integrantes": 10,
+    "left": 69.22,
+    "top": 72.8,
+    "polos": null
   },
   {
     "id": "lafape",
