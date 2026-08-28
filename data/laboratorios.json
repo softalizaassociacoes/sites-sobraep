@@ -351,16 +351,17 @@
     "nome": "Grupo de Pesquisas em Eletrônica de Potência e Acionamentos Industriais",
     "instituicao": "IFSC - Instituto Federal de Santa Catarina",
     "cidade": "Florianópolis",
-    "uf": "SC",
     "responsavel": "Bruno Scortegagna Dupczak",
     "email": "bruno.dupczak@ifsc.edu.br",
-    "integrantes": 11,
+    "uf": "SC",
     "site": "https://www.gepai.com.br",
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": "/images/laboratorios/gepai.png",
-    "left": 64.37,
-    "top": 85
+    "integrantes": 11,
+    "left": 64,
+    "top": 84.13,
+    "polos": null
   },
   {
     "id": "geppel",
