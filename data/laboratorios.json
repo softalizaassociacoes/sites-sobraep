@@ -413,8 +413,9 @@
     "instagram": null,
     "logo": "/images/laboratorios/jl-power.png",
     "integrantes": 2,
-    "left": 62.83,
-    "top": 83.72
+    "left": 64,
+    "top": 84.13,
+    "polos": null
   },
   {
     "id": "npee",
