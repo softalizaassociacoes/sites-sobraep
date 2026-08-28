@@ -189,16 +189,17 @@
     "nome": "LABORATÓRIO DE AUTOMAÇÃO AGRÍCOLA E PROCESSAMENTO DE ENERGIA",
     "instituicao": "UEPG - Universidade Estadual de Ponta Grossa",
     "cidade": "Ponta Grossa",
-    "uf": "PR",
     "responsavel": "Zito Palhano da Fonseca",
     "email": "zpfonseca@uepg.br",
-    "integrantes": 5,
+    "uf": "PR",
     "site": null,
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": null,
-    "left": 60.35,
-    "top": 76.43
+    "integrantes": 5,
+    "left": 60.79,
+    "top": 77.83,
+    "polos": null
   },
   {
     "id": "lepqer",
