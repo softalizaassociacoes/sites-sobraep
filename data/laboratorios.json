@@ -117,16 +117,17 @@
     "nome": "Núcleo de Pesquisa em Eletrônica de Potência",
     "instituicao": "UFU - Universidade Federal de Uberlândia",
     "cidade": "Uberlândia",
-    "uf": "MG",
     "responsavel": "Luiz Carlos Gomes de Freitas",
     "email": "lcgfreitas@ufu.br",
-    "integrantes": 13,
+    "uf": "MG",
     "site": "https://nupep-ufu.com/",
-    "instagram": "https://www.instagram.com/nupep_ufu/",
     "linkedin": "https://www.linkedin.com/in/nupep-ufu/",
+    "instagram": "https://www.instagram.com/nupep_ufu/",
     "logo": "/images/laboratorios/nupep.png",
+    "integrantes": 13,
     "left": 65.62,
-    "top": 61.99
+    "top": 61.99,
+    "polos": null
   },
   {
     "id": "tesla",
