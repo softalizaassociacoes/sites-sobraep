@@ -225,16 +225,17 @@
     "nome": "Grupo de Pesquisa: Eletrônica de Potência para a Transição Energética, Laboratório: LEV - Laboratório de Eletrificação Veicular",
     "instituicao": "UTFPR - Universidade Tecnológica Federal do Paraná, Campus Ponta Grossa",
     "cidade": "Ponta Grossa",
-    "uf": "PR",
     "responsavel": "Carlos Henrique Illa Font",
     "email": "illafont@utfpr.edu.br",
-    "integrantes": 18,
+    "uf": "PR",
     "site": "https://dgp.cnpq.br/dgp/espelhogrupo/4237780666268708",
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": null,
-    "left": 60.95,
-    "top": 78.34
+    "integrantes": 18,
+    "left": 60.79,
+    "top": 77.83,
+    "polos": null
   },
   {
     "id": "lemt",
