@@ -13,8 +13,9 @@
     "instagram": null,
     "logo": "/images/laboratorios/gpec.png",
     "integrantes": 80,
-    "left": 90.81,
-    "top": 22.36
+    "left": 90.43,
+    "top": 23.05,
+    "polos": null
   },
   {
     "id": "lpc",
