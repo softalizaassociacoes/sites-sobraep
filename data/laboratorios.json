@@ -297,16 +297,17 @@
     "nome": "Grupo de Pesquisa e Desenvolvimento em Sistemas Elétricos e Computacionais",
     "instituicao": "UFSM - Universidade Federal de Santa Maria",
     "cidade": "Santa Maria",
-    "uf": "RS",
     "responsavel": "Álysson Raniere Seidel",
     "email": "gsec@ctism.ufsm.br",
-    "integrantes": 20,
+    "uf": "RS",
     "site": "https://www.ufsm.br/grupos/gsec",
-    "instagram": "https://www.instagram.com/gsecufsm/",
     "linkedin": "https://www.linkedin.com/company/electrical-and-computational-systems-research-and-development-group",
+    "instagram": "https://www.instagram.com/gsecufsm/",
     "logo": "/images/laboratorios/gsec.png",
-    "left": 52.25,
-    "top": 90.24
+    "integrantes": 20,
+    "left": 51.49,
+    "top": 89.6,
+    "polos": null
   },
   {
     "id": "fotovoltaica",
