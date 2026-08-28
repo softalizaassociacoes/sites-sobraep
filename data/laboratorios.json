@@ -423,16 +423,17 @@
     "nome": "Núcleo de Processamento de Energia Elétrica",
     "instituicao": "Udesc - Universidade do Estado de Santa Catarina",
     "cidade": "Joinville",
-    "uf": "SC",
     "responsavel": "Marcello Mezaroba",
     "email": "npee.cct@udesc.br",
-    "integrantes": 92,
+    "uf": "SC",
     "site": "https://www.npee.joinville.br/",
-    "instagram": "https://www.instagram.com/npee_udesc/",
     "linkedin": "https://www.linkedin.com/company/npee/",
+    "instagram": "https://www.instagram.com/npee_udesc/",
     "logo": "/images/laboratorios/npee.png",
-    "left": 64.45,
-    "top": 80.6
+    "integrantes": 92,
+    "left": 64.15,
+    "top": 80.93,
+    "polos": null
   },
   {
     "id": "cirue",
