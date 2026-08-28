@@ -66,14 +66,14 @@
     "linkedin": "https://br.linkedin.com/company/gesep",
     "instagram": "https://www.instagram.com/gesep_br/",
     "logo": "/images/uploads/gesep-ufv-1787593389738.jpg",
-    "integrantes": 10,
+    "integrantes": 50,
     "left": 79.39,
     "top": 66.71,
     "polos": [
       {
         "cidade": "Viçosa",
         "uf": "MG",
-        "instituicao": "UFV - Universidade Federal de Viçosa",
+        "instituicao": "UFV/UFJF/CEFET-MG",
         "left": 79.39,
         "top": 66.71
       },
