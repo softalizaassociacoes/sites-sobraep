@@ -171,16 +171,17 @@
     "nome": "Grupo de Eletrônica de Potência e Acionamentos Elétricos",
     "instituicao": "UFPE - Universidade Federal de Pernambuco",
     "cidade": "Recife",
-    "uf": "PE",
     "responsavel": "Marcelo Cabral Cavalcanti",
     "email": "gepae.ufpe@gmail.com",
-    "integrantes": 45,
+    "uf": "PE",
     "site": "http://www.ufpe.br/gepae/",
-    "instagram": "https://www.instagram.com/gepae.ufpe",
     "linkedin": null,
+    "instagram": "https://www.instagram.com/gepae.ufpe",
     "logo": "/images/laboratorios/gepae.png",
+    "integrantes": 45,
     "left": 98.66,
-    "top": 33.75
+    "top": 33.75,
+    "polos": null
   },
   {
     "id": "laaepe",
