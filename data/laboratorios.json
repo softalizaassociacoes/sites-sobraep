@@ -495,15 +495,16 @@
     "nome": "Eletrônica de Potência, Acionamentos Elétricos e Sistemas",
     "instituicao": "Unicamp",
     "cidade": "Campinas",
-    "uf": "SP",
     "responsavel": "José Antenor Pomilio",
     "email": "antenor@unicamp.br",
-    "integrantes": 50,
+    "uf": "SP",
     "site": "https://dgp.cnpq.br/dgp/espelhogrupo/7513527302049134",
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": null,
-    "left": 68.19,
-    "top": 71.38
+    "integrantes": 50,
+    "left": 68.7,
+    "top": 72.22,
+    "polos": null
   }
 ]
