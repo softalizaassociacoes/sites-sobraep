@@ -441,16 +441,17 @@
     "nome": "Centro de Inovação em Resiliência Urbana e Energética e LEPS - Lab. de Eletrônica de Potência e Smart Grids",
     "instituicao": "UFABC - Universidade Federal do ABC",
     "cidade": "Santo André",
-    "uf": "SP",
     "responsavel": "Alfeu Sguarezi",
     "email": "cirue@ufabc.edu.br",
-    "integrantes": null,
+    "uf": "SP",
     "site": "https://cirue.ufabc.edu.br/",
-    "instagram": null,
     "linkedin": "https://www.linkedin.com/posts/cirue_cirue-ufabc-santoandre-activity-7430689513632337920-tvTU/?originalSubdomain=pt",
+    "instagram": null,
     "logo": "/images/laboratorios/cirue.png",
-    "left": 70.08,
-    "top": 73.05
+    "integrantes": null,
+    "left": 69.22,
+    "top": 72.8,
+    "polos": null
   },
   {
     "id": "lacep",
