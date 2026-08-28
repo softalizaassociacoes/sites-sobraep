@@ -135,16 +135,17 @@
     "nome": "Engenharia de Potência",
     "instituicao": "UFMG - Universidade Federal de Minas Gerais",
     "cidade": "Belo Horizonte",
-    "uf": "MG",
     "responsavel": "Braz de Jesus Cardoso Filho",
     "email": "secretaria.tesla@gmail.com",
-    "integrantes": 50,
+    "uf": "MG",
     "site": "https://dgp.cnpq.br/dgp/espelhogrupo/8543155460250055",
-    "instagram": null,
     "linkedin": "https://www.linkedin.com/company/tesla-engenharia-de-potência-ufmg",
+    "instagram": null,
     "logo": "/images/laboratorios/tesla.png",
+    "integrantes": 50,
     "left": 76.22,
-    "top": 63.82
+    "top": 63.82,
+    "polos": null
   },
   {
     "id": "ufsj",
