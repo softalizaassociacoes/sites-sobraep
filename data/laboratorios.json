@@ -153,16 +153,17 @@
     "nome": "Núcleo de Estudos em Eletrônica de Potência e Sistemas Eletrônicos",
     "instituicao": "UFSJ - Universidade Federal de São João del-Rei",
     "cidade": "São João del-Rei",
-    "uf": "MG",
     "responsavel": "Fernando Lessa Tofoli",
     "email": "fernandolessa@ufsj.edu.br",
-    "integrantes": 17,
+    "uf": "MG",
     "site": null,
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": null,
-    "left": 75.56,
-    "top": 68.23
+    "integrantes": 17,
+    "left": 75.87,
+    "top": 67.68,
+    "polos": null
   },
   {
     "id": "gepae",
