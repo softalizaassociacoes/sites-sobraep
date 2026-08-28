@@ -387,16 +387,17 @@
     "nome": "Instituto de Eletrônica de Potência",
     "instituicao": "UFSC - Universidade Federal de Santa Catarina",
     "cidade": "Florianópolis",
-    "uf": "SC",
     "responsavel": "Denizar Cruz Martins",
     "email": "denizar.martins@gmail.com",
-    "integrantes": 80,
+    "uf": "SC",
     "site": "https://www.inep.ufsc.br",
-    "instagram": null,
     "linkedin": null,
+    "instagram": null,
     "logo": "/images/laboratorios/inep.png",
-    "left": 64.72,
-    "top": 83.05
+    "integrantes": 80,
+    "left": 64,
+    "top": 84.13,
+    "polos": null
   },
   {
     "id": "jl-power",
