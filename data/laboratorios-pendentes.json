@@ -73,5 +73,20 @@
     "site": "https://www.ufsm.br/grupos/gepoc",
     "instagram": "",
     "linkedin": ""
+  },
+  {
+    "id": "p-mthkrns0vvxc",
+    "recebidoEm": "2026-08-31T18:31:45.696Z",
+    "sigla": "LAFAE",
+    "nome": "Laboratório de Fontes Alternativas de Energia",
+    "instituicao": "UFRJ",
+    "cidade": "Rio de Janeiro",
+    "uf": "RJ",
+    "responsavel": "Prof. Robson Dias",
+    "email": "dias@lafae.ufrj.br",
+    "integrantes": "80",
+    "site": "https://www.lafae.ufrj.br/",
+    "instagram": "https://www.instagram.com/lafaeufrj",
+    "linkedin": "https://www.linkedin.com/company/lafae-ufrj/"
   }
 ]
