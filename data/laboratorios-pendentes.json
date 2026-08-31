@@ -118,5 +118,20 @@
     "site": "https://www.mayorca.com.br",
     "instagram": "",
     "linkedin": ""
+  },
+  {
+    "id": "p-mthlo4h0v104",
+    "recebidoEm": "2026-08-31T18:57:00.325Z",
+    "sigla": "LPEE",
+    "nome": "Laboratório de Processamento Eletrônico de Energia",
+    "instituicao": "UTFPR",
+    "cidade": "Curitiba",
+    "uf": "PR",
+    "responsavel": "Alceu Badin",
+    "email": "badin@utfpr.edu.br",
+    "integrantes": "9",
+    "site": "https://utfpr.curitiba.br/lpee/",
+    "instagram": "",
+    "linkedin": ""
   }
 ]
