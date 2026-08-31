@@ -13,5 +13,20 @@
     "site": "https://www.gov.br/inpe/pt-br/area-conhecimento/pesquisa-aplicada-e-desenvolvimento-tecnologico/laboratorios-banco-de-testes-grupos-p-d/laboratorio-de-eletromagnetismo-aplicado-pelet",
     "instagram": "",
     "linkedin": ""
+  },
+  {
+    "id": "p-mthe1cuweegf",
+    "recebidoEm": "2026-08-31T15:23:20.793Z",
+    "sigla": "BATLAB",
+    "nome": "Laboratório de Inteligência Artificial, Eletrônica de Potência e Sistemas Digitais",
+    "instituicao": "UFMS - Universidade Federal de Mato Grosso do Sul",
+    "cidade": "Campo Grande",
+    "uf": "MS",
+    "responsavel": "Ruben Barros Godoy",
+    "email": "ruben.godoy@ufms.br",
+    "integrantes": "44",
+    "site": "https://ppgee.ufms.br/facilidadeslaboratorios/",
+    "instagram": "",
+    "linkedin": ""
   }
 ]
