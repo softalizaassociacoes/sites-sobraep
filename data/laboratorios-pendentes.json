@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": "p-mthcf45q2ack",
+    "recebidoEm": "2026-08-31T14:38:03.470Z",
+    "sigla": "PELET",
+    "nome": "Eletromagnetismo Aplicado",
+    "instituicao": "INPE - Instituto Nacional de Pesquisas Espaciais",
+    "cidade": "São José dos Campos",
+    "uf": "SP",
+    "responsavel": "Jose Osvaldo Rossi",
+    "email": "jose.rossi@inpe.br",
+    "integrantes": "4",
+    "site": "https://www.gov.br/inpe/pt-br/area-conhecimento/pesquisa-aplicada-e-desenvolvimento-tecnologico/laboratorios-banco-de-testes-grupos-p-d/laboratorio-de-eletromagnetismo-aplicado-pelet",
+    "instagram": "",
+    "linkedin": ""
+  }
+]
