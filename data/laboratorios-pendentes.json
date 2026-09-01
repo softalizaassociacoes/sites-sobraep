@@ -238,5 +238,20 @@
     "site": "https://www.lafae.ufrj.br/",
     "instagram": "https://www.instagram.com/lafaeufrj/",
     "linkedin": "https://www.linkedin.com/company/lafae-ufrj/"
+  },
+  {
+    "id": "p-mtiuz5qspq9s",
+    "recebidoEm": "2026-09-01T16:05:17.909Z",
+    "sigla": "LEnP-Mot",
+    "nome": "Lab. de Ensaios de Pequenos Motores",
+    "instituicao": "UFG - Escola de Engenharia Elétrica",
+    "cidade": "Goiânia",
+    "uf": "GO",
+    "responsavel": "Geyverson Teixeira de Paula",
+    "email": "geyverson@ufg.br",
+    "integrantes": "15",
+    "site": "",
+    "instagram": "",
+    "linkedin": ""
   }
 ]
