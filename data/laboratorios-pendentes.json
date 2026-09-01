@@ -223,5 +223,20 @@
     "site": "",
     "instagram": "",
     "linkedin": ""
+  },
+  {
+    "id": "p-mtip2vltd197",
+    "recebidoEm": "2026-09-01T13:20:13.697Z",
+    "sigla": "LAFAE",
+    "nome": "Laboratório de Fontes Alternativas de Energia",
+    "instituicao": "Universidade Federal do Rio de Janeiro",
+    "cidade": "Rio de Janeiro",
+    "uf": "RJ",
+    "responsavel": "Robson Francisco de Silva Dias",
+    "email": "dias@lafae.ufrj.br",
+    "integrantes": "50",
+    "site": "https://www.lafae.ufrj.br/",
+    "instagram": "https://www.instagram.com/lafaeufrj/",
+    "linkedin": "https://www.linkedin.com/company/lafae-ufrj/"
   }
 ]
