@@ -49,6 +49,9 @@ const site = {
   email: 'presidente@sobraep.org.br',
   emailSecundario: 'heverton.pereira@ufv.br',
   emailSecretaria: 'secretaria1@sobraep.org.br',
+  // as logomarcas do mapa de laboratórios vão para outra caixa, a pedido da
+  // SOBRAEP: quem recebe o arquivo não é quem atende a secretaria em geral
+  emailLogomarcas: 'secretaria2@sobraep.org.br',
   telefone: '(31) 3612-6401',
   endereco: 'Prof. Heverton Augusto Pereira, Universidade Federal de Viçosa – UFV. Gerência de Especialistas em Sistemas Elétricos de Potência – GESEP. Departamento de Engenharia Elétrica, Viçosa – MG – Brasil, CEP 36570-900',
   facebook: 'https://www.facebook.com/sobraep/',
