@@ -1422,6 +1422,7 @@ table.data-table tr:hover td { background: #fff6e6; }
 .labs-ponto {
   position: absolute;
   transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center;
   width: 13px; height: 13px; padding: 0;
   border: 2px solid #fff;
   border-radius: 50%;
@@ -1434,6 +1435,19 @@ table.data-table tr:hover td { background: #fff6e6; }
 .labs-ponto:hover, .labs-ponto:focus-visible { transform: translate(-50%, -50%) scale(1.5); }
 .labs-ponto.is-ativo { background: var(--color-secondary); transform: translate(-50%, -50%) scale(1.75); z-index: 5; }
 .labs-ponto.is-apagado { opacity: 0.22; }
+
+/* Cidade com mais de um grupo: o número resolve na hora o que antes só se
+   descobria passando o mouse — quatro pontos empilhados pareciam um só. */
+/* Fica na mesma cor dos demais: o que distingue é o tamanho e o número. Em
+   âmbar o branco do número ficava com contraste de 2,6:1, ilegível a 11px. */
+.labs-ponto--varios { background: var(--color-primary); }
+.labs-ponto-num {
+  font-size: calc(11px / var(--zoom, 1));
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-white);
+  pointer-events: none;
+}
 
 /* camada das linhas: por cima do mapa e transbordando até a lista */
 .labs-linhas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 4; }
@@ -1685,10 +1699,15 @@ table.data-table tr:hover td { background: #fff6e6; }
   height: calc(13px / var(--zoom, 1));
   border-width: calc(2px / var(--zoom, 1));
 }
+/* o ponto que reúne vários grupos é maior para caber o número */
+.labs-ponto--varios {
+  width: calc(20px / var(--zoom, 1));
+  height: calc(20px / var(--zoom, 1));
+}
 .labs-ponto:hover, .labs-ponto:focus-visible { transform: translate(-50%, -50%) scale(1.5); }
 .labs-ponto.is-ativo { transform: translate(-50%, -50%) scale(1.75); }
-/* grupo com polos: anel extra para diferenciar do ponto único */
-.labs-ponto--polo { box-shadow: 0 0 0 calc(2.5px / var(--zoom, 1)) rgba(244, 168, 22, 0.55); }
+/* o anel de polo saiu junto com o marcador por grupo: agora um grupo com polos
+   aparece como um ponto em cada cidade, e a lista mostra o distintivo "N polos" */
 
 /* ---------- Cartão do grupo fora da lista ---------- */
 .labs-cartao {
@@ -1714,6 +1733,7 @@ table.data-table tr:hover td { background: #fff6e6; }
   border-left: 1px solid var(--color-border);
   border-right: 3px solid var(--color-secondary);
 }
+.labs-cartao-logos { display: flex; flex-wrap: wrap; gap: 5px; max-width: 96px; }
 .labs-cartao-logo {
   flex: 0 0 40px;
   height: 40px;
@@ -1741,6 +1761,12 @@ table.data-table tr:hover td { background: #fff6e6; }
   color: var(--color-primary);
 }
 .labs-cartao-local { font-size: 0.7rem; color: var(--color-text-muted); line-height: 1.3; }
+
+/* Cidade com vários grupos: as logomarcas encolhem e se organizam em duas
+   colunas, senão quatro delas empurrariam o cartão para fora do mapa. */
+.labs-cartao--varios { max-width: 250px; }
+.labs-cartao--varios .labs-cartao-logo { flex: 0 0 34px; height: 34px; }
+.labs-cartao--varios .labs-cartao-sigla { font-size: 0.8rem; }
 
 /* selo de polos na lista */
 .labs-item-polos {

@@ -21,6 +21,31 @@
   });
   const ufsComLab = Object.keys(porUf).sort();
   const semLocal = laboratorios.filter(function (l) { return l.left === null || l.left === undefined; });
+
+  // O marcador representa a CIDADE, não o grupo. Quatro grupos em Belo
+  // Horizonte ficavam na mesma coordenada, um por cima do outro: só o de cima
+  // respondia, e o zoom não separava porque a posição era idêntica. Agora é um
+  // marcador por cidade, com a contagem quando há mais de um grupo ali.
+  const cidades = [];
+  const indiceDaCidade = {};
+  laboratorios.forEach(function (l, i) {
+    var locais = (l.polos && l.polos.length)
+      ? l.polos
+      : [{ cidade: l.cidade, uf: l.uf, left: l.left, top: l.top }];
+    locais.forEach(function (p) {
+      if (p.left === null || p.left === undefined) return;
+      // sem cidade cadastrada não dá para agrupar: cada um fica com o seu ponto
+      var chave = p.cidade
+        ? (p.cidade + '/' + (p.uf || '')).toLowerCase()
+        : '#' + i;
+      if (indiceDaCidade[chave] === undefined) {
+        indiceDaCidade[chave] = cidades.length;
+        cidades.push({ cidade: p.cidade, uf: p.uf, left: p.left, top: p.top, labs: [] });
+      }
+      var c = cidades[indiceDaCidade[chave]];
+      if (c.labs.indexOf(i) === -1) c.labs.push(i);
+    });
+  });
   const totalMembros = laboratorios.reduce(function (s, l) { return s + (l.integrantes || 0); }, 0);
 %>
 
@@ -42,8 +67,9 @@
       </div>
 
       <p class="labs-intro">
-        Clique em um estado do mapa para ver os grupos daquela região, ou percorra a
-        lista ao lado — ao passar por um item, uma linha mostra onde ele fica no mapa.
+        Cada ponto do mapa é uma cidade; quando ela tem mais de um grupo, o número
+        aparece sobre o ponto. Passe o mouse para ver as logomarcas e clique para
+        listar os grupos daquela cidade. Clicar em um estado filtra a lista ao lado.
       </p>
 
       <div class="labs-painel">
@@ -61,25 +87,25 @@
             <div class="labs-palco" id="labsPalco">
               <div class="labs-mapa-base"><%- mapaSvg %></div>
 
-            <% laboratorios.forEach(function (l, i) {
-                 // um grupo pode ter polos em cidades diferentes: cada um vira
-                 // um marcador, mas todos apontam para o mesmo laboratório
-                 var pontos = (l.polos && l.polos.length)
-                   ? l.polos
-                   : (l.left === null ? [] : [{ cidade: l.cidade, uf: l.uf, left: l.left, top: l.top }]);
-                 pontos.forEach(function (p) { %>
-            <button type="button" class="labs-ponto<%= (l.polos && l.polos.length > 1) ? ' labs-ponto--polo' : '' %>"
-                    style="left: <%= p.left %>%; top: <%= p.top %>%;"
-                    data-lab="<%= i %>" data-uf="<%= p.uf %>"
-                    aria-label="<%= l.sigla %> — <%= p.cidade %>/<%= p.uf %><%= (l.polos && l.polos.length > 1) ? ' (um dos ' + l.polos.length + ' polos)' : '' %>"></button>
-            <% }); }) %>
+            <% cidades.forEach(function (c, ci) {
+                 var siglas = c.labs.map(function (i) { return laboratorios[i].sigla; });
+                 var local = c.cidade ? c.cidade + '/' + c.uf : (c.uf || 'sem cidade');
+                 var varios = c.labs.length > 1; %>
+            <button type="button" class="labs-ponto<%= varios ? ' labs-ponto--varios' : '' %>"
+                    style="left: <%= c.left %>%; top: <%= c.top %>%;"
+                    data-cidade="<%= ci %>" data-uf="<%= c.uf %>"
+                    aria-label="<%= local %> — <%= varios ? c.labs.length + ' grupos: ' : '' %><%= siglas.join(', ') %>"><%
+              if (varios) { %><span class="labs-ponto-num"><%= c.labs.length %></span><% }
+            %></button>
+            <% }) %>
 
             </div><!-- /labs-palco -->
             </div><!-- /labs-viewport -->
 
-            <!-- cartão do grupo em foco: aparece sempre, fora da área recortada -->
+            <!-- cartão do que está em foco: aparece sempre, fora da área
+                 recortada, e comporta todas as logomarcas da cidade -->
             <div class="labs-cartao" id="labsCartao" hidden>
-              <span class="labs-cartao-logo"></span>
+              <span class="labs-cartao-logos"></span>
               <span class="labs-cartao-texto">
                 <strong class="labs-cartao-sigla"></strong>
                 <span class="labs-cartao-local"></span>
@@ -92,7 +118,7 @@
 
           <p class="labs-mapa-legenda">
             <span class="labs-legenda-uf"></span> estados com grupos cadastrados —
-            clique para filtrar
+            clique para filtrar. O número no ponto indica quantos grupos há na cidade.
           </p>
         </div>
 
@@ -191,6 +217,7 @@
 
 <script id="labsDados" type="application/json"><%- JSON.stringify(laboratorios) %></script>
 <script id="labsUfs" type="application/json"><%- JSON.stringify(ufsComLab) %></script>
+<script id="labsCidades" type="application/json"><%- JSON.stringify(cidades) %></script>
 <script src="/js/laboratorios.js" defer></script>
 
 <%- include('partials/footer') %>

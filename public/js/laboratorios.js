@@ -7,14 +7,17 @@
  *
  * Três comportamentos merecem explicação:
  *
- * - Ao passar por um ponto, a logomarca do grupo aparece num cartão ao lado do
- *   mapa e a linha tracejada vai até ele — sempre, esteja o grupo visível na
- *   lista ou não. A lista continua servindo para procurar e filtrar.
+ * - O marcador é a CIDADE, não o grupo. Quatro grupos em Belo Horizonte ficavam
+ *   na mesma coordenada, um sobre o outro: só o de cima respondia, e ampliar
+ *   não separava porque a posição era idêntica. Agora o ponto traz a contagem,
+ *   o cartão mostra todas as logomarcas da cidade e o clique filtra a lista
+ *   para aqueles grupos. Um grupo com polos aparece em cada cidade onde está.
+ * - Ao passar por um ponto, o cartão aparece ao lado do mapa e a linha
+ *   tracejada vai até ele — sempre, esteja o grupo visível na lista ou não. A
+ *   lista continua servindo para procurar e filtrar.
  * - O mapa tem zoom próprio, porque o zoom do navegador amplia a página
  *   inteira. Os pontos encolhem na mesma medida em que o mapa cresce, senão
  *   cobririam cidades vizinhas justamente quando se quer precisão.
- * - Um grupo com polos em cidades diferentes tem um marcador em cada uma,
- *   todos ligados ao mesmo registro.
  */
 (() => {
   const mapa = document.getElementById('labsMapa');
@@ -24,6 +27,7 @@
 
   const dados = JSON.parse(document.getElementById('labsDados').textContent);
   const ufsComLab = JSON.parse(document.getElementById('labsUfs').textContent);
+  const cidades = JSON.parse(document.getElementById('labsCidades').textContent);
   const svgLinhas = document.getElementById('labsLinhas');
   const palco = document.getElementById('labsPalco') || mapa;
   const itens = [...lista.querySelectorAll('.labs-item')];
@@ -47,9 +51,10 @@
     links: document.getElementById('labsPopupLinks')
   };
 
-  let ufAtiva = null;
-  let destacado = null;
-  let pontoDestacado = null;
+  // filtro da lista: null, { uf } ou { cidade }
+  let filtro = null;
+  // o que está em foco: { tipo, labs, cidade, local, ponto }
+  let foco = null;
 
   const NOMES_UF = {
     AC: 'Acre', AL: 'Alagoas', AM: 'Amazonas', AP: 'Amapá', BA: 'Bahia', CE: 'Ceará',
@@ -81,7 +86,7 @@
     document.getElementById('labsZoomMenos').disabled = escala <= ESCALA_MIN + 0.01;
     document.getElementById('labsZoomMais').disabled = escala >= ESCALA_MAX - 0.01;
     mapa.classList.toggle('is-ampliado', escala > 1.01);
-    if (destacado !== null) desenharLinha(destacado, pontoDestacado);
+    if (foco) desenharLinha();
   }
 
   function limitarPan() {
@@ -142,6 +147,16 @@
   mapa.addEventListener('pointerup', soltar);
   mapa.addEventListener('pointercancel', soltar);
 
+  // ---------- de grupo para cidade e vice-versa ----------
+  const cidadesDoGrupo = dados.map(function (_, i) {
+    return cidades.reduce(function (acc, c, ci) {
+      return c.labs.indexOf(i) === -1 ? acc : acc.concat(ci);
+    }, []);
+  });
+  const pontoDaCidade = (ci) => pontos.find((p) => Number(p.dataset.cidade) === ci);
+  const nomeDaCidade = (c) => (c.cidade ? `${c.cidade}/${c.uf}` : (c.uf || ''));
+  const plural = (n) => `${n} grupo${n > 1 ? 's' : ''}`;
+
   // ---------- estados clicáveis ----------
   const contagem = {};
   dados.forEach((l) => {
@@ -156,35 +171,57 @@
     path.setAttribute('tabindex', '0');
     path.setAttribute('role', 'button');
     const n = contagem[uf] || 0;
-    path.setAttribute('aria-label', `${NOMES_UF[uf] || uf}: ${n} grupo${n > 1 ? 's' : ''}`);
+    path.setAttribute('aria-label', `${NOMES_UF[uf] || uf}: ${plural(n)}`);
     const titulo = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-    titulo.textContent = `${NOMES_UF[uf] || uf} — ${n} grupo${n > 1 ? 's' : ''}`;
+    titulo.textContent = `${NOMES_UF[uf] || uf} — ${plural(n)}`;
     path.appendChild(titulo);
 
-    const acionar = (e) => { e.stopPropagation(); filtrar(ufAtiva === uf ? null : uf); };
+    const acionar = (e) => {
+      e.stopPropagation();
+      filtrar(filtro && filtro.uf === uf ? null : { uf });
+    };
     path.addEventListener('click', acionar);
     path.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); acionar(e); }
     });
   });
 
-  function filtrar(uf) {
-    ufAtiva = uf;
+  // ---------- filtro da lista ----------
+  // Atende ao clique no estado e ao clique numa cidade com mais de um grupo:
+  // nesse caso a lista passa a mostrar só os grupos de lá, e cada um continua
+  // abrindo o próprio detalhe.
+  function filtrar(criterio) {
+    filtro = criterio || null;
+    const daCidade = filtro && filtro.cidade != null ? cidades[filtro.cidade] : null;
     let visiveis = 0;
+
     itens.forEach((li) => {
+      const i = Number(li.dataset.lab);
       const ufsDoItem = (li.dataset.ufs || li.dataset.uf || '').split(',');
-      const mostra = !uf || ufsDoItem.includes(uf);
+      const mostra = !filtro ? true
+        : daCidade ? daCidade.labs.indexOf(i) !== -1
+        : ufsDoItem.indexOf(filtro.uf) !== -1;
       li.hidden = !mostra;
       if (mostra) visiveis++;
     });
-    pontos.forEach((p) => p.classList.toggle('is-apagado', Boolean(uf) && p.dataset.uf !== uf));
-    mapa.querySelectorAll('.tem-lab').forEach((p) => {
-      p.classList.toggle('is-ativo', p.id === `BR-${uf}`);
+
+    pontos.forEach((p) => {
+      const ci = Number(p.dataset.cidade);
+      const fora = !filtro ? false
+        : daCidade ? ci !== filtro.cidade
+        : cidades[ci].uf !== filtro.uf;
+      p.classList.toggle('is-apagado', fora);
     });
-    el.titulo.textContent = uf
-      ? `${NOMES_UF[uf] || uf} — ${contagem[uf]} grupo${contagem[uf] > 1 ? 's' : ''}`
-      : 'Todos os grupos';
-    el.limpar.hidden = !uf;
+
+    const ufAceso = daCidade ? daCidade.uf : (filtro ? filtro.uf : null);
+    mapa.querySelectorAll('.tem-lab').forEach((p) => {
+      p.classList.toggle('is-ativo', p.id === `BR-${ufAceso}`);
+    });
+
+    el.titulo.textContent = !filtro ? 'Todos os grupos'
+      : daCidade ? `${nomeDaCidade(daCidade)} — ${plural(daCidade.labs.length)}`
+      : `${NOMES_UF[filtro.uf] || filtro.uf} — ${plural(contagem[filtro.uf] || 0)}`;
+    el.limpar.hidden = !filtro;
     el.vazia.hidden = visiveis > 0;
     limparDestaque();
     fechar();
@@ -194,24 +231,36 @@
   el.limpar.addEventListener('click', () => filtrar(null));
 
   // ---------- cartão flutuante ----------
-  // Mostra a logomarca do grupo em foco ao lado do mapa. Fica fora da área
-  // recortada pelo zoom, senão um ponto colado na borda — Recife é o caso —
-  // teria o cartão cortado junto com o mapa.
-  function mostrarCartao(lab, ponto) {
-    const logo = cartao.querySelector('.labs-cartao-logo');
-    logo.innerHTML = '';
-    if (lab.logo) {
-      const img = document.createElement('img');
-      img.src = lab.logo;
-      img.alt = '';
-      logo.appendChild(img);
-    } else {
-      const s = document.createElement('span');
-      s.textContent = lab.sigla;
-      logo.appendChild(s);
-    }
-    cartao.querySelector('.labs-cartao-sigla').textContent = lab.sigla;
-    cartao.querySelector('.labs-cartao-local').textContent = cidadesDe(lab).join(' · ') || '—';
+  // Mostra as logomarcas do que está em foco ao lado do mapa: um grupo, quando
+  // veio da lista, ou todos os da cidade, quando veio de um ponto do mapa. Fica
+  // fora da área recortada pelo zoom, senão um ponto colado na borda — Recife é
+  // o caso — teria o cartão cortado junto com o mapa.
+  function mostrarCartao(labs, local, ponto) {
+    const caixa = cartao.querySelector('.labs-cartao-logos');
+    caixa.innerHTML = '';
+    labs.forEach((lab) => {
+      const item = document.createElement('span');
+      item.className = 'labs-cartao-logo';
+      item.title = lab.sigla;
+      if (lab.logo) {
+        const img = document.createElement('img');
+        img.src = lab.logo;
+        img.alt = lab.sigla;
+        item.appendChild(img);
+      } else {
+        const s = document.createElement('span');
+        s.textContent = lab.sigla;
+        item.appendChild(s);
+      }
+      caixa.appendChild(item);
+    });
+
+    const varios = labs.length > 1;
+    cartao.classList.toggle('labs-cartao--varios', varios);
+    cartao.querySelector('.labs-cartao-sigla').textContent = varios ? local : labs[0].sigla;
+    cartao.querySelector('.labs-cartao-local').textContent = varios
+      ? labs.map((l) => l.sigla).join(' · ')
+      : (cidadesDe(labs[0]).join(' · ') || local || '—');
     cartao.hidden = false;
 
     // do lado do mapa oposto ao ponto, para a linha não cruzar o desenho
@@ -228,8 +277,9 @@
   const esconderCartao = () => { cartao.hidden = true; };
 
   // ---------- linha tracejada ----------
-  function desenharLinha(indice, ponto) {
-    const p = ponto || pontos.find((x) => x.dataset.lab === String(indice));
+  function desenharLinha() {
+    if (!foco) return apagarLinha();
+    const p = foco.ponto || (foco.cidade != null ? pontoDaCidade(foco.cidade) : null);
     if (!p) return apagarLinha();
     if (window.matchMedia('(max-width: 900px)').matches) return apagarLinha();
 
@@ -237,8 +287,7 @@
     // para o item quando ele estava à vista, e isso dependia da resolução e de
     // quantos grupos cabiam sem rolar: num item na borda da área rolável, a
     // linha terminava colada no limite e parecia não apontar para nada.
-    const lab = dados[indice];
-    mostrarCartao(lab, p);
+    mostrarCartao(foco.labs.map((i) => dados[i]), foco.local, p);
     const destino = cartao;
 
     const base = svgLinhas.getBoundingClientRect();
@@ -320,47 +369,79 @@
 
   function fechar() { popup.hidden = true; }
 
-  function destacar(indice, ponto) {
-    destacado = indice;
-    pontoDestacado = ponto || null;
-    itens.forEach((li) => li.classList.toggle('is-ativo', li.dataset.lab === String(indice)));
-    // todos os polos do mesmo grupo acendem juntos
-    pontos.forEach((p) => p.classList.toggle('is-ativo', p.dataset.lab === String(indice)));
+  // ---------- foco ----------
+  // Vindo da lista o foco é um grupo, e todas as cidades onde ele tem polo
+  // acendem. Vindo do mapa o foco é a cidade, e acendem os grupos dela.
+  function focarCidade(ci, ponto) {
+    const c = cidades[ci];
+    foco = { tipo: 'cidade', labs: c.labs, cidade: ci, local: nomeDaCidade(c), ponto: ponto || pontoDaCidade(ci) };
+    aplicarDestaque();
+  }
+
+  function focarGrupo(indice) {
+    const cs = cidadesDoGrupo[indice] || [];
+    foco = { tipo: 'grupo', labs: [indice], cidade: cs.length ? cs[0] : null, local: '', ponto: null };
+    aplicarDestaque();
+  }
+
+  function aplicarDestaque() {
+    itens.forEach((li) => {
+      li.classList.toggle('is-ativo', !!foco && foco.labs.indexOf(Number(li.dataset.lab)) !== -1);
+    });
+    pontos.forEach((p) => {
+      const ci = Number(p.dataset.cidade);
+      const aceso = !!foco && (foco.tipo === 'cidade'
+        ? ci === foco.cidade
+        : cidades[ci].labs.some((x) => foco.labs.indexOf(x) !== -1));
+      p.classList.toggle('is-ativo', aceso);
+    });
   }
 
   function limparDestaque() {
-    destacado = null;
-    pontoDestacado = null;
-    itens.forEach((li) => li.classList.remove('is-ativo'));
-    pontos.forEach((p) => p.classList.remove('is-ativo'));
+    foco = null;
+    aplicarDestaque();
     apagarLinha();
   }
 
   itens.forEach((li) => {
     const indice = Number(li.dataset.lab);
-    li.addEventListener('mouseenter', () => { destacar(indice); desenharLinha(indice); });
+    li.addEventListener('mouseenter', () => { focarGrupo(indice); desenharLinha(); });
     li.addEventListener('mouseleave', () => { if (popup.hidden) limparDestaque(); });
     const btn = li.querySelector('.labs-item-btn');
-    btn.addEventListener('focus', () => { destacar(indice); desenharLinha(indice); });
+    btn.addEventListener('focus', () => { focarGrupo(indice); desenharLinha(); });
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      destacar(indice);
-      desenharLinha(indice);
+      focarGrupo(indice);
+      desenharLinha();
       abrir(indice);
     });
   });
 
   pontos.forEach((p) => {
-    const indice = Number(p.dataset.lab);
-    p.addEventListener('mouseenter', () => { destacar(indice, p); desenharLinha(indice, p); });
+    const ci = Number(p.dataset.cidade);
+    p.addEventListener('mouseenter', () => { focarCidade(ci, p); desenharLinha(); });
     p.addEventListener('mouseleave', () => { if (popup.hidden) limparDestaque(); });
     p.addEventListener('click', (e) => {
       e.stopPropagation();
-      destacar(indice, p);
+      const c = cidades[ci];
+      if (c.labs.length > 1) {
+        // mais de um grupo na cidade: em vez de abrir um deles por sorteio, a
+        // lista passa a mostrar só esses, e a pessoa escolhe qual quer ver
+        filtrar({ cidade: ci });
+        focarCidade(ci, p);
+        desenharLinha();
+        // no celular a lista fica abaixo do mapa e o filtro passaria batido
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          lista.scrollIntoView({ block: 'nearest' });
+        }
+        return;
+      }
+      focarCidade(ci, p);
+      desenharLinha();
+      const indice = c.labs[0];
       // rola a lista até o grupo por conveniência; a linha não depende disso
-      const item = itens.find((li) => li.dataset.lab === String(indice));
+      const item = itens.find((li) => Number(li.dataset.lab) === indice);
       if (item && !item.hidden) item.scrollIntoView({ block: 'nearest' });
-      desenharLinha(indice, p);
       abrir(indice);
     });
   });
@@ -369,9 +450,7 @@
   popup.addEventListener('click', (e) => e.stopPropagation());
   cartao.addEventListener('click', (e) => e.stopPropagation());
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fechar(); limparDestaque(); } });
-  window.addEventListener('resize', () => {
-    if (destacado !== null) desenharLinha(destacado, pontoDestacado); else apagarLinha();
-  });
+  window.addEventListener('resize', () => desenharLinha());
 
   aplicarTransformacao();
 })();
