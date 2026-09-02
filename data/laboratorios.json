@@ -526,6 +526,24 @@
     "polos": null
   },
   {
+    "id": "mayorca-invent",
+    "sigla": "Mayorca Invent",
+    "nome": "Mayorca R&D",
+    "instituicao": "Mayorca Máquinas e Equipamentos LTDA",
+    "cidade": "Joinville",
+    "responsavel": "Aurelio Mayorca",
+    "email": "mayorca@mayorca.com.br",
+    "uf": "SC",
+    "site": "https://www.mayorca.com.br",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/mayorca-1788357005617.png",
+    "integrantes": 6,
+    "left": 64.15,
+    "top": 80.93,
+    "polos": null
+  },
+  {
     "id": "npee",
     "sigla": "nPEE",
     "nome": "Núcleo de Processamento de Energia Elétrica",
