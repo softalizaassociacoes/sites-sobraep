@@ -72,6 +72,24 @@
     "polos": null
   },
   {
+    "id": "lenp-mot",
+    "sigla": "LEnP-Mot",
+    "nome": "Lab. de Ensaios de Pequenos Motores",
+    "instituicao": "UFG - Escola de Engenharia Elétrica",
+    "cidade": "Goiânia",
+    "responsavel": "Geyverson Teixeira de Paula",
+    "email": "geyverson@ufg.br",
+    "uf": "GO",
+    "site": null,
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/ufg-1788358214770.png",
+    "integrantes": 15,
+    "left": 63.09,
+    "top": 56.28,
+    "polos": null
+  },
+  {
     "id": "gep",
     "sigla": "GEP",
     "nome": "Grupo de Eletrônica de Potência",
