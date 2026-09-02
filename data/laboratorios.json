@@ -688,6 +688,24 @@
     "polos": null
   },
   {
+    "id": "pelet",
+    "sigla": "PELET",
+    "nome": "Eletromagnetismo Aplicado",
+    "instituicao": "INPE - Instituto Nacional de Pesquisas Espaciais",
+    "cidade": "São José dos Campos",
+    "responsavel": "Jose Osvaldo Rossi",
+    "email": "jose.rossi@inpe.br",
+    "uf": "SP",
+    "site": "https://www.gov.br/inpe/pt-br/area-conhecimento/pesquisa-aplicada-e-desenvolvimento-tecnologico/laboratorios-banco-de-testes-grupos-p-d/laboratorio-de-eletromagnetismo-aplicado-pelet",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/inpe-1788357837532.png",
+    "integrantes": 4,
+    "left": 71.13,
+    "top": 71.78,
+    "polos": null
+  },
+  {
     "id": "unicamp",
     "sigla": "Unicamp",
     "nome": "Eletrônica de Potência, Acionamentos Elétricos e Sistemas",
