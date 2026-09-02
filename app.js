@@ -41,6 +41,14 @@ async function servirDoGitHub(req, res, next) {
 app.get('/images/uploads/:nome', servirDoGitHub);
 app.get('/docs/arquivos/:nome', servirDoGitHub);
 
+// A secretaria da SOBRAEP atende hoje por uma caixa só. Ela aparece em três
+// papéis distintos — endereço público, destino das logomarcas e destinatário do
+// aviso automático de cadastro — e cada um segue com a sua chave, porque já
+// divergiram antes e podem voltar a divergir. O literal, porém, é um só: foi
+// justamente trocar um dos papéis e esquecer do outro que fez o aviso de novo
+// cadastro continuar chegando na caixa antiga.
+const EMAIL_SECRETARIA = 'secretaria2@sobraep.org.br';
+
 const site = {
   nome: 'SOBRAEP',
   nomeCompleto: 'Associação Brasileira de Eletrônica de Potência',
@@ -48,14 +56,12 @@ const site = {
   sede: 'Florianópolis (SC)',
   email: 'presidente@sobraep.org.br',
   emailSecundario: 'heverton.pereira@ufv.br',
-  emailSecretaria: 'secretaria1@sobraep.org.br',
-  // as logomarcas do mapa de laboratórios vão para outra caixa, a pedido da
-  // SOBRAEP: quem recebe o arquivo não é quem atende a secretaria em geral
-  emailLogomarcas: 'secretaria2@sobraep.org.br',
-  // o aviso automático de novo cadastro no mapa segue a logomarca: as duas
-  // pontas do mesmo cadastro caíam em caixas diferentes, e quem montava o
-  // laboratório no painel ficava sem o e-mail que anunciava o cadastro
-  emailCadastroLaboratorio: 'secretaria2@sobraep.org.br',
+  // endereço da secretaria exibido na página de contato
+  emailSecretaria: EMAIL_SECRETARIA,
+  // para onde o formulário do mapa pede que a logomarca seja enviada
+  emailLogomarcas: EMAIL_SECRETARIA,
+  // destinatário do aviso automático de novo cadastro no mapa
+  emailCadastroLaboratorio: EMAIL_SECRETARIA,
   telefone: '(31) 3612-6401',
   endereco: 'Prof. Heverton Augusto Pereira, Universidade Federal de Viçosa – UFV. Gerência de Especialistas em Sistemas Elétricos de Potência – GESEP. Departamento de Engenharia Elétrica, Viçosa – MG – Brasil, CEP 36570-900',
   facebook: 'https://www.facebook.com/sobraep/',
