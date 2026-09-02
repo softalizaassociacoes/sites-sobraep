@@ -1,5 +1,23 @@
 [
   {
+    "id": "labefea",
+    "sigla": "LABEFEA",
+    "nome": "Laboratório de Eficiência Energética e Ambiental",
+    "instituicao": "UFBA",
+    "cidade": "Salvador",
+    "responsavel": "Fabiano Fragoso Costa",
+    "email": "fabiano.costa@ufba.br",
+    "uf": "BA",
+    "site": "https://labefea.eng.ufba.br/",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/labefeia-1788357303257.png",
+    "integrantes": 20,
+    "left": 88.79,
+    "top": 47.14,
+    "polos": null
+  },
+  {
     "id": "geper",
     "sigla": "geper",
     "nome": "grupo de eletrônica de potência em energias renováveis",
