@@ -346,6 +346,24 @@
     "polos": null
   },
   {
+    "id": "gepoc",
+    "sigla": "GEPOC",
+    "nome": "Grupo de Eletrônica de Potência e Controle",
+    "instituicao": "UFSM - Universidade Federal de Santa Maria",
+    "cidade": "Santa Maria",
+    "responsavel": "Prof. Jose Renes Pinheiro",
+    "email": "jrenes@gepoc.ufsm.br",
+    "uf": "RS",
+    "site": "https://www.ufsm.br/grupos/gepoc",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/gepoc-1788356102053.png",
+    "integrantes": 100,
+    "left": 51.49,
+    "top": 89.6,
+    "polos": null
+  },
+  {
     "id": "gsec",
     "sigla": "GSEC",
     "nome": "Grupo de Pesquisa e Desenvolvimento em Sistemas Elétricos e Computacionais",
