@@ -634,6 +634,24 @@
     "polos": null
   },
   {
+    "id": "lep",
+    "sigla": "LEP",
+    "nome": "Laboratório de Eletrônica de Potência",
+    "instituicao": "EPUSP - Escola Politécnica da Universidade de São Paulo",
+    "cidade": "São Paulo",
+    "responsavel": "Wilson Komatsu",
+    "email": "wilsonk@usp.br",
+    "uf": "SP",
+    "site": "https://www.pea.usp.br/pesquisa/linha-de-pesquisa/lep-laboratorio-de-eletronica-de-potencia/",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logotipo-lep-poli-usp-1788357496952.png",
+    "integrantes": 20,
+    "left": 69.2,
+    "top": 72.81,
+    "polos": null
+  },
+  {
     "id": "lepo",
     "sigla": "LEPO",
     "nome": "LABORATÓRIOS EM ELETRONICA DE POTENCIA DA UNICAMP",
