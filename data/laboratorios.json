@@ -292,6 +292,24 @@
     "polos": null
   },
   {
+    "id": "sg2",
+    "sigla": "SG2",
+    "nome": "Smart Grid Group",
+    "instituicao": "UFPB - Universidade Federal da Paraíba",
+    "cidade": "João Pessoa",
+    "responsavel": "Camila Gehrke",
+    "email": "camila@cear.ufpb.br",
+    "uf": "PB",
+    "site": null,
+    "linkedin": null,
+    "instagram": "https://www.instagram.com/sg2.ufpb/",
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/sg2-1788358716745.png",
+    "integrantes": 20,
+    "left": 99.8,
+    "top": 30.58,
+    "polos": null
+  },
+  {
     "id": "gepae",
     "sigla": "GEPAE",
     "nome": "Grupo de Eletrônica de Potência e Acionamentos Elétricos",
