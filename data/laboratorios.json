@@ -166,6 +166,24 @@
     "polos": null
   },
   {
+    "id": "leiam",
+    "sigla": "LEIAM",
+    "nome": "Laboratório de Eletrônica Industrial e Acionamento de Máquinas",
+    "instituicao": "UFCG - Universidade Federal de Campina Grande",
+    "cidade": "Campina Grande",
+    "responsavel": "Montiê Alves Vitorino",
+    "email": "vitorino@dee.ufcg.edu.br",
+    "uf": "PB",
+    "site": null,
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/leiam-logomarca-1788355782764.png",
+    "integrantes": 20,
+    "left": 96.75,
+    "top": 31.32,
+    "polos": null
+  },
+  {
     "id": "gepae",
     "sigla": "GEPAE",
     "nome": "Grupo de Eletrônica de Potência e Acionamentos Elétricos",
