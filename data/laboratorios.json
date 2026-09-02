@@ -562,6 +562,24 @@
     "polos": null
   },
   {
+    "id": "lepo",
+    "sigla": "LEPO",
+    "nome": "LABORATÓRIOS EM ELETRONICA DE POTENCIA DA UNICAMP",
+    "instituicao": "UNICAMP",
+    "cidade": "Campinas",
+    "responsavel": "Tárcio André dos Santos Barros",
+    "email": "tarcio87@unicamp.br",
+    "uf": "SP",
+    "site": "https://www.lepounicamp.com/",
+    "linkedin": null,
+    "instagram": "https://www.instagram.com/lepounicamp/",
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logo-lepo-1788356240064.jpeg",
+    "integrantes": 99,
+    "left": 68.7,
+    "top": 72.22,
+    "polos": null
+  },
+  {
     "id": "unicamp",
     "sigla": "Unicamp",
     "nome": "Eletrônica de Potência, Acionamentos Elétricos e Sistemas",
