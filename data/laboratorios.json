@@ -292,6 +292,24 @@
     "polos": null
   },
   {
+    "id": "lpee",
+    "sigla": "LPEE",
+    "nome": "Laboratório de Processamento Eletrônico de Energia",
+    "instituicao": "UTFPR",
+    "cidade": "Curitiba",
+    "responsavel": "Alceu Badin",
+    "email": "badin@utfpr.edu.br",
+    "uf": "PR",
+    "site": "https://utfpr.curitiba.br/lpee/",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logo-lpee-1788356672869.jpg",
+    "integrantes": 9,
+    "left": 62.65,
+    "top": 78.01,
+    "polos": null
+  },
+  {
     "id": "lafae",
     "sigla": "LAFAE",
     "nome": "Laboratório de Fontes Alternativas de Energia",
