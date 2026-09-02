@@ -526,6 +526,24 @@
     "polos": null
   },
   {
+    "id": "gpee",
+    "sigla": "GPEE",
+    "nome": "Grupo de Processamento Eletrônico de Energia",
+    "instituicao": "IFSC - Instituto Federal de Santa Catarina",
+    "cidade": "Florianópolis",
+    "responsavel": "Flábio Alberto Bardemaker Batista",
+    "email": "flabio@ifsc.edu.br",
+    "uf": "SC",
+    "site": null,
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/ifsc-logo-vertical-1788358051858.png",
+    "integrantes": 15,
+    "left": 64,
+    "top": 84.13,
+    "polos": null
+  },
+  {
     "id": "inep",
     "sigla": "INEP",
     "nome": "Instituto de Eletrônica de Potência",
