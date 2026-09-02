@@ -15,6 +15,9 @@
  * - Ao passar por um ponto, o cartão aparece ao lado do mapa e a linha
  *   tracejada vai até ele — sempre, esteja o grupo visível na lista ou não. A
  *   lista continua servindo para procurar e filtrar.
+ * - A lista tem busca própria. Passou de 40 grupos: rolar até achar um deixou
+ *   de funcionar, e o filtro por estado só ajuda quem já sabe onde o grupo
+ *   fica. A busca casa sigla, nome, instituição, cidade e estado.
  * - O mapa tem zoom próprio, porque o zoom do navegador amplia a página
  *   inteira. Os pontos encolhem na mesma medida em que o mapa cresce, senão
  *   cobririam cidades vizinhas justamente quando se quer precisão.
@@ -48,11 +51,16 @@
     respLinha: document.getElementById('labsPopupRespLinha'),
     integrantes: document.getElementById('labsPopupIntegrantes'),
     integrantesLinha: document.getElementById('labsPopupIntegrantesLinha'),
-    links: document.getElementById('labsPopupLinks')
+    links: document.getElementById('labsPopupLinks'),
+    busca: document.getElementById('labsBusca'),
+    buscaLimpar: document.getElementById('labsBuscaLimpar')
   };
 
   // filtro da lista: null, { uf } ou { cidade }
   let filtro = null;
+  // termos da busca, já normalizados, e o texto cru para exibir no título
+  let termos = [];
+  let termoExibido = '';
   // o que está em foco: { tipo, labs, cidade, local, ponto }
   let foco = null;
 
@@ -155,7 +163,7 @@
   });
   const pontoDaCidade = (ci) => pontos.find((p) => Number(p.dataset.cidade) === ci);
   const nomeDaCidade = (c) => (c.cidade ? `${c.cidade}/${c.uf}` : (c.uf || ''));
-  const plural = (n) => `${n} grupo${n > 1 ? 's' : ''}`;
+  const plural = (n) => `${n} grupo${n === 1 ? '' : 's'}`;
 
   // ---------- estados clicáveis ----------
   const contagem = {};
@@ -186,31 +194,69 @@
     });
   });
 
+  // ---------- busca por texto ----------
+  // Casa sigla, nome, instituição, cidade e estado — o estado tanto pela sigla
+  // (MG) quanto pelo nome por extenso (Minas Gerais). Os acentos saem dos dois
+  // lados: quem digita "vicosa" precisa achar Viçosa.
+  const semAcento = (t) => String(t || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+  const textoDoGrupo = dados.map((l) => {
+    const locais = (l.polos && l.polos.length)
+      ? l.polos
+      : [{ cidade: l.cidade, uf: l.uf, instituicao: l.instituicao }];
+    const partes = [l.sigla, l.nome, l.instituicao];
+    locais.forEach((p) => partes.push(p.cidade, p.uf, NOMES_UF[p.uf], p.instituicao));
+    return semAcento(partes.filter(Boolean).join(' '));
+  });
+
+  // termos separados por espaço se somam: "gesep vicosa" só casa com quem tem
+  // os dois, o que é o que faz a busca por cidade + sigla valer a pena
+  const casaBusca = (i) => termos.every((t) => textoDoGrupo[i].indexOf(t) !== -1);
+
   // ---------- filtro da lista ----------
   // Atende ao clique no estado e ao clique numa cidade com mais de um grupo:
   // nesse caso a lista passa a mostrar só os grupos de lá, e cada um continua
   // abrindo o próprio detalhe.
   function filtrar(criterio) {
     filtro = criterio || null;
+    aplicarLista();
+  }
+
+  function buscar(texto) {
+    termoExibido = String(texto || '').trim();
+    termos = semAcento(termoExibido).split(/\s+/).filter(Boolean);
+    aplicarLista();
+  }
+
+  // O estado da lista é a soma dos dois: o clique no mapa recorta a região e a
+  // busca recorta o texto. Um não zera o outro — buscar dentro de um estado já
+  // filtrado é justamente o caso de quem sabe a região mas não a sigla.
+  function aplicarLista() {
     const daCidade = filtro && filtro.cidade != null ? cidades[filtro.cidade] : null;
+    const buscando = termos.length > 0;
     let visiveis = 0;
 
     itens.forEach((li) => {
       const i = Number(li.dataset.lab);
       const ufsDoItem = (li.dataset.ufs || li.dataset.uf || '').split(',');
-      const mostra = !filtro ? true
+      const naRegiao = !filtro ? true
         : daCidade ? daCidade.labs.indexOf(i) !== -1
         : ufsDoItem.indexOf(filtro.uf) !== -1;
+      const mostra = naRegiao && (!buscando || casaBusca(i));
       li.hidden = !mostra;
       if (mostra) visiveis++;
     });
 
     pontos.forEach((p) => {
       const ci = Number(p.dataset.cidade);
-      const fora = !filtro ? false
+      const foraDaRegiao = !filtro ? false
         : daCidade ? ci !== filtro.cidade
         : cidades[ci].uf !== filtro.uf;
-      p.classList.toggle('is-apagado', fora);
+      // a cidade apaga quando nenhum grupo dela sobrou na busca: assim o mapa
+      // mostra onde está o que a lista encontrou
+      const foraDaBusca = buscando && !cidades[ci].labs.some((i) => casaBusca(i));
+      p.classList.toggle('is-apagado', foraDaRegiao || foraDaBusca);
     });
 
     const ufAceso = daCidade ? daCidade.uf : (filtro ? filtro.uf : null);
@@ -218,17 +264,53 @@
       p.classList.toggle('is-ativo', p.id === `BR-${ufAceso}`);
     });
 
-    el.titulo.textContent = !filtro ? 'Todos os grupos'
-      : daCidade ? `${nomeDaCidade(daCidade)} — ${plural(daCidade.labs.length)}`
-      : `${NOMES_UF[filtro.uf] || filtro.uf} — ${plural(contagem[filtro.uf] || 0)}`;
-    el.limpar.hidden = !filtro;
+    const regiao = !filtro ? ''
+      : daCidade ? nomeDaCidade(daCidade)
+      : (NOMES_UF[filtro.uf] || filtro.uf);
+    el.titulo.textContent = buscando
+      ? `${regiao ? regiao + ' · ' : ''}\u201C${termoExibido}\u201D — ${plural(visiveis)}`
+      : !filtro ? 'Todos os grupos'
+      : daCidade ? `${regiao} — ${plural(daCidade.labs.length)}`
+      : `${regiao} — ${plural(contagem[filtro.uf] || 0)}`;
+    el.limpar.hidden = !filtro && !buscando;
     el.vazia.hidden = visiveis > 0;
+    el.vazia.textContent = buscando
+      ? 'Nenhum grupo encontrado. Tente a sigla, a instituição, a cidade ou o estado.'
+      : 'Nenhum grupo neste estado.';
+    if (el.buscaLimpar) el.buscaLimpar.hidden = !buscando;
     limparDestaque();
     fechar();
     lista.scrollTop = 0;
   }
 
-  el.limpar.addEventListener('click', () => filtrar(null));
+  // "ver todos" desfaz tudo de uma vez: com os dois filtros somados, limpar só
+  // um deixava a lista ainda recortada e parecia que o botão não funcionou
+  el.limpar.addEventListener('click', () => {
+    if (el.busca) el.busca.value = '';
+    termoExibido = '';
+    termos = [];
+    filtrar(null);
+  });
+
+  if (el.busca) {
+    el.busca.addEventListener('input', () => buscar(el.busca.value));
+    el.busca.addEventListener('keydown', (e) => {
+      // Esc limpa a busca em vez de fechar o detalhe: o campo é o que está em
+      // uso. O stopPropagation é o que impede o Esc global de agir também.
+      if (e.key === 'Escape' && el.busca.value) {
+        e.stopPropagation();
+        el.busca.value = '';
+        buscar('');
+      }
+    });
+  }
+  if (el.buscaLimpar) {
+    el.buscaLimpar.addEventListener('click', () => {
+      el.busca.value = '';
+      buscar('');
+      el.busca.focus();
+    });
+  }
 
   // ---------- cartão flutuante ----------
   // Mostra as logomarcas do que está em foco ao lado do mapa: um grupo, quando

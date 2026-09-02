@@ -52,6 +52,10 @@ const site = {
   // as logomarcas do mapa de laboratórios vão para outra caixa, a pedido da
   // SOBRAEP: quem recebe o arquivo não é quem atende a secretaria em geral
   emailLogomarcas: 'secretaria2@sobraep.org.br',
+  // o aviso automático de novo cadastro no mapa segue a logomarca: as duas
+  // pontas do mesmo cadastro caíam em caixas diferentes, e quem montava o
+  // laboratório no painel ficava sem o e-mail que anunciava o cadastro
+  emailCadastroLaboratorio: 'secretaria2@sobraep.org.br',
   telefone: '(31) 3612-6401',
   endereco: 'Prof. Heverton Augusto Pereira, Universidade Federal de Viçosa – UFV. Gerência de Especialistas em Sistemas Elétricos de Potência – GESEP. Departamento de Engenharia Elétrica, Viçosa – MG – Brasil, CEP 36570-900',
   facebook: 'https://www.facebook.com/sobraep/',
@@ -240,7 +244,7 @@ app.post('/laboratorios/cadastro', async (req, res) => {
     }
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     await sgMail.send({
-      to: [site.emailSecretaria, 'marcos@softaliza.com.br'],
+      to: [site.emailCadastroLaboratorio, 'marcos@softaliza.com.br'],
       from: { email: process.env.SENDGRID_FROM, name: 'Site SOBRAEP' },
       replyTo: dadosLab.email,
       subject: `[Mapa de laboratórios] Novo cadastro: ${dadosLab.sigla}`,

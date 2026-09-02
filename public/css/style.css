@@ -1466,6 +1466,37 @@ table.data-table tr:hover td { background: #fff6e6; }
   position: sticky;
   top: 92px;
 }
+/* Busca da lista: fica acima do título porque o título muda conforme o
+   filtro, e o campo precisa de um lugar fixo para a pessoa voltar a ele. */
+.labs-busca { position: relative; margin: 0 8px 0 0; }
+.labs-busca-campo {
+  width: 100%;
+  padding: 10px 34px 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  background: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--color-text);
+}
+.labs-busca-campo::placeholder { color: var(--color-text-muted); }
+.labs-busca-campo:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(47, 47, 123, 0.12);
+}
+/* o "x" nativo do type=search some no Firefox e muda de tamanho entre
+   navegadores; o nosso fica igual em todos */
+.labs-busca-campo::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.labs-busca-limpar {
+  position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
+  width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%;
+  background: var(--color-bg); color: var(--color-text-muted);
+  font-size: 1rem; line-height: 1; cursor: pointer;
+}
+.labs-busca-limpar:hover { background: var(--color-border); color: var(--color-primary); }
+.labs-busca-ajuda { margin: 6px 8px 12px 2px; font-size: 0.73rem; line-height: 1.35; color: var(--color-text-muted); }
+
 .labs-lista-topo { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-right: 8px; margin-bottom: 10px; }
 .labs-lista-titulo { margin: 0; font-family: var(--font-heading); font-weight: 600; color: var(--color-primary); font-size: 0.95rem; }
 .labs-limpar { border: 0; background: none; color: var(--color-accent); font-size: 0.82rem; cursor: pointer; text-decoration: underline; padding: 2px 4px; }
