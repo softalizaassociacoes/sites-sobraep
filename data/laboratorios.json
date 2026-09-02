@@ -220,6 +220,24 @@
     "polos": null
   },
   {
+    "id": "batlab",
+    "sigla": "BATLAB",
+    "nome": "Laboratório de Inteligência Artificial, Eletrônica de Potência e Sistemas Digitais",
+    "instituicao": "UFMS - Universidade Federal de Mato Grosso do Sul",
+    "cidade": "Campo Grande",
+    "responsavel": "Ruben Barros Godoy",
+    "email": "ruben.godoy@ufms.br",
+    "uf": "MS",
+    "site": "https://ppgee.ufms.br/facilidadeslaboratorios/",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/batlab-logo-preto-1788357595497.png",
+    "integrantes": 44,
+    "left": 49.41,
+    "top": 65.93,
+    "polos": null
+  },
+  {
     "id": "leiam",
     "sigla": "LEIAM",
     "nome": "Laboratório de Eletrônica Industrial e Acionamento de Máquinas",
