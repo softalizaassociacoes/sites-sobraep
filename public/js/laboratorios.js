@@ -202,11 +202,12 @@
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
   const textoDoGrupo = dados.map((l) => {
-    const locais = (l.polos && l.polos.length)
-      ? l.polos
-      : [{ cidade: l.cidade, uf: l.uf, instituicao: l.instituicao }];
-    const partes = [l.sigla, l.nome, l.instituicao];
-    locais.forEach((p) => partes.push(p.cidade, p.uf, NOMES_UF[p.uf], p.instituicao));
+    // A cidade do próprio grupo entra sempre, e não só pelos polos: o painel
+    // monta os polos pela base de municípios e descarta em silêncio a linha
+    // cuja cidade não reconhece — inclusive a principal. Um grupo com polos
+    // ficaria impossível de achar justamente pela cidade onde ele fica.
+    const partes = [l.sigla, l.nome, l.instituicao, l.cidade, l.uf, NOMES_UF[l.uf]];
+    (l.polos || []).forEach((p) => partes.push(p.cidade, p.uf, NOMES_UF[p.uf], p.instituicao));
     return semAcento(partes.filter(Boolean).join(' '));
   });
 
