@@ -184,6 +184,24 @@
     "polos": null
   },
   {
+    "id": "nimo",
+    "sigla": "NIMO",
+    "nome": "Núcleo de Iluminação Moderna",
+    "instituicao": "UFJF - Departamento de Circuitos Elétricos",
+    "cidade": "Juiz de Fora",
+    "responsavel": "HENRIQUE ANTONIO CARVALHO BRAGA",
+    "email": "henrique.braga@ufjf.br",
+    "uf": "MG",
+    "site": "https://www2.ufjf.br/nimo/",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/nimo-logo-vector2-b-1788358598269.png",
+    "integrantes": 10,
+    "left": 77.72,
+    "top": 67.15,
+    "polos": null
+  },
+  {
     "id": "nupep",
     "sigla": "NUPEP",
     "nome": "Núcleo de Pesquisa em Eletrônica de Potência",
