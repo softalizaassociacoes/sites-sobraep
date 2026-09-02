@@ -69,7 +69,9 @@
       <p class="labs-intro">
         Cada ponto do mapa é uma cidade; quando ela tem mais de um grupo, o número
         aparece sobre o ponto. Passe o mouse para ver as logomarcas e clique para
-        listar os grupos daquela cidade. Clicar em um estado filtra a lista ao lado.
+        listar os grupos daquela cidade. Clicar em um estado filtra a lista ao lado,
+        e a busca acima da lista encontra um grupo pela sigla, instituição, cidade
+        ou estado.
       </p>
 
       <div class="labs-painel">
@@ -124,8 +126,23 @@
 
         <!-- Lista lateral -->
         <aside class="labs-lista-col" aria-label="Lista de laboratórios">
+          <!-- Com dezenas de grupos na lista, percorrer o rolamento até achar um
+               deixou de ser viável: a busca filtra por sigla, instituição, cidade
+               e estado (a sigla da UF ou o nome por extenso). -->
+          <div class="labs-busca">
+            <label class="sr-only" for="labsBusca">Buscar grupo por sigla, instituição, cidade ou estado</label>
+            <input type="search" id="labsBusca" class="labs-busca-campo" autocomplete="off"
+                   placeholder="Buscar laboratório ou grupo" aria-describedby="labsBuscaAjuda">
+            <button type="button" class="labs-busca-limpar" id="labsBuscaLimpar" aria-label="Limpar busca" hidden>&times;</button>
+          </div>
+          <!-- os critérios ficam aqui, e não no placeholder: a coluna é estreita
+               e o texto longo era cortado no meio da palavra -->
+          <p class="labs-busca-ajuda" id="labsBuscaAjuda">
+            Sigla, instituição, cidade ou estado.
+          </p>
+
           <div class="labs-lista-topo">
-            <p class="labs-lista-titulo" id="labsFiltroTitulo">Todos os grupos</p>
+            <p class="labs-lista-titulo" id="labsFiltroTitulo" role="status">Todos os grupos</p>
             <button type="button" class="labs-limpar" id="labsLimpar" hidden>ver todos</button>
           </div>
 
