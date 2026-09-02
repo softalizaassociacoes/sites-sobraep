@@ -94,6 +94,24 @@
     ]
   },
   {
+    "id": "gpei",
+    "sigla": "GPEI",
+    "nome": "Grupo de Pesquisa em Eletricidade Inteligente",
+    "instituicao": "Universidade Federal de Lavras",
+    "cidade": "Lavras",
+    "responsavel": "Silvia Costa Ferreira",
+    "email": "silvia.ferreira@ufla.br",
+    "uf": "MG",
+    "site": "http://www.gpei.ufla.br/",
+    "linkedin": null,
+    "instagram": "https://www.instagram.com/gpei.ufla?igsi=MXZnaWZ1cm02ZzVldg==",
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/gpei-1788355974340.jpeg",
+    "integrantes": 15,
+    "left": 73.96,
+    "top": 67.98,
+    "polos": null
+  },
+  {
     "id": "lcce",
     "sigla": "LCCE",
     "nome": "Laboratório de Conversão e Controle da Energia",
