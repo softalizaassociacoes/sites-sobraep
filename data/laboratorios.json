@@ -1,5 +1,23 @@
 [
   {
+    "id": "geper",
+    "sigla": "geper",
+    "nome": "grupo de eletrônica de potência em energias renováveis",
+    "instituicao": "Universidade de Fortaleza - Unifor",
+    "cidade": "Fortaleza",
+    "responsavel": "Juliano de Oliveira Pacheco",
+    "email": "juliano.pacheco@unifor.br",
+    "uf": "CE",
+    "site": null,
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/unifor-logo-1788356477435.jpg",
+    "integrantes": 12,
+    "left": 90.43,
+    "top": 23.05,
+    "polos": null
+  },
+  {
     "id": "gpec",
     "sigla": "GPEC",
     "nome": "GRUPO DE PROCESSAMENTO DE ENERGIA E CONTROLE",
