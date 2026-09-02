@@ -184,6 +184,24 @@
     "polos": null
   },
   {
+    "id": "leacopi",
+    "sigla": "LEACOPI",
+    "nome": "Laboratório de Eletrônica de Potência, Acionamentos e Controle de Processos Industriais",
+    "instituicao": "CEFET-MG",
+    "cidade": "Belo Horizonte",
+    "responsavel": "Marcelo Martins Stopa",
+    "email": "marcelo@cefetmg.br",
+    "uf": "MG",
+    "site": "https://www.leacopi.cefetmg.br/",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/leacopi-1788358918374.png",
+    "integrantes": 20,
+    "left": 76.7,
+    "top": 64.55,
+    "polos": null
+  },
+  {
     "id": "nimo",
     "sigla": "NIMO",
     "nome": "Núcleo de Iluminação Moderna",
