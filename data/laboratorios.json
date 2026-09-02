@@ -238,6 +238,24 @@
     "polos": null
   },
   {
+    "id": "lafae",
+    "sigla": "LAFAE",
+    "nome": "Laboratório de Fontes Alternativas de Energia",
+    "instituicao": "UFRJ",
+    "cidade": "Rio de Janeiro",
+    "responsavel": "Prof. Robson Dias",
+    "email": "dias@lafae.ufrj.br",
+    "uf": "RJ",
+    "site": "https://www.lafae.ufrj.br/",
+    "linkedin": "https://www.linkedin.com/company/lafae-ufrj/",
+    "instagram": "https://www.instagram.com/lafaeufrj",
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/lafae-completo-2d-1788355515427.png",
+    "integrantes": 80,
+    "left": 78.24,
+    "top": 69.65,
+    "polos": null
+  },
+  {
     "id": "lemt",
     "sigla": "LEMT",
     "nome": "Laboratory of Energy Management Technologies",
