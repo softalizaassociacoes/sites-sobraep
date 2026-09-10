@@ -526,6 +526,24 @@
     "polos": null
   },
   {
+    "id": "lapec",
+    "sigla": "LAPEC",
+    "nome": "Laboratório de Processamento de Energia e Controle",
+    "instituicao": "Universidade Federal do Pampa",
+    "cidade": "Alegrete",
+    "responsavel": "Felipe Grigoletto",
+    "email": "felipegrigoletto@unipampa.edu.br",
+    "uf": "RS",
+    "site": "https://sites.unipampa.edu.br/lapec/",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/imagem-2023-10-06-160027547-300x119-1789059499775.png",
+    "integrantes": 10,
+    "left": 46.44,
+    "top": 89.87,
+    "polos": null
+  },
+  {
     "id": "fotovoltaica",
     "sigla": "Fotovoltaica",
     "nome": "Grupo de Pesquisa Estratégica em Energia Solar da Universidade Federal de Santa Catarina",
