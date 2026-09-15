@@ -742,6 +742,24 @@
     "polos": null
   },
   {
+    "id": "unicamp",
+    "sigla": "LabREI",
+    "nome": "Laboratório de Redes Elétricas Inteligentes",
+    "instituicao": "Unicamp",
+    "cidade": "Campinas",
+    "responsavel": "José Antenor Pomilio",
+    "email": "antenor@unicamp.br",
+    "uf": "SP",
+    "site": "https://dgp.cnpq.br/dgp/espelhogrupo/7513527302049134",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/labrei-1-1789470166106.png",
+    "integrantes": 50,
+    "left": 68.7,
+    "top": 72.22,
+    "polos": null
+  },
+  {
     "id": "lacep",
     "sigla": "LACEP",
     "nome": "Laboratório de Acionamentos e Conversores Eletrônicos de Potência",
@@ -829,24 +847,6 @@
     "integrantes": 4,
     "left": 73,
     "top": 70.1,
-    "polos": null
-  },
-  {
-    "id": "unicamp",
-    "sigla": "Unicamp",
-    "nome": "Eletrônica de Potência, Acionamentos Elétricos e Sistemas",
-    "instituicao": "Unicamp",
-    "cidade": "Campinas",
-    "responsavel": "José Antenor Pomilio",
-    "email": "antenor@unicamp.br",
-    "uf": "SP",
-    "site": "https://dgp.cnpq.br/dgp/espelhogrupo/7513527302049134",
-    "linkedin": null,
-    "instagram": null,
-    "logo": "/images/uploads/unicamp-1787880121430.png",
-    "integrantes": 50,
-    "left": 66.4,
-    "top": 71,
     "polos": null
   }
 ]
