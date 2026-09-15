@@ -796,6 +796,24 @@
     "polos": null
   },
   {
+    "id": "lcee",
+    "sigla": "LCEE",
+    "nome": "Laboratório de Condicionamento de Energia Elétrica",
+    "instituicao": "Unicamp",
+    "cidade": "Campinas",
+    "responsavel": "José Antenor Pomilio",
+    "email": null,
+    "uf": "SP",
+    "site": "https://dgp.cnpq.br/dgp/espelhogrupo/7513527302049134",
+    "linkedin": null,
+    "instagram": null,
+    "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/lcee-1-1789470304464.png",
+    "integrantes": 50,
+    "left": 68.7,
+    "top": 72.22,
+    "polos": null
+  },
+  {
     "id": "lep",
     "sigla": "LEP",
     "nome": "Laboratório de Eletrônica de Potência",
