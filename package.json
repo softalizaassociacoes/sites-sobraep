@@ -8,7 +8,7 @@
     "dev": "node --env-file-if-exists=.env --watch server.js"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",
