@@ -1435,6 +1435,10 @@ table.data-table tr:hover td { background: #fff6e6; }
 .labs-ponto:hover, .labs-ponto:focus-visible { transform: translate(-50%, -50%) scale(1.5); }
 .labs-ponto.is-ativo { background: var(--color-secondary); transform: translate(-50%, -50%) scale(1.75); z-index: 5; }
 .labs-ponto.is-apagado { opacity: 0.22; }
+/* O marcador ganhou display:flex para centralizar o numero, e com isso passou
+   a vencer o "[hidden] { display: none }" do navegador. Sem esta linha, as
+   cidades reunidas num conjunto continuam desenhadas por baixo dele. */
+.labs-ponto[hidden] { display: none; }
 
 /* Cidade com mais de um grupo: o número resolve na hora o que antes só se
    descobria passando o mouse — quatro pontos empilhados pareciam um só. */

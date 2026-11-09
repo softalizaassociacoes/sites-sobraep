@@ -200,25 +200,28 @@
     const conjuntos = [];
     while (livres.length) {
       const semente = livres.shift();
-      const grupo = [semente];
+      const membros = [semente];
       for (let k = livres.length - 1; k >= 0; k--) {
-        if (px(semente, livres[k]) < ENCOSTO) grupo.push(livres.splice(k, 1)[0]);
+        if (px(semente, livres[k]) < ENCOSTO) membros.push(livres.splice(k, 1)[0]);
       }
-      conjuntos.push(grupo.sort((a, b) => a - b));
+      conjuntos.push({ semente, membros: membros.sort((a, b) => a - b) });
     }
     return conjuntos;
   }
 
   function aplicarAgrupamento() {
     const escondidas = new Set();
-    agrupar().forEach((membros) => {
-      const ponto = pontoDaCidade(membros[0]);
+    agrupar().forEach(({ semente, membros }) => {
+      const ponto = pontoDaCidade(semente);
       if (!ponto) return;
-      // o ponto do conjunto fica no meio das cidades que ele representa
-      const left = membros.reduce((t, ci) => t + cidades[ci].left, 0) / membros.length;
-      const top = membros.reduce((t, ci) => t + cidades[ci].top, 0) / membros.length;
-      ponto.style.left = left + '%';
-      ponto.style.top = top + '%';
+      // O ponto fica sobre a cidade-semente, e não no meio do conjunto. Pelo
+      // meio, dois conjuntos vizinhos podiam ser desenhados mais perto do que
+      // o limite que os manteve separados — a conta usava a semente e o
+      // desenho usava o centro. Pela semente os dois coincidem, e como duas
+      // sementes estão sempre a ENCOSTO ou mais uma da outra, dois pontos
+      // desenhados nunca ficam mais perto do que isso.
+      ponto.style.left = cidades[semente].left + '%';
+      ponto.style.top = cidades[semente].top + '%';
       ponto.dataset.conjunto = membros.join(',');
 
       const labs = [...new Set(membros.flatMap((ci) => cidades[ci].labs))];
@@ -229,7 +232,7 @@
         nomeDoConjunto(membros) + ' — ' + plural(labs.length) + ': ' +
         labs.map((i) => dados[i].sigla).join(', '));
 
-      membros.slice(1).forEach((ci) => escondidas.add(ci));
+      membros.forEach((ci) => { if (ci !== semente) escondidas.add(ci); });
     });
     pontos.forEach((p) => { p.hidden = escondidas.has(Number(p.dataset.cidade)); });
     // o foco pode ter ido parar num ponto que sumiu
@@ -616,7 +619,32 @@
   popup.addEventListener('click', (e) => e.stopPropagation());
   cartao.addEventListener('click', (e) => e.stopPropagation());
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fechar(); limparDestaque(); } });
-  window.addEventListener('resize', () => desenharLinha());
+  // A largura do mapa define a distância em pixels entre duas cidades, e é ela
+  // que decide o agrupamento. Mudou a largura, o agrupamento precisa ser
+  // refeito: sem isso, quem diminui a janela ou gira o tablet fica com o
+  // agrupamento da largura anterior e os pontos voltam a se sobrepor.
+  //
+  // Observar a caixa do mapa pega mais casos do que ouvir o resize da janela —
+  // a fonte que termina de carregar e empurra o layout, por exemplo. Um quadro
+  // de espera evita refazer a conta a cada pixel do arraste da borda.
+  // O adiamento é por temporizador, e não por quadro de animação: numa aba em
+  // segundo plano o navegador não entrega quadros, e o recálculo ficaria preso
+  // até a aba voltar à frente.
+  let recalcPendente = null;
+  const recalcular = () => {
+    clearTimeout(recalcPendente);
+    recalcPendente = setTimeout(() => {
+      limitarPan();
+      aplicarTransformacao();
+    }, 60);
+  };
+  // Os dois caminhos, porque nenhum cobre tudo sozinho: o observador enxerga
+  // mudanças da caixa que o evento de janela não vê (a coluna que muda de
+  // largura, a fonte que termina de carregar), mas só é entregue enquanto a
+  // página desenha; o evento da janela chega mesmo com a aba em segundo plano.
+  // Chamar os dois é inofensivo — o recálculo é adiado e idempotente.
+  window.addEventListener('resize', recalcular);
+  if (window.ResizeObserver) new ResizeObserver(recalcular).observe(mapa);
 
   aplicarTransformacao();
 })();
