@@ -67,8 +67,9 @@
       </div>
 
       <p class="labs-intro">
-        Cada ponto do mapa é uma cidade; quando ela tem mais de um grupo, o número
-        aparece sobre o ponto. Passe o mouse para ver as logomarcas e clique para
+        Cada ponto do mapa é uma cidade; quando ela reúne mais de um grupo, o
+        número aparece sobre o ponto. Cidades vizinhas demais para caber lado a
+        lado entram no mesmo ponto e se separam conforme você aproxima. Passe o mouse para ver as logomarcas e clique para
         listar os grupos daquela cidade. Clicar em um estado filtra a lista ao lado,
         e a busca acima da lista encontra um grupo pela sigla, instituição, cidade
         ou estado.
@@ -95,10 +96,9 @@
                  var varios = c.labs.length > 1; %>
             <button type="button" class="labs-ponto<%= varios ? ' labs-ponto--varios' : '' %>"
                     style="left: <%= c.left %>%; top: <%= c.top %>%;"
-                    data-cidade="<%= ci %>" data-uf="<%= c.uf %>"
-                    aria-label="<%= local %> — <%= varios ? c.labs.length + ' grupos: ' : '' %><%= siglas.join(', ') %>"><%
-              if (varios) { %><span class="labs-ponto-num"><%= c.labs.length %></span><% }
-            %></button>
+                    data-cidade="<%= ci %>" data-uf="<%= c.uf %>" data-conjunto="<%= ci %>"
+                    aria-label="<%= local %> — <%= varios ? c.labs.length + ' grupos: ' : '' %><%= siglas.join(', ') %>"
+            ><span class="labs-ponto-num"><%= varios ? c.labs.length : '' %></span></button>
             <% }) %>
 
             </div><!-- /labs-palco -->

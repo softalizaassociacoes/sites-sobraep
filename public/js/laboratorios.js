@@ -21,6 +21,10 @@
  * - O mapa tem zoom próprio, porque o zoom do navegador amplia a página
  *   inteira. Os pontos encolhem na mesma medida em que o mapa cresce, senão
  *   cobririam cidades vizinhas justamente quando se quer precisão.
+ * - Cidades vizinhas demais para caber lado a lado entram num ponto só, que
+ *   mostra o total e se desfaz sozinho quando o zoom dá espaço. Sem isso, Rio
+ *   e Niterói ficam a 1,8px uma da outra: o ponto de cima rouba o mouse e o
+ *   laboratório de baixo é inalcançável em qualquer zoom razoável.
  */
 (() => {
   const mapa = document.getElementById('labsMapa');
@@ -83,7 +87,9 @@
   let panX = 0;
   let panY = 0;
   const ESCALA_MIN = 1;
-  const ESCALA_MAX = 6;
+  // 1200%: Rio e Niterói pedem 1025% para o mouse acertar uma sem pegar a
+  // outra, e esse é o par mais apertado do mapa
+  const ESCALA_MAX = 12;
 
   function aplicarTransformacao() {
     palco.style.transform = `translate(${panX}px, ${panY}px) scale(${escala})`;
@@ -94,6 +100,7 @@
     document.getElementById('labsZoomMenos').disabled = escala <= ESCALA_MIN + 0.01;
     document.getElementById('labsZoomMais').disabled = escala >= ESCALA_MAX - 0.01;
     mapa.classList.toggle('is-ampliado', escala > 1.01);
+    aplicarAgrupamento();
     if (foco) desenharLinha();
   }
 
@@ -164,6 +171,70 @@
   const pontoDaCidade = (ci) => pontos.find((p) => Number(p.dataset.cidade) === ci);
   const nomeDaCidade = (c) => (c.cidade ? `${c.cidade}/${c.uf}` : (c.uf || ''));
   const plural = (n) => `${n} grupo${n === 1 ? '' : 's'}`;
+  const cidadesDoPonto = (p) => p.dataset.conjunto.split(',').map(Number);
+  const labsDoPonto = (p) =>
+    [...new Set(cidadesDoPonto(p).flatMap((ci) => cidades[ci].labs))];
+  const nomeDoConjunto = (membros) => membros.map((ci) => nomeDaCidade(cidades[ci])).join(' · ');
+  // o ponto que de fato responde pela cidade: pode ser o dela ou o do conjunto
+  // em que ela caiu
+  const pontoVisivelDaCidade = (ci) =>
+    pontos.find((p) => !p.hidden && cidadesDoPonto(p).indexOf(ci) !== -1);
+
+  // ---------- agrupamento por proximidade ----------
+  // Dois pontos a menos de ENCOSTO pixels na tela brigam pelo mouse: o de cima
+  // ganha sempre e o de baixo não existe. Em vez de deixar assim, viram um
+  // ponto só com o total, e se separam quando o zoom abre espaço entre eles.
+  const ENCOSTO = 20;
+
+  function agrupar() {
+    const area = mapa.getBoundingClientRect();
+    const px = (a, b) => Math.hypot(
+      ((cidades[a].left - cidades[b].left) / 100) * area.width * escala,
+      ((cidades[a].top - cidades[b].top) / 100) * area.height * escala
+    );
+    // Cada conjunto é um círculo de raio ENCOSTO em volta de uma cidade. Juntar
+    // "quem encosta em quem" de forma transitiva não serve: com 31 cidades
+    // espalhadas por 700px sempre existe uma corrente de saltos curtos ligando
+    // Salvador a Porto Alegre, e o mapa inteiro virava um ponto só.
+    const livres = cidades.map((_, i) => i);
+    const conjuntos = [];
+    while (livres.length) {
+      const semente = livres.shift();
+      const grupo = [semente];
+      for (let k = livres.length - 1; k >= 0; k--) {
+        if (px(semente, livres[k]) < ENCOSTO) grupo.push(livres.splice(k, 1)[0]);
+      }
+      conjuntos.push(grupo.sort((a, b) => a - b));
+    }
+    return conjuntos;
+  }
+
+  function aplicarAgrupamento() {
+    const escondidas = new Set();
+    agrupar().forEach((membros) => {
+      const ponto = pontoDaCidade(membros[0]);
+      if (!ponto) return;
+      // o ponto do conjunto fica no meio das cidades que ele representa
+      const left = membros.reduce((t, ci) => t + cidades[ci].left, 0) / membros.length;
+      const top = membros.reduce((t, ci) => t + cidades[ci].top, 0) / membros.length;
+      ponto.style.left = left + '%';
+      ponto.style.top = top + '%';
+      ponto.dataset.conjunto = membros.join(',');
+
+      const labs = [...new Set(membros.flatMap((ci) => cidades[ci].labs))];
+      const num = ponto.querySelector('.labs-ponto-num');
+      if (num) num.textContent = labs.length > 1 ? labs.length : '';
+      ponto.classList.toggle('labs-ponto--varios', labs.length > 1);
+      ponto.setAttribute('aria-label',
+        nomeDoConjunto(membros) + ' — ' + plural(labs.length) + ': ' +
+        labs.map((i) => dados[i].sigla).join(', '));
+
+      membros.slice(1).forEach((ci) => escondidas.add(ci));
+    });
+    pontos.forEach((p) => { p.hidden = escondidas.has(Number(p.dataset.cidade)); });
+    // o foco pode ter ido parar num ponto que sumiu
+    if (foco && foco.ponto && foco.ponto.hidden) limparDestaque();
+  }
 
   // ---------- estados clicáveis ----------
   const contagem = {};
@@ -234,7 +305,12 @@
   // busca recorta o texto. Um não zera o outro — buscar dentro de um estado já
   // filtrado é justamente o caso de quem sabe a região mas não a sigla.
   function aplicarLista() {
-    const daCidade = filtro && filtro.cidade != null ? cidades[filtro.cidade] : null;
+    // o clique no mapa recorta por um ponto, que pode reunir mais de uma cidade
+    const noPonto = filtro && filtro.cidades
+      ? { cidades: filtro.cidades,
+          labs: [...new Set(filtro.cidades.flatMap((ci) => cidades[ci].labs))],
+          uf: cidades[filtro.cidades[0]].uf }
+      : null;
     const buscando = termos.length > 0;
     let visiveis = 0;
 
@@ -242,7 +318,7 @@
       const i = Number(li.dataset.lab);
       const ufsDoItem = (li.dataset.ufs || li.dataset.uf || '').split(',');
       const naRegiao = !filtro ? true
-        : daCidade ? daCidade.labs.indexOf(i) !== -1
+        : noPonto ? noPonto.labs.indexOf(i) !== -1
         : ufsDoItem.indexOf(filtro.uf) !== -1;
       const mostra = naRegiao && (!buscando || casaBusca(i));
       li.hidden = !mostra;
@@ -250,28 +326,28 @@
     });
 
     pontos.forEach((p) => {
-      const ci = Number(p.dataset.cidade);
+      const membros = cidadesDoPonto(p);
       const foraDaRegiao = !filtro ? false
-        : daCidade ? ci !== filtro.cidade
-        : cidades[ci].uf !== filtro.uf;
-      // a cidade apaga quando nenhum grupo dela sobrou na busca: assim o mapa
+        : noPonto ? !membros.some((ci) => noPonto.cidades.indexOf(ci) !== -1)
+        : !membros.some((ci) => cidades[ci].uf === filtro.uf);
+      // o ponto apaga quando nenhum grupo dele sobrou na busca: assim o mapa
       // mostra onde está o que a lista encontrou
-      const foraDaBusca = buscando && !cidades[ci].labs.some((i) => casaBusca(i));
+      const foraDaBusca = buscando && !labsDoPonto(p).some((i) => casaBusca(i));
       p.classList.toggle('is-apagado', foraDaRegiao || foraDaBusca);
     });
 
-    const ufAceso = daCidade ? daCidade.uf : (filtro ? filtro.uf : null);
+    const ufAceso = noPonto ? noPonto.uf : (filtro ? filtro.uf : null);
     mapa.querySelectorAll('.tem-lab').forEach((p) => {
       p.classList.toggle('is-ativo', p.id === `BR-${ufAceso}`);
     });
 
     const regiao = !filtro ? ''
-      : daCidade ? nomeDaCidade(daCidade)
+      : noPonto ? nomeDoConjunto(noPonto.cidades)
       : (NOMES_UF[filtro.uf] || filtro.uf);
     el.titulo.textContent = buscando
       ? `${regiao ? regiao + ' · ' : ''}\u201C${termoExibido}\u201D — ${plural(visiveis)}`
       : !filtro ? 'Todos os grupos'
-      : daCidade ? `${regiao} — ${plural(daCidade.labs.length)}`
+      : noPonto ? `${regiao} — ${plural(noPonto.labs.length)}`
       : `${regiao} — ${plural(contagem[filtro.uf] || 0)}`;
     el.limpar.hidden = !filtro && !buscando;
     el.vazia.hidden = visiveis > 0;
@@ -362,7 +438,8 @@
   // ---------- linha tracejada ----------
   function desenharLinha() {
     if (!foco) return apagarLinha();
-    const p = foco.ponto || (foco.cidade != null ? pontoDaCidade(foco.cidade) : null);
+    const p = (foco.ponto && !foco.ponto.hidden) ? foco.ponto
+      : (foco.cidades && foco.cidades.length ? pontoVisivelDaCidade(foco.cidades[0]) : null);
     if (!p) return apagarLinha();
     if (window.matchMedia('(max-width: 900px)').matches) return apagarLinha();
 
@@ -453,17 +530,25 @@
   function fechar() { popup.hidden = true; }
 
   // ---------- foco ----------
-  // Vindo da lista o foco é um grupo, e todas as cidades onde ele tem polo
-  // acendem. Vindo do mapa o foco é a cidade, e acendem os grupos dela.
-  function focarCidade(ci, ponto) {
-    const c = cidades[ci];
-    foco = { tipo: 'cidade', labs: c.labs, cidade: ci, local: nomeDaCidade(c), ponto: ponto || pontoDaCidade(ci) };
+  // Vindo da lista o foco é um grupo, e todos os pontos onde ele aparece
+  // acendem. Vindo do mapa o foco é o ponto — uma cidade, ou o punhado de
+  // cidades vizinhas que couberam nele — e acendem os grupos de lá.
+  function focarPonto(ponto) {
+    const membros = cidadesDoPonto(ponto);
+    foco = {
+      tipo: 'ponto',
+      labs: labsDoPonto(ponto),
+      cidades: membros,
+      local: nomeDoConjunto(membros),
+      ponto
+    };
     aplicarDestaque();
   }
 
   function focarGrupo(indice) {
     const cs = cidadesDoGrupo[indice] || [];
-    foco = { tipo: 'grupo', labs: [indice], cidade: cs.length ? cs[0] : null, local: '', ponto: null };
+    const ponto = cs.length ? pontoVisivelDaCidade(cs[0]) : null;
+    foco = { tipo: 'grupo', labs: [indice], cidades: cs, local: '', ponto: ponto || null };
     aplicarDestaque();
   }
 
@@ -472,10 +557,9 @@
       li.classList.toggle('is-ativo', !!foco && foco.labs.indexOf(Number(li.dataset.lab)) !== -1);
     });
     pontos.forEach((p) => {
-      const ci = Number(p.dataset.cidade);
-      const aceso = !!foco && (foco.tipo === 'cidade'
-        ? ci === foco.cidade
-        : cidades[ci].labs.some((x) => foco.labs.indexOf(x) !== -1));
+      const aceso = !!foco && (foco.tipo === 'ponto'
+        ? p === foco.ponto
+        : labsDoPonto(p).some((x) => foco.labs.indexOf(x) !== -1));
       p.classList.toggle('is-ativo', aceso);
     });
   }
@@ -501,17 +585,16 @@
   });
 
   pontos.forEach((p) => {
-    const ci = Number(p.dataset.cidade);
-    p.addEventListener('mouseenter', () => { focarCidade(ci, p); desenharLinha(); });
+    p.addEventListener('mouseenter', () => { focarPonto(p); desenharLinha(); });
     p.addEventListener('mouseleave', () => { if (popup.hidden) limparDestaque(); });
     p.addEventListener('click', (e) => {
       e.stopPropagation();
-      const c = cidades[ci];
-      if (c.labs.length > 1) {
-        // mais de um grupo na cidade: em vez de abrir um deles por sorteio, a
+      const labs = labsDoPonto(p);
+      if (labs.length > 1) {
+        // mais de um grupo no ponto: em vez de abrir um deles por sorteio, a
         // lista passa a mostrar só esses, e a pessoa escolhe qual quer ver
-        filtrar({ cidade: ci });
-        focarCidade(ci, p);
+        filtrar({ cidades: cidadesDoPonto(p) });
+        focarPonto(p);
         desenharLinha();
         // no celular a lista fica abaixo do mapa e o filtro passaria batido
         if (window.matchMedia('(max-width: 900px)').matches) {
@@ -519,9 +602,9 @@
         }
         return;
       }
-      focarCidade(ci, p);
+      focarPonto(p);
       desenharLinha();
-      const indice = c.labs[0];
+      const indice = labs[0];
       // rola a lista até o grupo por conveniência; a linha não depende disso
       const item = itens.find((li) => Number(li.dataset.lab) === indice);
       if (item && !item.hidden) item.scrollIntoView({ block: 'nearest' });

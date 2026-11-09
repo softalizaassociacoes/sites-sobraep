@@ -13,8 +13,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/labefeia-1788357303257.png",
     "integrantes": 20,
-    "left": 88.79,
-    "top": 47.14,
+    "left": 90.54,
+    "top": 44.613,
     "polos": null
   },
   {
@@ -32,7 +32,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/unifor-logo-1788356477435.jpg",
     "integrantes": 12,
     "left": 90.43,
-    "top": 23.05,
+    "top": 21.873,
     "polos": null
   },
   {
@@ -50,7 +50,7 @@
     "logo": "/images/laboratorios/gpec.png",
     "integrantes": 80,
     "left": 90.43,
-    "top": 23.05,
+    "top": 21.873,
     "polos": null
   },
   {
@@ -68,7 +68,7 @@
     "logo": "/images/laboratorios/lpc.png",
     "integrantes": 15,
     "left": 90.22,
-    "top": 23.43,
+    "top": 22.234,
     "polos": null
   },
   {
@@ -86,7 +86,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/ufg-colorido-1791943635465.png",
     "integrantes": 15,
     "left": 63.09,
-    "top": 56.28,
+    "top": 53.949,
     "polos": null
   },
   {
@@ -104,7 +104,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logo-02-1788396410453.png",
     "integrantes": 15,
     "left": 63.09,
-    "top": 56.28,
+    "top": 53.949,
     "polos": null
   },
   {
@@ -121,8 +121,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/gep.png",
     "integrantes": 30,
-    "left": 75.8,
-    "top": 60.3,
+    "left": 76.7,
+    "top": 62.206,
     "polos": null
   },
   {
@@ -139,29 +139,29 @@
     "instagram": "https://www.instagram.com/gesep_br/",
     "logo": "/images/uploads/gesep-ufv-1787593389738.jpg",
     "integrantes": 80,
-    "left": 78.7,
-    "top": 63.6,
+    "left": 79.39,
+    "top": 64.39,
     "polos": [
       {
         "cidade": "Viçosa",
         "uf": "MG",
         "instituicao": "UFV/UFJF/CEFET-MG",
         "left": 79.39,
-        "top": 66.71
+        "top": 64.39
       },
       {
         "cidade": "Juiz de Fora",
         "uf": "MG",
         "instituicao": "UFV/UFJF/CEFET-MG",
-        "left": 77.72,
-        "top": 67.15
+        "left": 78.2,
+        "top": 67.014
       },
       {
         "cidade": "Belo Horizonte",
         "uf": "MG",
         "instituicao": "UFV/UFJF/CEFET-MG",
         "left": 76.7,
-        "top": 64.55
+        "top": 62.206
       }
     ]
   },
@@ -179,8 +179,8 @@
     "instagram": "https://www.instagram.com/gpei.ufla?igsi=MXZnaWZ1cm02ZzVldg==",
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/gpei-1788355974340.jpeg",
     "integrantes": 15,
-    "left": 72.8,
-    "top": 65.4,
+    "left": 73.96,
+    "top": 65.679,
     "polos": null
   },
   {
@@ -197,8 +197,8 @@
     "instagram": null,
     "logo": "/images/uploads/logo-1787330161236.jpg",
     "integrantes": 10,
-    "left": 75.4,
-    "top": 60.4,
+    "left": 76.7,
+    "top": 62.206,
     "polos": null
   },
   {
@@ -215,8 +215,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/leacopi-1788358918374.png",
     "integrantes": 20,
-    "left": 74.9,
-    "top": 60.4,
+    "left": 76.7,
+    "top": 62.206,
     "polos": null
   },
   {
@@ -233,8 +233,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/nimo-logo-vector2-b-1788358598269.png",
     "integrantes": 10,
-    "left": 77.72,
-    "top": 67.15,
+    "left": 78.2,
+    "top": 67.014,
     "polos": null
   },
   {
@@ -252,7 +252,7 @@
     "logo": "/images/laboratorios/nupep.png",
     "integrantes": 13,
     "left": 65.62,
-    "top": 61.99,
+    "top": 59.634,
     "polos": null
   },
   {
@@ -269,8 +269,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/tesla.png",
     "integrantes": 50,
-    "left": 74.9,
-    "top": 60.5,
+    "left": 76.7,
+    "top": 62.206,
     "polos": null
   },
   {
@@ -287,8 +287,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/image-1787879636329.png",
     "integrantes": 17,
-    "left": 75.1,
-    "top": 63.3,
+    "left": 75.87,
+    "top": 65.374,
     "polos": null
   },
   {
@@ -306,7 +306,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/batlab-logo-preto-1788357595497.png",
     "integrantes": 44,
     "left": 49.41,
-    "top": 65.93,
+    "top": 63.6,
     "polos": null
   },
   {
@@ -323,8 +323,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/leiam-logomarca-1788355782764.png",
     "integrantes": 20,
-    "left": 96.75,
-    "top": 31.32,
+    "left": 97.24,
+    "top": 30.425,
     "polos": null
   },
   {
@@ -341,8 +341,8 @@
     "instagram": "https://www.instagram.com/sg2.ufpb/",
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/sg2-1788358716745.png",
     "integrantes": 20,
-    "left": 99.8,
-    "top": 30.58,
+    "left": 99.81,
+    "top": 30.167,
     "polos": null
   },
   {
@@ -359,8 +359,8 @@
     "instagram": "https://www.instagram.com/gepae.ufpe",
     "logo": "/images/laboratorios/gepae.png",
     "integrantes": 45,
-    "left": 98.66,
-    "top": 33.75,
+    "left": 99.78,
+    "top": 32.443,
     "polos": null
   },
   {
@@ -378,7 +378,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logo-1-1787880176012.png",
     "integrantes": 5,
     "left": 60.79,
-    "top": 77.83,
+    "top": 75.837,
     "polos": null
   },
   {
@@ -396,7 +396,7 @@
     "logo": "/images/laboratorios/lepqer.png",
     "integrantes": 30,
     "left": 59.56,
-    "top": 72.93,
+    "top": 70.748,
     "polos": null
   },
   {
@@ -414,7 +414,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/utfpr-1787880306951.jpg",
     "integrantes": 18,
     "left": 60.79,
-    "top": 77.83,
+    "top": 75.837,
     "polos": null
   },
   {
@@ -431,8 +431,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logo-lpee-1788356672869.jpg",
     "integrantes": 9,
-    "left": 62.65,
-    "top": 78.01,
+    "left": 63.09,
+    "top": 76.718,
     "polos": null
   },
   {
@@ -449,8 +449,8 @@
     "instagram": "https://www.instagram.com/lafaeufrj",
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/lafae-completo-2d-1-1788396582337.png",
     "integrantes": 50,
-    "left": 78.24,
-    "top": 69.65,
+    "left": 78.56,
+    "top": 70.037,
     "polos": null
   },
   {
@@ -467,8 +467,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/lemt-logo-1787879715270.png",
     "integrantes": 22,
-    "left": 78.24,
-    "top": 69.65,
+    "left": 78.56,
+    "top": 70.037,
     "polos": null
   },
   {
@@ -485,8 +485,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/nitee.png",
     "integrantes": 30,
-    "left": 78.16,
-    "top": 69.66,
+    "left": 78.8,
+    "top": 69.965,
     "polos": null
   },
   {
@@ -504,7 +504,7 @@
     "logo": "/images/laboratorios/gedre.png",
     "integrantes": 50,
     "left": 51.49,
-    "top": 89.6,
+    "top": 88.408,
     "polos": null
   },
   {
@@ -522,7 +522,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/gepoc-1788356102053.png",
     "integrantes": 100,
     "left": 51.49,
-    "top": 89.6,
+    "top": 88.408,
     "polos": null
   },
   {
@@ -540,7 +540,7 @@
     "logo": "/images/laboratorios/gsec.png",
     "integrantes": 20,
     "left": 51.49,
-    "top": 89.6,
+    "top": 88.408,
     "polos": null
   },
   {
@@ -558,7 +558,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/imagem-2023-10-06-160027547-300x119-1789059499775.png",
     "integrantes": 10,
     "left": 46.44,
-    "top": 89.87,
+    "top": 88.702,
     "polos": null
   },
   {
@@ -575,8 +575,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/watermarked-img-12389808642483441083-1788177732182.jpg",
     "integrantes": null,
-    "left": 64,
-    "top": 84.13,
+    "left": 64.98,
+    "top": 82.64,
     "polos": null
   },
   {
@@ -593,8 +593,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/gati.png",
     "integrantes": 11,
-    "left": 58.02,
-    "top": 82.17,
+    "left": 57.36,
+    "top": 81.465,
     "polos": null
   },
   {
@@ -611,8 +611,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/gepai.png",
     "integrantes": 11,
-    "left": 64,
-    "top": 84.13,
+    "left": 64.98,
+    "top": 82.64,
     "polos": null
   },
   {
@@ -630,7 +630,7 @@
     "logo": "/images/uploads/logo-geppel-1-1787330238102.jpeg",
     "integrantes": 6,
     "left": 63.59,
-    "top": 82.5,
+    "top": 80.763,
     "polos": null
   },
   {
@@ -647,8 +647,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/ifsc-logo-vertical-1788358051858.png",
     "integrantes": 15,
-    "left": 64,
-    "top": 84.13,
+    "left": 64.98,
+    "top": 82.64,
     "polos": null
   },
   {
@@ -665,8 +665,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/inep.png",
     "integrantes": 80,
-    "left": 64,
-    "top": 84.13,
+    "left": 64.98,
+    "top": 82.64,
     "polos": null
   },
   {
@@ -683,8 +683,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/jl-power.png",
     "integrantes": 2,
-    "left": 64,
-    "top": 84.13,
+    "left": 64.98,
+    "top": 82.64,
     "polos": null
   },
   {
@@ -702,7 +702,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logolabep-1788396818576.png",
     "integrantes": 6,
     "left": 64.61,
-    "top": 82.49,
+    "top": 80.753,
     "polos": null
   },
   {
@@ -720,7 +720,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/mayorca-1788357005617.png",
     "integrantes": 6,
     "left": 64.15,
-    "top": 80.93,
+    "top": 79.099,
     "polos": null
   },
   {
@@ -738,7 +738,7 @@
     "logo": "/images/laboratorios/npee.png",
     "integrantes": 92,
     "left": 64.15,
-    "top": 80.93,
+    "top": 79.099,
     "polos": null
   },
   {
@@ -755,8 +755,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/cirue.png",
     "integrantes": null,
-    "left": 69.22,
-    "top": 72.8,
+    "left": 70.03,
+    "top": 72.049,
     "polos": null
   },
   {
@@ -774,7 +774,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/labrei-1-1789470166106.png",
     "integrantes": 30,
     "left": 68.7,
-    "top": 72.22,
+    "top": 70.016,
     "polos": null
   },
   {
@@ -791,8 +791,8 @@
     "instagram": null,
     "logo": "/images/laboratorios/lacep.png",
     "integrantes": 10,
-    "left": 69.22,
-    "top": 72.8,
+    "left": 70.03,
+    "top": 72.049,
     "polos": null
   },
   {
@@ -809,8 +809,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/lafape-1787880051879.png",
     "integrantes": 25,
-    "left": 66.8,
-    "top": 67.7,
+    "left": 66.61,
+    "top": 67.688,
     "polos": null
   },
   {
@@ -828,7 +828,7 @@
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/lcee-1-1789470304464.png",
     "integrantes": 20,
     "left": 68.7,
-    "top": 72.22,
+    "top": 70.016,
     "polos": null
   },
   {
@@ -845,8 +845,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logotipo-lep-poli-usp-1788357496952.png",
     "integrantes": 20,
-    "left": 69.2,
-    "top": 72.81,
+    "left": 69.79,
+    "top": 71.677,
     "polos": null
   },
   {
@@ -863,8 +863,8 @@
     "instagram": "https://www.instagram.com/lepounicamp/",
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/logo-lepo-1788356240064.jpeg",
     "integrantes": 99,
-    "left": 67,
-    "top": 71.5,
+    "left": 68.7,
+    "top": 70.016,
     "polos": null
   },
   {
@@ -881,8 +881,8 @@
     "instagram": null,
     "logo": "https://bnowph1bvckatyqi.public.blob.vercel-storage.com/images/uploads/inpe-1788357837532.png",
     "integrantes": 4,
-    "left": 73,
-    "top": 70.1,
+    "left": 71.71,
+    "top": 70.768,
     "polos": null
   }
 ]

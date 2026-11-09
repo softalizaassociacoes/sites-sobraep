@@ -1441,6 +1441,7 @@ table.data-table tr:hover td { background: #fff6e6; }
 /* Fica na mesma cor dos demais: o que distingue é o tamanho e o número. Em
    âmbar o branco do número ficava com contraste de 2,6:1, ilegível a 11px. */
 .labs-ponto--varios { background: var(--color-primary); }
+.labs-ponto-num:empty { display: none; }
 .labs-ponto-num {
   font-size: calc(11px / var(--zoom, 1));
   font-weight: 700;
