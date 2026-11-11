@@ -96,6 +96,7 @@
     // o ponto encolhe na mesma proporção: assim ele cobre sempre a mesma área
     // geográfica, e aproximar realmente separa cidades vizinhas
     mapa.style.setProperty('--zoom', escala);
+    mapa.style.setProperty('--mapa', fatorDoMapa());
     document.getElementById('labsZoomNivel').textContent = `${Math.round(escala * 100)}%`;
     document.getElementById('labsZoomMenos').disabled = escala <= ESCALA_MIN + 0.01;
     document.getElementById('labsZoomMais').disabled = escala >= ESCALA_MAX - 0.01;
@@ -186,8 +187,17 @@
   // ponto só com o total, e se separam quando o zoom abre espaço entre eles.
   const ENCOSTO = 20;
 
+  // Quanto o mapa desta tela mede em relacao ao desktop (699px). O ponto e o
+  // limite de agrupamento seguem essa proporcao: assim o territorio coberto
+  // por um marcador e o mesmo em qualquer tela, e o celular deixa de virar um
+  // ponto por estado. O piso evita que o ponto suma numa tela muito estreita.
+  const LARGURA_BASE = 699;
+  const fatorDoMapa = () =>
+    Math.max(0.5, Math.min(1, mapa.getBoundingClientRect().width / LARGURA_BASE));
+
   function agrupar() {
     const area = mapa.getBoundingClientRect();
+    const limite = ENCOSTO * fatorDoMapa();
     const px = (a, b) => Math.hypot(
       ((cidades[a].left - cidades[b].left) / 100) * area.width * escala,
       ((cidades[a].top - cidades[b].top) / 100) * area.height * escala
@@ -202,7 +212,7 @@
       const semente = livres.shift();
       const membros = [semente];
       for (let k = livres.length - 1; k >= 0; k--) {
-        if (px(semente, livres[k]) < ENCOSTO) membros.push(livres.splice(k, 1)[0]);
+        if (px(semente, livres[k]) < limite) membros.push(livres.splice(k, 1)[0]);
       }
       conjuntos.push({ semente, membros: membros.sort((a, b) => a - b) });
     }

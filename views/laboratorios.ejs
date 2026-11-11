@@ -78,14 +78,18 @@
       <div class="labs-painel">
         <!-- Mapa -->
         <div class="labs-mapa-col">
-          <div class="labs-mapa" id="labsMapa">
-            <div class="labs-zoom" role="group" aria-label="Zoom do mapa">
-              <button type="button" id="labsZoomMais" aria-label="Aproximar">+</button>
-              <button type="button" id="labsZoomMenos" aria-label="Afastar">&minus;</button>
-              <button type="button" id="labsZoomReset" aria-label="Voltar ao tamanho normal">⟲</button>
-              <span class="labs-zoom-nivel" id="labsZoomNivel">100%</span>
-            </div>
+          <!-- O controle de zoom e irmao do mapa, nao filho: no celular ele
+               desce para baixo do desenho. Flutuando sobre um mapa de 293px
+               ele tapava Fortaleza, Recife e Joao Pessoa, e como o mapa so
+               arrasta quando esta ampliado, nao havia como alcanca-los. -->
+          <div class="labs-zoom" role="group" aria-label="Zoom do mapa">
+            <button type="button" id="labsZoomMais" aria-label="Aproximar">+</button>
+            <button type="button" id="labsZoomMenos" aria-label="Afastar">&minus;</button>
+            <button type="button" id="labsZoomReset" aria-label="Voltar ao tamanho normal">⟲</button>
+            <span class="labs-zoom-nivel" id="labsZoomNivel">100%</span>
+          </div>
 
+          <div class="labs-mapa" id="labsMapa">
             <div class="labs-viewport">
             <div class="labs-palco" id="labsPalco">
               <div class="labs-mapa-base"><%- mapaSvg %></div>

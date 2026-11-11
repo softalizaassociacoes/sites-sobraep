@@ -1396,6 +1396,7 @@ table.data-table tr:hover td { background: #fff6e6; }
 }
 
 .labs-mapa-col {
+  position: relative;
   background: linear-gradient(160deg, #fbfbfe, #f1f1f9);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
@@ -1447,7 +1448,7 @@ table.data-table tr:hover td { background: #fff6e6; }
 .labs-ponto--varios { background: var(--color-primary); }
 .labs-ponto-num:empty { display: none; }
 .labs-ponto-num {
-  font-size: calc(11px / var(--zoom, 1));
+  font-size: calc(11px * var(--mapa, 1) / var(--zoom, 1));
   font-weight: 700;
   line-height: 1;
   color: var(--color-white);
@@ -1681,21 +1682,26 @@ table.data-table tr:hover td { background: #fff6e6; }
    de Recife, colado na borda direita. */
 .labs-mapa { touch-action: pan-y pinch-zoom; }
 .labs-viewport { position: absolute; inset: 0; overflow: hidden; border-radius: 12px; }
+/* Sem will-change: ele promove o palco a uma camada propria, rasterizada uma
+   vez na escala de origem, e o scale passa a esticar esse bitmap — o desenho
+   fica borrado justamente quando se amplia para ver de perto. Sem ele o
+   navegador redesenha o SVG em cada escala, e o contorno sai nitido. */
 .labs-palco {
   position: absolute;
   inset: 0;
   transform-origin: center center;
   transition: transform 0.18s ease-out;
-  will-change: transform;
 }
 .labs-mapa.is-arrastando .labs-palco { transition: none; }
 .labs-mapa.is-ampliado { cursor: grab; }
 .labs-mapa.is-arrastando { cursor: grabbing; }
 
+/* Posicionado pela coluna, e nao pelo mapa: 16px de padding da coluna mais
+   os 10px de folga que o controle tinha sobre o desenho. */
 .labs-zoom {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 26px;
+  right: 26px;
   z-index: 8;
   display: flex;
   flex-direction: column;
@@ -1730,15 +1736,20 @@ table.data-table tr:hover td { background: #fff6e6; }
 
 /* O ponto encolhe conforme o mapa cresce: o marcador passa a cobrir sempre a
    mesma área geográfica, e aproximar de fato separa cidades vizinhas. */
+/* O ponto acompanha a largura do mapa, e nao so o zoom. Fixo em 13px ele
+   cobria 1,9% do mapa no desktop e 4,4% no celular, onde a moldura tem menos
+   da metade da largura — o mesmo limite de agrupamento engolia o dobro de
+   territorio e o celular acabava com um ponto por estado. Proporcional, as
+   duas telas mostram a mesma coisa. */
 .labs-ponto {
-  width: calc(13px / var(--zoom, 1));
-  height: calc(13px / var(--zoom, 1));
-  border-width: calc(2px / var(--zoom, 1));
+  width: calc(13px * var(--mapa, 1) / var(--zoom, 1));
+  height: calc(13px * var(--mapa, 1) / var(--zoom, 1));
+  border-width: calc(2px * var(--mapa, 1) / var(--zoom, 1));
 }
 /* o ponto que reúne vários grupos é maior para caber o número */
 .labs-ponto--varios {
-  width: calc(20px / var(--zoom, 1));
-  height: calc(20px / var(--zoom, 1));
+  width: calc(20px * var(--mapa, 1) / var(--zoom, 1));
+  height: calc(20px * var(--mapa, 1) / var(--zoom, 1));
 }
 .labs-ponto:hover, .labs-ponto:focus-visible { transform: translate(-50%, -50%) scale(1.5); }
 .labs-ponto.is-ativo { transform: translate(-50%, -50%) scale(1.75); }
@@ -1819,5 +1830,19 @@ table.data-table tr:hover td { background: #fff6e6; }
 @media (max-width: 900px) {
   /* no celular o gesto de pinça já resolve; os controles seguem disponíveis */
   .labs-cartao { display: none !important; }
+
+  /* Sai de cima do desenho e deita embaixo dele: num mapa de 293px o controle
+     ocupava 5,6% da area e tapava os marcadores do Nordeste. */
+  .labs-zoom {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    width: max-content;
+    margin: 10px auto 0;
+    order: 2;
+  }
+  .labs-mapa-col { display: flex; flex-direction: column; }
+  .labs-mapa { order: 1; }
+  .labs-mapa-legenda { order: 3; }
   .labs-zoom { top: 6px; right: 6px; }
 }
